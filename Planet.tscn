@@ -1,0 +1,39 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://sprites/planets/sun/Sun_C.png" type="Texture" id=1]
+[ext_resource path="res://sprites/planets/sun/Sun_B.png" type="Texture" id=2]
+[ext_resource path="res://sprites/planets/continental/Continental.png" type="Texture" id=3]
+[ext_resource path="res://sprites/planets/moon/Moon.png" type="Texture" id=4]
+[ext_resource path="res://sprites/planets/sun/Sun_A.png" type="Texture" id=5]
+[ext_resource path="res://sprites/planets/gas/Gas.png" type="Texture" id=6]
+[ext_resource path="res://Planet.gd" type="Script" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "Continental",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "Gas",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "Moon",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "Star",
+"speed": 1.0
+} ]
+
+[node name="Planet" type="Node2D"]
+script = ExtResource( 7 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "Star"

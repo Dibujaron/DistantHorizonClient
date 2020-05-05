@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://sprites/background/background.png" type="Texture" id=4]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+[node name="LayerBackground" type="ParallaxLayer" parent="."]
+z_index = -2
+motion_scale = Vector2( 0.01, 0.01 )
+motion_mirroring = Vector2( 51200, 38400 )
+
+[node name="Sprite" type="Sprite" parent="LayerBackground"]
+z_index = -2
+texture = ExtResource( 4 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 51200, 38400 )

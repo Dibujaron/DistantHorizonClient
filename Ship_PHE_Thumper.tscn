@@ -1,0 +1,208 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://sprites/ships/skeleton_tug.png" type="Texture" id=1]
+[ext_resource path="res://Ship_PHE_Thumper.gd" type="Script" id=2]
+[ext_resource path="res://CargoHold.tscn" type="PackedScene" id=3]
+[ext_resource path="res://DockingPortMale.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Account.tscn" type="PackedScene" id=5]
+[ext_resource path="res://EnginePlume.tscn" type="PackedScene" id=6]
+[ext_resource path="res://CargoContainer.tscn" type="PackedScene" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "base",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 20.7196 )
+
+[node name="Ship_PHE_Thumper" type="Area2D"]
+position = Vector2( 0.188934, -0.0944672 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+rotation_power = 3.0
+mass = 10000000
+initial_velocity = Vector2( 0, 0 )
+
+[node name="Account" parent="." instance=ExtResource( 5 )]
+rotation = 1.5708
+balance = 500
+
+[node name="CargoHold" parent="." instance=ExtResource( 3 )]
+size = 2000
+commodities_map = {
+"biological_cells": 0,
+"copper_ore": 0,
+"cryptonium": 0,
+"encrypted_data": 0,
+"energy_crystals": 0,
+"food": 0,
+"hydrogen": 0,
+"iron_ore": 0,
+"luxuries": 0,
+"machinery": 0,
+"munitions": 0,
+"rush": 0,
+"water": 0
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "base"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="EngineP" parent="." instance=ExtResource( 6 )]
+position = Vector2( -15, 35 )
+anim_name = "plume_larger"
+
+[node name="EngineS" parent="." instance=ExtResource( 6 )]
+position = Vector2( 15, 35 )
+anim_name = "plume_larger"
+
+[node name="ManuSA" parent="." instance=ExtResource( 6 )]
+position = Vector2( 22, 27 )
+rotation = -1.5708
+anim_name = "plume_tiny"
+
+[node name="ManuSF" parent="." instance=ExtResource( 6 )]
+position = Vector2( 20, -21 )
+rotation = -1.5708
+anim_name = "plume_tiny"
+
+[node name="ManuPF" parent="." instance=ExtResource( 6 )]
+position = Vector2( -19, -22 )
+rotation = 1.5708
+anim_name = "plume_tiny"
+
+[node name="ManuPA" parent="." instance=ExtResource( 6 )]
+position = Vector2( -21, 26 )
+rotation = 1.5708
+anim_name = "plume_tiny"
+
+[node name="ManuAP" parent="." instance=ExtResource( 6 )]
+position = Vector2( -3, 31 )
+anim_name = "plume_tiny"
+
+[node name="ManuAS" parent="." instance=ExtResource( 6 )]
+position = Vector2( 3, 31 )
+anim_name = "plume_tiny"
+
+[node name="ManuFP" parent="." instance=ExtResource( 6 )]
+position = Vector2( -14, 18 )
+rotation = 3.14159
+anim_name = "plume_tiny"
+
+[node name="ManuFS" parent="." instance=ExtResource( 6 )]
+position = Vector2( 16, 18 )
+rotation = 3.14159
+anim_name = "plume_tiny"
+
+[node name="DockPortP" parent="." instance=ExtResource( 4 )]
+position = Vector2( -19, 26 )
+rotation = 1.5708
+port_name = "shp_port"
+
+[node name="DockPortS" parent="." instance=ExtResource( 4 )]
+position = Vector2( 20, 26 )
+rotation = -1.5708
+port_name = "shp_stbd"
+
+[node name="Container_B6" parent="." instance=ExtResource( 7 )]
+position = Vector2( -6, 10 )
+color = "green"
+
+[node name="Container_C6" parent="." instance=ExtResource( 7 )]
+position = Vector2( 2, 10 )
+
+[node name="Container_B5" parent="." instance=ExtResource( 7 )]
+position = Vector2( -6, 4 )
+
+[node name="Container_C5" parent="." instance=ExtResource( 7 )]
+position = Vector2( 2, 4 )
+color = "gray"
+
+[node name="Container_B4" parent="." instance=ExtResource( 7 )]
+position = Vector2( -6, -2 )
+color = "purple"
+
+[node name="Container_C4" parent="." instance=ExtResource( 7 )]
+position = Vector2( 2, -2 )
+color = "yellow"
+
+[node name="Container_B3" parent="." instance=ExtResource( 7 )]
+position = Vector2( -6, -8 )
+color = "blue"
+
+[node name="Container_C3" parent="." instance=ExtResource( 7 )]
+position = Vector2( 2, -8 )
+color = "purple"
+
+[node name="Container_B2" parent="." instance=ExtResource( 7 )]
+position = Vector2( -6, -14 )
+color = "green"
+
+[node name="Container_C2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 2.06597, -14.1319 )
+color = "yellow"
+
+[node name="Container_B1" parent="." instance=ExtResource( 7 )]
+position = Vector2( -6, -20 )
+color = "yellow"
+
+[node name="Container_C1" parent="." instance=ExtResource( 7 )]
+position = Vector2( 2, -20 )
+color = "purple"
+
+[node name="Container_A6" parent="." instance=ExtResource( 7 )]
+position = Vector2( -12, 10 )
+color = "gray"
+
+[node name="Container_D6" parent="." instance=ExtResource( 7 )]
+position = Vector2( 8.132, 10 )
+color = "blue"
+
+[node name="Container_A5" parent="." instance=ExtResource( 7 )]
+position = Vector2( -12, 4 )
+color = "purple"
+
+[node name="Container_D5" parent="." instance=ExtResource( 7 )]
+position = Vector2( 8.132, 4 )
+color = "purple"
+
+[node name="Container_A4" parent="." instance=ExtResource( 7 )]
+position = Vector2( -12, -2 )
+color = "green"
+
+[node name="Container_D4" parent="." instance=ExtResource( 7 )]
+position = Vector2( 8.132, -2 )
+color = "green"
+
+[node name="Container_A3" parent="." instance=ExtResource( 7 )]
+position = Vector2( -12, -8 )
+color = "purple"
+
+[node name="Container_D3" parent="." instance=ExtResource( 7 )]
+position = Vector2( 8.132, -8 )
+color = "yellow"
+
+[node name="Container_A2" parent="." instance=ExtResource( 7 )]
+position = Vector2( -12, -14 )
+color = "gray"
+
+[node name="Container_D2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 8, -14 )
+color = "gray"
+
+[node name="Container_A1" parent="." instance=ExtResource( 7 )]
+position = Vector2( -12, -20 )
+
+[node name="Container_D1" parent="." instance=ExtResource( 7 )]
+position = Vector2( 8, -20 )
+color = "blue"
