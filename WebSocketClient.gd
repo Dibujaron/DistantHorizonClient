@@ -7,6 +7,7 @@ extends Node2D
 
 export var main_url = "ws://66.70.193.213:25611/ws/"
 export var debug_url = "ws://localhost:25611/ws/"
+export var do_local_debug = true
 export (NodePath) var space_path
 onready var space = get_node(space_path)
 # Called when the node enters the scene tree for the first time.
@@ -14,7 +15,7 @@ var _client = WebSocketClient.new()
 var connected = false
 var socket_url
 func _ready():
-	if OS.is_debug_build():
+	if OS.is_debug_build() && do_local_debug:
 		socket_url = debug_url
 	else:
 		socket_url = main_url
@@ -25,7 +26,7 @@ func _ready():
 	# a full packet is received.
 	# Alternatively, you could check get_peer(1).get_available_packets() in a loop.
 	_client.connect("data_received", self, "_on_data")
-	print("attempting to connect...")
+	print("attempting to connect to ", socket_url, "...")
 	_client.connect_to_url(socket_url)
 
 func _closed(was_clean = false):

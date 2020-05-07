@@ -10,10 +10,10 @@ var tidal_lock = false
 var type = "Star"
 
 export var type_scale_map = {
-	"Star": 5.0,
-	"Continental": 0.5,
-	"Moon": 0.2,
-	"Gas": 1.5
+	"Star": 1.0,
+	"Continental": 0.2,
+	"Moon": 0.1,
+	"Gas": 0.75
 }
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,8 +27,8 @@ func json_init(planet_info):
 	if new_type != type:
 		type = new_type
 		$AnimatedSprite.play(type)
-	$AnimatedSprite.global_scale.x = planet_info["scale"] * type_scale_map[type]
-	$AnimatedSprite.global_scale.y = planet_info["scale"] * type_scale_map[type]
+	scale.x = planet_info["scale"] * type_scale_map[type]
+	scale.y = planet_info["scale"] * type_scale_map[type]
 
 func json_update(planet_info):
 	.json_update(planet_info)
