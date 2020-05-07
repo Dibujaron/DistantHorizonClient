@@ -6,6 +6,7 @@ func _ready():
 func json_init(station_info):
 	.json_init(station_info)
 	$AnimatedSprite.play("default")
+	global_scale = Vector2(1.0, 1.0)
 
 func json_update(station_info):
 	.json_update(station_info)

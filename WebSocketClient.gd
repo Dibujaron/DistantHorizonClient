@@ -5,20 +5,14 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
-export var main_url = "ws://66.70.193.213:25611/ws/"
-export var debug_url = "ws://localhost:25611/ws/"
-export var do_local_debug = true
+export var socket_url = "ws://66.70.193.213:25611/ws/"
+#export var debug_url = "ws://localhost:25611/ws/"
 export (NodePath) var space_path
 onready var space = get_node(space_path)
 # Called when the node enters the scene tree for the first time.
 var _client = WebSocketClient.new()
 var connected = false
-var socket_url
 func _ready():
-	if OS.is_debug_build() && do_local_debug:
-		socket_url = debug_url
-	else:
-		socket_url = main_url
 	_client.connect("connection_closed", self, "_closed")
 	_client.connect("connection_error", self, "_closed")
 	_client.connect("connection_established", self, "_connected")
