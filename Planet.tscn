@@ -15,11 +15,6 @@ animations = [ {
 "name": "Continental",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ) ],
-"loop": true,
-"name": "Gas",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "Moon",
@@ -29,6 +24,11 @@ animations = [ {
 "loop": true,
 "name": "Star",
 "speed": 1.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "Gas",
+"speed": 5.0
 } ]
 
 [node name="Planet" type="Node2D"]

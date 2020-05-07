@@ -106,7 +106,7 @@ func initialize(message):
 		station.name = station_info["name"]
 		stations[station.name] = station
 		station.add_to_group("stations")
-		if station_info.has("parent"):
+		if station_info["parent"]:
 			var parent_name = station_info["parent"]
 			var parent_node = planets[parent_name]
 			parent_node.add_child(station)
