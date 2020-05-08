@@ -25,9 +25,6 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-rotation_power = 3.0
-mass = 10000000
-initial_velocity = Vector2( 0, 0 )
 
 [node name="Account" parent="." instance=ExtResource( 5 )]
 rotation = 1.5708

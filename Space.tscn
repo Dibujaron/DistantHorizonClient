@@ -6,7 +6,6 @@
 [ext_resource path="res://ParallaxBackground.tscn" type="PackedScene" id=7]
 
 [node name="Space" type="Node2D"]
-position = Vector2( 9.07568, -9.07593 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 3926.48 ]
