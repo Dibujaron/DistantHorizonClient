@@ -123,6 +123,6 @@ ui_dock={
 
 [rendering]
 
-quality/driver/fallback_to_gles2=true
+quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false

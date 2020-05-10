@@ -5,8 +5,8 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
-#export var socket_url = "ws://66.70.193.213:25611/ws/"
-export var socket_url = "ws://localhost:25611/ws/"
+export var socket_url = "ws://66.70.193.213:25611/ws/"
+#export var socket_url = "ws://localhost:25611/ws/"
 export (NodePath) var space_path
 onready var space = get_node(space_path)
 # Called when the node enters the scene tree for the first time.
@@ -39,10 +39,35 @@ func _on_data():
 	var parse_result = JSON.parse(message_str)
 	if parse_result.error == OK:
 		var json = parse_result.result
-		get_parent().receive_world_update(json)
+		var message_type = json["message_type"]
+		if message_type == "world_state":
+			get_parent().receive_world_update(json)
+		elif message_type == "docked_to_station":
+			var canvas = get_tree().get_root().get_node("Space").get_node("GuiCanvas")
+			var menu = canvas.get_node("TradeMenu")
+			if not menu:
+				menu = load("res://TradeMenu.tscn").instance()
+				canvas.add_child(menu)
+			menu.init(json)
 	else:
 		print(parse_result.error_string)
 
+func purchase_from_station(commodity_name, quantity):
+	var dict = {}
+	print("bb")
+	dict["message_type"] = "purchase_from_station"
+	dict["commodity_name"] = commodity_name
+	dict["quantity"] = quantity
+	print("cc")
+	send_message(JSON.print(dict))
+	print("dd")
+func sell_to_station(commodity_name, quantity):
+	var dict = {}
+	dict["message_type"] = "sell_to_station"
+	dict["commodity_name"] = commodity_name
+	dict["quantity"] = quantity
+	send_message(JSON.print(dict))
+		
 func send_message(message):
 	var err = _client.get_peer(1).put_packet(str(message).to_utf8())
 	

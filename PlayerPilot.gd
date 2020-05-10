@@ -97,6 +97,10 @@ func _process(delta):
 		var dict = {}
 		dict["message_type"] = "attempt_dock"
 		socket_client.send_message(JSON.print(dict))
+		var canvas = get_tree().get_root().get_node("Space").get_node("GuiCanvas")
+		var menu = canvas.get_node("TradeMenu")
+		if menu:
+			canvas.remove_child(menu)
 	
 func zoom_in():
 	var camera = $Camera2D
