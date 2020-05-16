@@ -8,15 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "PID_Controller",
+"language": "GDScript",
+"path": "res://PIDController.gd"
+} ]
 _global_script_class_icons={
-
+"PID_Controller": ""
 }
 
 [application]
 
 config/name="DistantHorizon1"
-run/main_scene="res://Space.tscn"
+run/main_scene="res://WelcomeScene.tscn"
 config/icon="res://sprites/logo/logo.png"
 config/windows_native_icon="res://sprites/logo/icon.ico"
 

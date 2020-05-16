@@ -1,10 +1,5 @@
 extends Node2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 export (NodePath) var socket_client_path
 onready var socket_client = get_node(socket_client_path)
 export var zoom_factor = 0.5
@@ -95,12 +90,8 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("ui_dock"):
 		var dict = {}
-		dict["message_type"] = "attempt_dock"
+		dict["message_type"] = "dock_or_undock"
 		socket_client.send_message(JSON.print(dict))
-		var canvas = get_tree().get_root().get_node("Space").get_node("GuiCanvas")
-		var menu = canvas.get_node("TradeMenu")
-		if menu:
-			canvas.remove_child(menu)
 	
 func zoom_in():
 	var camera = $Camera2D

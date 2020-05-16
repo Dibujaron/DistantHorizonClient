@@ -1,6 +1,5 @@
 extends Node2D
 
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -42,13 +41,20 @@ func _on_data():
 		var message_type = json["message_type"]
 		if message_type == "world_state":
 			get_parent().receive_world_update(json)
-		elif message_type == "docked_to_station":
-			var canvas = get_tree().get_root().get_node("Space").get_node("GuiCanvas")
-			var menu = canvas.get_node("TradeMenu")
-			if not menu:
-				menu = load("res://TradeMenu.tscn").instance()
-				canvas.add_child(menu)
-			menu.init(json)
+		elif message_type == "ships_initial_state":
+			get_parent().receive_initial_ships(json)
+		elif message_type == "ship_inputs":
+			get_parent().receive_ship_inputs_update(json)
+		elif message_type == "ship_heartbeats":
+			get_parent().receive_ship_heartbeats(json)
+		elif message_type == "trade_menu_info":
+			get_parent().receive_trade_menu_info(json)
+		elif message_type == "trade_menu_close":
+			get_parent().receive_trade_menu_close(json)
+		elif message_type == "ship_docked":
+			get_parent().receive_ship_docked(json)
+		elif message_type == "ship_undocked":
+			get_parent().receive_ship_undocked(json)
 	else:
 		print(parse_result.error_string)
 

@@ -1,7 +1,7 @@
 extends "res://Orbiter.gd"
 
 func _ready():
-	pass
+	add_to_group("Stations")
 
 func json_init(station_info):
 	.json_init(station_info)
@@ -13,4 +13,5 @@ func json_update(station_info):
 
 func _process(delta):
 	look_at(get_parent().global_position)
+
 

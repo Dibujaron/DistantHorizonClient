@@ -9,7 +9,8 @@ export var ship_scenes = {
 	"rijay.mockingbird": preload("res://Ship_Rijay_Mockingbird.tscn")
 }
 
-var initialized = false
+var initialized_orbiters = false
+var initialized_ships = false
 var planets = {}
 var stations = {}
 var ships = {}
@@ -18,33 +19,61 @@ func _ready():
 	pass # Replace with function body.
 
 func receive_world_update(message):
-	if not initialized:
-		initialize(message)
-		initialized = true
+	if not initialized_orbiters:
+		initialize_orbiters(message)
+		initialized_orbiters = true
 	else:
-		json_update(message)
-
-func json_update(message):
-	var world_state = message["world_state"]
-	var json_planets = world_state["planets"]
-	var json_stations = world_state["stations"]
-	var json_ships = world_state["ships"]	
-	
-	for planet_info in json_planets:
-		var planet = planets[planet_info["name"]]
-		planet.json_update(planet_info)
-	
-	for station_info in json_stations:
-		var station = stations[station_info["name"]]
-		station.json_update(station_info)
+		json_update_orbiters(message)
 		
-	#todo handle removing ships better than this
+func receive_trade_menu_info(message):
+	var canvas = $GuiCanvas
+	var menu = canvas.get_node("TradeMenu")
+	if not menu:
+		menu = load("res://TradeMenu.tscn").instance()
+		canvas.add_child(menu)
+		menu.init(message)
+
+func receive_trade_menu_close(message):
+	var canvas = $GuiCanvas
+	var menu = canvas.get_node("TradeMenu")
+	if menu:
+		canvas.remove_child(menu)
+		
+func receive_initial_ships(message):
+	if not initialized_ships:
+		print("initializing ships")
+		initialize_ships(message)
+		initialized_ships = true
+	else:
+		print("error received initial ships message twice.")
+	
+func receive_ship_docked(message):
+	var docked_message = message["ship_docked"]
+	var ship_id = docked_message["id"]
+	var ship = ships[ship_id]
+	ship.json_receive_docked(docked_message)
+	
+func receive_ship_undocked(message):
+	var undocked_message = message["ship_undocked"]
+	var ship_id = undocked_message["id"]
+	var ship = ships[ship_id]
+	ship.json_receive_undocked(undocked_message)
+	
+func receive_ship_inputs_update(message):
+	var inputs_update = message["ship_inputs"]
+	var ship_id = inputs_update["id"]
+	var ship = ships[ship_id]
+	ship.json_update_inputs(inputs_update)
+		
+func receive_ship_heartbeats(message):
+	var json_ships = message["ship_heartbeats"]
+		#todo handle removing ships better than this
 	var updated_ships = []
 	for ship_info in json_ships:
 		var ship_id = ship_info["id"]
 		if ships.has(ship_id):
 			var ship = ships[ship_id]
-			ship.json_update(ship_info)
+			ship.json_sync_state(ship_info)
 		else:
 			init_ship(ship_info)
 		updated_ships.append(ship_id)
@@ -58,6 +87,30 @@ func json_update(message):
 		var ship = ships[ship_id]
 		ship.get_parent().remove_child(ship)
 		ships.erase(ship_id)
+		
+func json_update_orbiters(message):
+	var world_state = message["world_state"]
+	var json_planets = world_state["planets"]
+	var json_stations = world_state["stations"]
+
+	for planet_info in json_planets:
+		var planet = planets[planet_info["name"]]
+		planet.json_update(planet_info)
+	
+	for station_info in json_stations:
+		var station = stations[station_info["name"]]
+		station.json_update(station_info)
+	
+func initialize_ships(message):
+	var json_ships = message["ships_initial_state"]
+	var my_ship_id = message["ship_id"]
+	for ship_info in json_ships:
+		init_ship(ship_info)
+		
+	var my_ship = ships[my_ship_id]
+	var pilot = $PlayerPilot
+	remove_child(pilot)
+	my_ship.add_child(pilot)
 	
 func init_ship(ship_info):
 	var ship_scene = ship_scenes[ship_info["type"]]
@@ -67,22 +120,12 @@ func init_ship(ship_info):
 	add_child(ship)
 	ship.json_init(ship_info)
 	
-func initialize(message):
+func initialize_orbiters(message):
 	var player_id = message["player_id"]
-	var my_ship_id = message["ship_id"]
 	var world_state = message["world_state"]
 	var json_planets = world_state["planets"]
 	var json_stations = world_state["stations"]
-	var json_ships = world_state["ships"]
-	
-	for ship_info in json_ships:
-		init_ship(ship_info)
-		
-	var my_ship = ships[my_ship_id]
-	var pilot = $PlayerPilot
-	remove_child(pilot)
-	my_ship.add_child(pilot)
-	
+
 	var planet_scene = preload("res://Planet.tscn")
 	for planet_info in json_planets:
 		var planet = planet_scene.instance()
@@ -116,6 +159,9 @@ func initialize(message):
 
 func json_to_vec(json):
 	return Vector2(json["x"],json["y"])
+
+	
+#some operations briefly set the camera to 0,0. This flashes the sun. No way to fix so just hide the sun.
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

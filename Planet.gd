@@ -8,34 +8,39 @@ extends "res://Orbiter.gd"
 var rotation_speed = 0
 var tidal_lock = false
 var type = "Star"
-
+var mass = 0
+var min_orbital_altitude = 0
 export var type_scale_map = {
 	"Star": 1.0,
 	"Continental": 0.2,
 	"Moon": 0.1,
 	"Gas": 0.75
 }
-# Called when the node enters the scene tree for the first time.
+
+func get_mass():
+	return mass
+	
 func _ready():
-	pass # Replace with function body.
+	add_to_group("Planets")
 
 func json_init(planet_info):
 	.json_init(planet_info)
 	rotation_speed = planet_info["rotation_speed"]
 	tidal_lock = planet_info["tidal_lock"]
+	mass = planet_info["mass"]
+	min_orbital_altitude = planet_info["min_orbital_altitude"]
 	var new_type = planet_info["type"]
 	if new_type != type:
 		type = new_type
 		$AnimatedSprite.play(type)
 	$AnimatedSprite.global_scale.x = planet_info["scale"]
 	$AnimatedSprite.global_scale.y = planet_info["scale"]
-	#scale.y = planet_info["scale"] * type_scale_map[type]
 
 func json_update(planet_info):
 	.json_update(planet_info)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _process(delta):
 	if tidal_lock:
 		$AnimatedSprite.look_at(get_parent().global_position)
 	else:
