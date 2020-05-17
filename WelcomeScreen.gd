@@ -7,7 +7,8 @@ extends MarginContainer
 
 func _ready():
 	get_node("VBoxContainer/JoinButton").connect("pressed", self, "_join_game")
-
+	get_node("VBoxContainer/CommunityButtons/Discord").connect("pressed", self, "_open_discord")
+	get_node("VBoxContainer/CommunityButtons/Reddit").connect("pressed", self, "_open_reddit")
 func _process(delta):
 	var screen_size = get_viewport_rect().size
 	var my_size = rect_size
@@ -18,6 +19,13 @@ func _process(delta):
 
 func _join_game():
 	get_tree().change_scene("res://Space.tscn")
+	
+func _open_reddit():
+	OS.shell_open("https://old.reddit.com/r/distanthorizon/")
+	
+func _open_discord():
+	OS.shell_open("https://discord.gg/8UNdWxA")
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

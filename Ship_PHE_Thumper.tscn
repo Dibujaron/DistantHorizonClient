@@ -1,30 +1,67 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://sprites/ships/skeleton_tug.png" type="Texture" id=1]
+[ext_resource path="res://sprites/ships/PHE/Thumper/c1.png" type="Texture" id=1]
 [ext_resource path="res://Ship_PHE_Thumper.gd" type="Script" id=2]
 [ext_resource path="res://CargoHold.tscn" type="PackedScene" id=3]
 [ext_resource path="res://DockingPortMale.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Account.tscn" type="PackedScene" id=5]
 [ext_resource path="res://EnginePlume.tscn" type="PackedScene" id=6]
 [ext_resource path="res://CargoContainer.tscn" type="PackedScene" id=7]
+[ext_resource path="res://sprites/ships/PHE/Thumper/c2_shaded.png" type="Texture" id=8]
+[ext_resource path="res://sprites/ships/PHE/Thumper/c2.png" type="Texture" id=9]
+[ext_resource path="res://sprites/ships/PHE/Thumper/c1_shaded.png" type="Texture" id=10]
+[ext_resource path="res://sprites/ships/PHE/Thumper/const_color.png" type="Texture" id=11]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 1 ) ],
+"frames": [ ExtResource( 10 ) ],
 "loop": true,
-"name": "base",
+"name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 20.7196 )
 
 [node name="Ship_PHE_Thumper" type="Area2D"]
-position = Vector2( 0.188934, -0.0944672 )
+z_index = 1
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
+default_primary_color = Color( 1, 0.415686, 0, 1 )
 
 [node name="Account" parent="." instance=ExtResource( 5 )]
 rotation = 1.5708
@@ -48,12 +85,23 @@ commodities_map = {
 "water": 0
 }
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 1 )
-animation = "base"
+[node name="Color1Shaded" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+
+[node name="Color1" type="AnimatedSprite" parent="."]
+frames = SubResource( 3 )
+
+[node name="Color2Shaded" type="AnimatedSprite" parent="."]
+frames = SubResource( 4 )
+
+[node name="Color2" type="AnimatedSprite" parent="."]
+frames = SubResource( 5 )
+
+[node name="ConstantColor" type="AnimatedSprite" parent="."]
+frames = SubResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="EngineP" parent="." instance=ExtResource( 6 )]
 position = Vector2( -15, 35 )

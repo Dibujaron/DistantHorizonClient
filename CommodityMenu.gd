@@ -67,11 +67,8 @@ func _buy_100_pressed():
 	buy(100)
 	
 func buy(desired_num):
-	print("a")
 	var client = get_tree().get_root().get_node("Space").get_node("WebSocketClient")
-	print("b")
 	client.purchase_from_station(commodity_identifying_name, desired_num)
-	print("c")
 	update()
 	
 func _sell_1_pressed():
@@ -88,7 +85,6 @@ func sell(desired_num):
 	client.sell_to_station(commodity_identifying_name, desired_num)
 	update()
 	#update the UI
-	update()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

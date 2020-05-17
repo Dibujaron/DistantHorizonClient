@@ -2,10 +2,10 @@ extends Node2D
 
 # Declare member variables here. Examples:
 # var a = 2
-# var b = "text"
+# var b = "text"zzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 
-export var socket_url = "ws://66.70.193.213:25611/ws/"
-#export var socket_url = "ws://localhost:25611/ws/"
+#export var socket_url = "ws://66.70.193.213:25611/ws/"
+export var socket_url = "ws://localhost:25611/ws/"
 export (NodePath) var space_path
 onready var space = get_node(space_path)
 # Called when the node enters the scene tree for the first time.

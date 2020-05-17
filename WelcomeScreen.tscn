@@ -13,7 +13,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_right = 368.0
-margin_bottom = 388.0
+margin_bottom = 460.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 368.0
@@ -73,3 +73,51 @@ text = "Join Game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Spacer4" type="Label" parent="VBoxContainer"]
+margin_top = 392.0
+margin_right = 368.0
+margin_bottom = 406.0
+align = 1
+
+[node name="Spacer6" type="Label" parent="VBoxContainer"]
+margin_top = 410.0
+margin_right = 368.0
+margin_bottom = 424.0
+align = 1
+
+[node name="Spacer5" type="Label" parent="VBoxContainer"]
+margin_top = 428.0
+margin_right = 368.0
+margin_bottom = 442.0
+align = 1
+
+[node name="CommunityButtons" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 446.0
+margin_right = 368.0
+margin_bottom = 460.0
+alignment = 1
+
+[node name="Discuss this project on" type="Label" parent="VBoxContainer/CommunityButtons"]
+margin_left = 53.0
+margin_right = 200.0
+margin_bottom = 14.0
+text = "Discuss this project on"
+
+[node name="Discord" type="LinkButton" parent="VBoxContainer/CommunityButtons"]
+margin_left = 204.0
+margin_right = 253.0
+margin_bottom = 14.0
+text = "Discord"
+
+[node name="or" type="Label" parent="VBoxContainer/CommunityButtons"]
+margin_left = 257.0
+margin_right = 270.0
+margin_bottom = 14.0
+text = "or"
+
+[node name="Reddit" type="LinkButton" parent="VBoxContainer/CommunityButtons"]
+margin_left = 274.0
+margin_right = 315.0
+margin_bottom = 14.0
+text = "Reddit"

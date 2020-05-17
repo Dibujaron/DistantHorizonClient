@@ -34,9 +34,20 @@ var rotation_error = 0.0
 var velocity = Vector2(0,0)
 var initialized = false
 
+export var default_primary_color = Color.blue
+export var default_secondary_color = Color.white
+
 func _ready():
-	$AnimatedSprite.play("base")
-		
+	_set_primary_color(default_primary_color)
+	_set_secondary_color(default_secondary_color)
+func _set_primary_color(color):
+	$Color1.modulate = color
+	$Color1Shaded.modulate = Color.from_hsv(color.h, color.s, color.v - 0.1)
+	
+func _set_secondary_color(color):
+	$Color2.modulate = color
+	$Color2Shaded.modulate = Color.from_hsv(color.h, color.s, color.v - 0.1)
+	
 func json_init(json):
 	main_engine_thrust = json["main_engine_thrust"]
 	manu_engine_thrust = json["manu_engine_thrust"]

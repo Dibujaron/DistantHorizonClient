@@ -31,7 +31,7 @@ func receive_trade_menu_info(message):
 	if not menu:
 		menu = load("res://TradeMenu.tscn").instance()
 		canvas.add_child(menu)
-		menu.init(message)
+	menu.init(message)
 
 func receive_trade_menu_close(message):
 	var canvas = $GuiCanvas

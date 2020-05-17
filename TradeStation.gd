@@ -13,5 +13,3 @@ func json_update(station_info):
 
 func _process(delta):
 	look_at(get_parent().global_position)
-
-
