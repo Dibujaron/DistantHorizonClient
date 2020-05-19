@@ -52,8 +52,8 @@ func json_init(json):
 	main_engine_thrust = json["main_engine_thrust"]
 	manu_engine_thrust = json["manu_engine_thrust"]
 	rotation_power = json["rotation_power"]
-	rotation_error_adjust = rotation_power
-	rotation = json["rotation"]
+	rotation_error_adjust = rotation_power / 10
+	global_rotation = json["rotation"]
 	global_position = json_to_vec(json["global_pos"])
 	velocity = json_to_vec(json["velocity"])
 	#json_update_inputs(json)
@@ -92,6 +92,9 @@ func json_receive_undocked(json):
 	var expected_velocity = json_to_vec(json["velocity"])
 	velocity = expected_velocity
 	
+var left_press_time = 0
+var left_press_start_tick = 0
+var left_press_start_phys_tick = 0
 func json_update_inputs(json):
 	main_engines_active = json["main_engines"]
 	port_thrusters_active = json["port_thrusters"]
@@ -99,6 +102,12 @@ func json_update_inputs(json):
 	fore_thrusters_active = json["fore_thrusters"]
 	aft_thrusters_active = json["aft_thrusters"]
 	var server_left = json["rotating_left"]
+	#if server_left and not tiller_left:
+	#	left_press_time = OS.get_ticks_msec()
+	#	left_press_start_tick = tick_count
+	#	left_press_start_phys_tick = physics_tick_count 
+	#elif not server_left and tiller_left:
+	#	print("left pressed for ", (OS.get_ticks_msec() - left_press_time), "ms, ", (tick_count - left_press_start_tick), " main ticks, ", (physics_tick_count - left_press_start_phys_tick), " phys ticks")
 	tiller_left = server_left
 	var server_right = json["rotating_right"]
 	tiller_right = server_right
@@ -112,13 +121,15 @@ func json_update_inputs(json):
 		thruster.set_enabled(fore_thrusters_active)
 	for thruster in aft_thrusters:
 		thruster.set_enabled(aft_thrusters_active)
+	json_sync_state(json)
 	
 var last_sync_time = 0.0
 func json_sync_state(json):
 	var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
 	if not docked:
 		var expected_rotation = json["rotation"]
-		rotation_error = angular_diff(expected_rotation, global_rotation)
+		#rotation_error = Global.angular_diff(global_rotation, expected_rotation
+		#print("expected rotation: ", rad2deg(expected_rotation), " actual rotation: ", rad2deg(global_rotation), " angular diff: ", rad2deg(rotation_error))
 		global_rotation = expected_rotation
 		var expected_position = json_to_vec(json["global_pos"])
 		var expected_velocity = json_to_vec(json["velocity"])
@@ -126,10 +137,13 @@ func json_sync_state(json):
 		var true_pos_after_time = global_position + (velocity * sync_delta)
 		var velocity_adj = expected_pos_after_time - true_pos_after_time
 		#global_position = expected_position
-		velocity += velocity_adj	
+		velocity += velocity_adj
 	last_sync_time = OS.get_ticks_msec()
-	
-func _physics_process(delta):
+
+var tick_count = 0
+var physics_tick_count = 0
+func _process(delta):
+	#only things where the tick rate doesn't matter
 	if not docked:
 		if main_engines_active:
 			velocity += Vector2(0,-main_engine_thrust).rotated(global_rotation) * delta
@@ -144,10 +158,13 @@ func _physics_process(delta):
 		if tiller_left:
 			global_rotation -= rotation_power * delta #todo multiply by delta
 		if tiller_right:
-			global_rotation += rotation_power * delta		
-		velocity += get_gravity_acceleration() * delta * 60.0
+			global_rotation += rotation_power * delta
 		global_position += velocity * delta
-
+		tick_count += 1
+		
+func _physics_process(delta):
+	velocity += get_gravity_acceleration() * delta * 50.0
+	physics_tick_count += 1
 	
 func angular_diff(a, b):
 	var diff = rad2deg(b) - rad2deg(a)

@@ -15,6 +15,7 @@ func _ready():
 	pass # Replace with function body.
 
 func init(json):
+	print("Initializing trade menu")
 	self.player_balance = json["player_balance"]
 	self.ship_hold_space = json["hold_space"]
 	var station_info = json["station_info"]

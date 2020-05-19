@@ -4,8 +4,8 @@ extends Node2D
 # var a = 2
 # var b = "text"zzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 
-#export var socket_url = "ws://66.70.193.213:25611/ws/"
-export var socket_url = "ws://localhost:25611/ws/"
+export var socket_url = "ws://23.254.142.198:25611/ws/"
+#export var socket_url = "ws://localhost:25611/ws/"
 export (NodePath) var space_path
 onready var space = get_node(space_path)
 # Called when the node enters the scene tree for the first time.
@@ -60,13 +60,14 @@ func _on_data():
 
 func purchase_from_station(commodity_name, quantity):
 	var dict = {}
-	print("bb")
+	print("bb purchasing from station")
 	dict["message_type"] = "purchase_from_station"
 	dict["commodity_name"] = commodity_name
 	dict["quantity"] = quantity
 	print("cc")
 	send_message(JSON.print(dict))
 	print("dd")
+	
 func sell_to_station(commodity_name, quantity):
 	var dict = {}
 	dict["message_type"] = "sell_to_station"

@@ -9,22 +9,27 @@ var commodity_identifying_name
 var trade_menu
 var hold_contents
 var commodity_info
+var initialized = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
 func init(trade_menu, commodity_info, hold_contents):
+	print("Initializing commodity menu")
 	self.trade_menu = trade_menu
 	self.hold_contents = hold_contents
 	self.commodity_info = commodity_info
 	self.commodity_display_name = commodity_info["display_name"]
 	self.commodity_identifying_name = commodity_info["identifying_name"]
-	get_node("VBoxContainer/BuyBox/Buy1").connect("pressed", self, "_buy_1_pressed")
-	get_node("VBoxContainer/BuyBox/Buy10").connect("pressed", self, "_buy_10_pressed")
-	get_node("VBoxContainer/BuyBox/Buy100").connect("pressed", self, "_buy_100_pressed")
-	get_node("VBoxContainer/SellBox/Sell1").connect("pressed", self, "_sell_1_pressed")
-	get_node("VBoxContainer/SellBox/Sell10").connect("pressed", self, "_sell_10_pressed")
-	get_node("VBoxContainer/SellBox/Sell100").connect("pressed", self, "_sell_100_pressed")
+	if not initialized:
+		print("has not beein initialized before")
+		get_node("VBoxContainer/BuyBox/Buy1").connect("pressed", self, "_buy_1_pressed")
+		get_node("VBoxContainer/BuyBox/Buy10").connect("pressed", self, "_buy_10_pressed")
+		get_node("VBoxContainer/BuyBox/Buy100").connect("pressed", self, "_buy_100_pressed")
+		get_node("VBoxContainer/SellBox/Sell1").connect("pressed", self, "_sell_1_pressed")
+		get_node("VBoxContainer/SellBox/Sell10").connect("pressed", self, "_sell_10_pressed")
+		get_node("VBoxContainer/SellBox/Sell100").connect("pressed", self, "_sell_100_pressed")
+	initialized = true
 	draw()
 
 func update():

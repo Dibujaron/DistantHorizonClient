@@ -30,16 +30,12 @@ func json_update(orbiter_info):
 	var elapsed_time = current_time - last_update
 	expected_angular_pos = orbiter_info["angular_pos"]
 	var angular_pos = position.angle()
-	var current_error = angular_diff(expected_angular_pos, angular_pos)
+	var current_error = Global.angular_diff(expected_angular_pos, angular_pos)
 	if elapsed_time > 0:
 		var delta = velocity_controller.calculate(current_error, elapsed_time)
 		current_angular_velocity = base_angular_velocity + delta
 	last_update = OS.get_ticks_msec() / 1000.0
 	
-func angular_diff(a, b):
-	var vecA = polar2cartesian(1, a)
-	var vecB = polar2cartesian(1, b)
-	return vecB.angle_to(vecA)
 	
 func json_to_vec(json):
 	return Vector2(json["x"],json["y"])
