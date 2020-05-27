@@ -10,3 +10,4 @@
 [node name="CanvasLayer" type="CanvasLayer" parent="ParallaxBackground"]
 
 [node name="WelcomeScreen" parent="ParallaxBackground/CanvasLayer" instance=ExtResource( 2 )]
+anchor_bottom = 0.12

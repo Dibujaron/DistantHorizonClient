@@ -33,6 +33,7 @@ var rotation_error_adjust = 0.0
 var rotation_error = 0.0
 var velocity = Vector2(0,0)
 var initialized = false
+var is_player_ship = false
 
 export var default_primary_color = Color.blue
 export var default_secondary_color = Color.white
@@ -56,10 +57,15 @@ func json_init(json):
 	global_rotation = json["rotation"]
 	global_position = json_to_vec(json["global_pos"])
 	velocity = json_to_vec(json["velocity"])
+	
+	# If this is the player's ship, update the rotation of the compass needle
+	if is_player_ship:
+			get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
+	
 	#json_update_inputs(json)
 	initialized = true
 
-func json_receive_docked(json):	
+func json_receive_docked(json):
 	docked = true;
 	var my_port_info = json["ship_port"]
 	var station_name = json["station_identifying_name"]
@@ -131,6 +137,10 @@ func json_sync_state(json):
 		#rotation_error = Global.angular_diff(global_rotation, expected_rotation
 		#print("expected rotation: ", rad2deg(expected_rotation), " actual rotation: ", rad2deg(global_rotation), " angular diff: ", rad2deg(rotation_error))
 		global_rotation = expected_rotation
+		
+		# If this is the player's ship, update the rotation of the compass needle
+		if is_player_ship:
+			get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
 		var expected_position = json_to_vec(json["global_pos"])
 		var expected_velocity = json_to_vec(json["velocity"])
 		var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
@@ -157,8 +167,16 @@ func _process(delta):
 			velocity += Vector2(0, -manu_engine_thrust).rotated(global_rotation) * delta
 		if tiller_left:
 			global_rotation -= rotation_power * delta #todo multiply by delta
+			
+			# If this is the player's ship, update the rotation of the compass needle
+			if is_player_ship:
+				get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
 		if tiller_right:
 			global_rotation += rotation_power * delta
+			
+			# If this is the player's ship, update the rotation of the compass needle
+			if is_player_ship:
+				get_tree().get_root().get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
 		global_position += velocity * delta
 		tick_count += 1
 		

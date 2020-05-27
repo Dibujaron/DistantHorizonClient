@@ -14,6 +14,7 @@ var initialized_ships = false
 var planets = {}
 var stations = {}
 var ships = {}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -67,7 +68,7 @@ func receive_ship_inputs_update(message):
 		
 func receive_ship_heartbeats(message):
 	var json_ships = message["ship_heartbeats"]
-		#todo handle removing ships better than this
+		#TODO handle removing ships better than this
 	var updated_ships = []
 	for ship_info in json_ships:
 		var ship_id = ship_info["id"]
@@ -111,6 +112,10 @@ func initialize_ships(message):
 	var pilot = $PlayerPilot
 	remove_child(pilot)
 	my_ship.add_child(pilot)
+	# Setting HUD to be visible now that they've actually joined
+	$GuiCanvas.get_node("HUD").visible = true
+	# Tell this ship that it's the player's so it can update the HUD
+	my_ship.is_player_ship = true
 	
 func init_ship(ship_info):
 	var ship_scene = ship_scenes[ship_info["type"]]
@@ -119,7 +124,7 @@ func init_ship(ship_info):
 	ships[ship_id] = ship
 	add_child(ship)
 	ship.json_init(ship_info)
-	
+
 func initialize_orbiters(message):
 	var player_id = message["player_id"]
 	var world_state = message["world_state"]
