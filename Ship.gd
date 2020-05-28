@@ -5,9 +5,10 @@ extends Area2D
 # var a = 2
 # var b = "text"
 #var rotation_speed = 0
+export var gravity_constant_fudge = 10.0
 export var gravity_constant_base = 6.67408
 export var gravity_constant_exp = -11.0
-var gravity_constant = gravity_constant_base * pow(10, gravity_constant_exp)
+var gravity_constant = gravity_constant_base * pow(10, gravity_constant_exp) * gravity_constant_fudge
 var main_engines
 var port_thrusters
 var starboard_thrusters
@@ -25,6 +26,9 @@ var tiller_left = false
 var tiller_right = false
 var docked = false
 var currently_inside_planet = false
+var manually_controlled = true
+var auto_control_script = {} #integer indexed map of steps.
+var next_auto_step = 0 #next step to execute
 
 var main_engine_thrust = 0.0
 var manu_engine_thrust = 0.0
@@ -96,7 +100,9 @@ var left_press_time = 0
 var left_press_start_tick = 0
 var left_press_start_phys_tick = 0
 func json_update_inputs(json):
+	print("got inputs back from server")
 	main_engines_active = json["main_engines"]
+	print("main engines: ", main_engines_active)
 	port_thrusters_active = json["port_thrusters"]
 	starboard_thrusters_active = json["stbd_thrusters"]
 	fore_thrusters_active = json["fore_thrusters"]
@@ -128,15 +134,21 @@ func json_sync_state(json):
 	var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
 	if not docked:
 		var expected_rotation = json["rotation"]
-		#rotation_error = Global.angular_diff(global_rotation, expected_rotation
-		#print("expected rotation: ", rad2deg(expected_rotation), " actual rotation: ", rad2deg(global_rotation), " angular diff: ", rad2deg(rotation_error))
 		global_rotation = expected_rotation
 		var expected_position = json_to_vec(json["global_pos"])
 		var expected_velocity = json_to_vec(json["velocity"])
 		var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
 		var true_pos_after_time = global_position + (velocity * sync_delta)
 		var velocity_adj = expected_pos_after_time - true_pos_after_time
-		#global_position = expected_position
+		var manually_controlled_setting = json["manually_controlled"]
+		if manually_controlled_setting and not manually_controlled:
+			auto_control_script.clear() #disabled autocontrol, clear it out.
+		manually_controlled = manually_controlled_setting
+		if not manually_controlled:
+			var script_additions = json["movement_script"]
+			for step_index in script_additions.keys():
+				var step = script_additions[step_index]
+				auto_control_script[step_index] = step
 		velocity += velocity_adj
 	last_sync_time = OS.get_ticks_msec()
 
@@ -144,7 +156,7 @@ var tick_count = 0
 var physics_tick_count = 0
 func _process(delta):
 	#only things where the tick rate doesn't matter
-	if not docked:
+	if not docked and manually_controlled:
 		if main_engines_active:
 			velocity += Vector2(0,-main_engine_thrust).rotated(global_rotation) * delta
 		if starboard_thrusters_active:
@@ -160,10 +172,19 @@ func _process(delta):
 		if tiller_right:
 			global_rotation += rotation_power * delta
 		global_position += velocity * delta
-		tick_count += 1
+	tick_count += 1
 		
 func _physics_process(delta):
-	velocity += get_gravity_acceleration() * delta * 50.0
+	if manually_controlled:
+		velocity += get_gravity_acceleration() * delta
+	else:
+		var step_index = next_auto_step
+		var step = auto_control_script[step_index]
+		rotation = step.rotation
+		velocity = step.velocity
+		auto_control_script.erase[step_index]
+		next_auto_step += 1
+
 	physics_tick_count += 1
 	
 func angular_diff(a, b):
