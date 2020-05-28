@@ -1,9 +1,27 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://WebSocketClient.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Space.gd" type="Script" id=2]
 [ext_resource path="res://PlayerPilot.tscn" type="PackedScene" id=3]
+[ext_resource path="res://sprites/hud/compass.png" type="Texture" id=4]
+[ext_resource path="res://sprites/hud/compass_needle.png" type="Texture" id=5]
 [ext_resource path="res://ParallaxBackground.tscn" type="PackedScene" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ), null ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="Space" type="Node2D"]
 script = ExtResource( 2 )
@@ -12,6 +30,31 @@ __meta__ = {
 }
 
 [node name="GuiCanvas" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="GridContainer" parent="GuiCanvas"]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -200.0
+margin_bottom = -150.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 100, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Compass" type="AnimatedSprite" parent="GuiCanvas/HUD"]
+position = Vector2( 49, 50 )
+z_index = 4096
+frames = SubResource( 1 )
+
+[node name="Needle" type="AnimatedSprite" parent="GuiCanvas/HUD/Compass"]
+frames = SubResource( 2 )
 
 [node name="ParallaxBackground" parent="." instance=ExtResource( 7 )]
 

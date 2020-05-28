@@ -1,7 +1,7 @@
 extends Node2D
 
 # Declare member variables here. Examples:
-# var a = 2
+# var a = 2mmmmmmmmmmmmmmmmmmmmmmmmmmm
 # var b = "text"zzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 
 export var socket_url = "ws://23.254.142.198:25611/ws/"
