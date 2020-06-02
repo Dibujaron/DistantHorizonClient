@@ -89,6 +89,7 @@ func _process(delta):
 		socket_client.send_message(JSON.print(dict))
 		
 	if Input.is_action_just_pressed("ui_dock"):
+		print("attempting dock.")
 		var dict = {}
 		dict["message_type"] = "dock_or_undock"
 		socket_client.send_message(JSON.print(dict))

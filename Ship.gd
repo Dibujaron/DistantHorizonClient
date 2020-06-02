@@ -26,7 +26,6 @@ var tiller_left = false
 var tiller_right = false
 var docked = false
 var currently_inside_planet = false
-var manually_controlled = true
 var auto_control_script = {} #integer indexed map of steps.
 var next_auto_step = 0 #next step to execute
 
@@ -106,9 +105,7 @@ var left_press_time = 0
 var left_press_start_tick = 0
 var left_press_start_phys_tick = 0
 func json_update_inputs(json):
-	print("got inputs back from server")
 	main_engines_active = json["main_engines"]
-	print("main engines: ", main_engines_active)
 	port_thrusters_active = json["port_thrusters"]
 	starboard_thrusters_active = json["stbd_thrusters"]
 	fore_thrusters_active = json["fore_thrusters"]
@@ -139,8 +136,9 @@ var last_sync_time = 0.0
 func json_sync_state(json):
 	var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
 	if not docked:
-		var expected_rotation = json["rotation"]
-		global_rotation = expected_rotation
+		if manually_controlled(): #this shouldn't only be in manual mode
+			var expected_rotation = json["rotation"]
+			global_rotation = expected_rotation
 		
 		# If this is the player's ship, update the rotation of the compass needle
 		if is_player_ship:
@@ -150,60 +148,82 @@ func json_sync_state(json):
 		var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
 		var true_pos_after_time = global_position + (velocity * sync_delta)
 		var velocity_adj = expected_pos_after_time - true_pos_after_time
-		var manually_controlled_setting = json["manually_controlled"]
-		if manually_controlled_setting and not manually_controlled:
-			auto_control_script.clear() #disabled autocontrol, clear it out.
-		manually_controlled = manually_controlled_setting
-		if not manually_controlled:
+		velocity += velocity_adj
+
+		if json.has("movement_script"):
 			var script_additions = json["movement_script"]
+			var add_count = 0
+			var dupe_count = 0
 			for step_index in script_additions.keys():
 				var step = script_additions[step_index]
+				if auto_control_script.has(step_index):
+					dupe_count += 1
+				else:
+					add_count += 1
 				auto_control_script[step_index] = step
-		velocity += velocity_adj
+			if (add_count > 0 or dupe_count > 0):
+				print("added ", add_count, " steps to navigation script and got ", dupe_count, " duplicates")
+		if auto_control_script.empty():
+			next_auto_step = 0
+
 	last_sync_time = OS.get_ticks_msec()
 
 var tick_count = 0
 var physics_tick_count = 0
 func _process(delta):
 	#only things where the tick rate doesn't matter
-	if not docked and manually_controlled:
-		if main_engines_active:
-			velocity += Vector2(0,-main_engine_thrust).rotated(global_rotation) * delta
-		if starboard_thrusters_active:
-			velocity += Vector2(-manu_engine_thrust, 0).rotated(global_rotation) * delta
-		if port_thrusters_active:
-			velocity += Vector2(manu_engine_thrust, 0).rotated(global_rotation) * delta
-		if fore_thrusters_active:
-			velocity += Vector2(0, manu_engine_thrust).rotated(global_rotation) * delta
-		if aft_thrusters_active:
-			velocity += Vector2(0, -manu_engine_thrust).rotated(global_rotation) * delta
-		if tiller_left:
-			global_rotation -= rotation_power * delta #todo multiply by delta
-			
-			# If this is the player's ship, update the rotation of the compass needle
-			if is_player_ship:
-				get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
-		if tiller_right:
-			global_rotation += rotation_power * delta
-			
-			# If this is the player's ship, update the rotation of the compass needle
-			if is_player_ship:
-				get_tree().get_root().get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
+	if not docked:
+		if manually_controlled():
+			if main_engines_active:
+				velocity += Vector2(0,-main_engine_thrust).rotated(global_rotation) * delta
+			if starboard_thrusters_active:
+				velocity += Vector2(-manu_engine_thrust, 0).rotated(global_rotation) * delta
+			if port_thrusters_active:
+				velocity += Vector2(manu_engine_thrust, 0).rotated(global_rotation) * delta
+			if fore_thrusters_active:
+				velocity += Vector2(0, manu_engine_thrust).rotated(global_rotation) * delta
+			if aft_thrusters_active:
+				velocity += Vector2(0, -manu_engine_thrust).rotated(global_rotation) * delta
+			if tiller_left:
+				global_rotation -= rotation_power * delta #todo multiply by delta
+				
+				# If this is the player's ship, update the rotation of the compass needle
+				if is_player_ship:
+					get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
+			if tiller_right:
+				global_rotation += rotation_power * delta
+				
+				# If this is the player's ship, update the rotation of the compass needle
+				if is_player_ship:
+					get_tree().get_root().get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
 		global_position += velocity * delta
 	tick_count += 1
 		
 func _physics_process(delta):
-	if manually_controlled:
+	if auto_control_script.empty(): # manually controlled
 		velocity += get_gravity_acceleration() * delta
 	else:
-		var step_index = next_auto_step
-		var step = auto_control_script[step_index]
-		rotation = step.rotation
-		velocity = step.velocity
-		auto_control_script.erase[step_index]
-		next_auto_step += 1
+		if docked:
+			next_auto_step = 0
+			auto_control_script.clear()
+		else:
+			var step_index = next_auto_step
+			var step_key = str(step_index)
+			if auto_control_script.has(step_key):
+				var step = auto_control_script[step_key]
+				global_rotation = step.rotation
+				#global_position = json_to_vec(step.global_position)
+				velocity = json_to_vec(step.velocity)
+				auto_control_script.erase(step_key)
+				next_auto_step += 1
+			else:
+				print("Error attempted to get auto control index ", step_key, " but key not found in script")
+				print("script has ", auto_control_script.size(), " keys: [", auto_control_script.keys().sort(), "]")
 
 	physics_tick_count += 1
+	
+func manually_controlled():
+	return auto_control_script.empty()
 	
 func angular_diff(a, b):
 	var diff = rad2deg(b) - rad2deg(a)
