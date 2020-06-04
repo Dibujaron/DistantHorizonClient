@@ -11,3 +11,4 @@
 
 [node name="WelcomeScreen" parent="ParallaxBackground/CanvasLayer" instance=ExtResource( 2 )]
 anchor_bottom = 0.12
+margin_bottom = 405.0

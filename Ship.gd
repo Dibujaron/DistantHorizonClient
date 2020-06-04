@@ -163,7 +163,12 @@ func json_sync_state(json):
 				print("added ", add_count, " steps to navigation script and got ", dupe_count, " duplicates")
 		if auto_control_script.empty():
 			next_auto_step = 0
-
+	else:
+		var expected_position = json_to_vec(json["global_pos"])
+		global_position = expected_position
+		var expected_rotation = json["rotation"]
+		global_rotation = expected_rotation
+		velocity = Vector2(0,0)
 	last_sync_time = OS.get_ticks_msec()
 
 var tick_count = 0
@@ -217,7 +222,7 @@ func _physics_process(delta):
 			if auto_control_script.has(step_key):
 				var step = auto_control_script[step_key]
 				global_rotation = step.rotation
-				#global_position = json_to_vec(step.global_position)
+				global_position = json_to_vec(step.global_position)
 				velocity = json_to_vec(step.velocity)
 				auto_control_script.erase(step_key)
 				next_auto_step += 1
