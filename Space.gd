@@ -42,7 +42,6 @@ func receive_trade_menu_close(message):
 		
 func receive_initial_ships(message):
 	if not initialized_ships:
-		print("initializing ships")
 		initialize_ships(message)
 		initialized_ships = true
 	else:
@@ -69,25 +68,25 @@ func receive_ship_inputs_update(message):
 func receive_ship_heartbeats(message):
 	var json_ships = message["ship_heartbeats"]
 		#TODO handle removing ships better than this
-	var updated_ships = []
+	#var updated_ships = []
 	for ship_info in json_ships:
 		var ship_id = ship_info["id"]
 		if ships.has(ship_id):
 			var ship = ships[ship_id]
 			ship.json_sync_state(ship_info)
 		else:
-			init_ship(ship_info)
-		updated_ships.append(ship_id)
+			print("got heartbeat for unitialized ship ", ship_id)
+		#updated_ships.append(ship_id)
 		
-	var removed_ships = []
-	for ship_id in ships:
-		if not updated_ships.has(ship_id):
-			removed_ships.append(ship_id)
+	#var removed_ships = []
+	#for ship_id in ships:
+	#	if not updated_ships.has(ship_id):
+	#		removed_ships.append(ship_id)
 	
-	for ship_id in removed_ships:
-		var ship = ships[ship_id]
-		ship.get_parent().remove_child(ship)
-		ships.erase(ship_id)
+	#for ship_id in removed_ships:
+	#	var ship = ships[ship_id]
+	#	ship.get_parent().remove_child(ship)
+	#	ships.erase(ship_id)
 		
 func json_update_orbiters(message):
 	var world_state = message["world_state"]
@@ -124,6 +123,7 @@ func init_ship(ship_info):
 	ships[ship_id] = ship
 	add_child(ship)
 	ship.json_init(ship_info)
+	print("initialized ship ", ship_id, " there are ", ships.size(), " ships registered.")
 
 func initialize_orbiters(message):
 	var player_id = message["player_id"]

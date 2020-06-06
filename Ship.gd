@@ -97,6 +97,7 @@ func json_receive_docked(json):
 	docked_to_port = station_port
 	
 func json_receive_undocked(json):
+	json_sync_state(json)
 	var expected_rotation = json["rotation"]
 	global_rotation = expected_rotation
 	var expected_position = json_to_vec(json["global_pos"])
@@ -153,12 +154,15 @@ func json_sync_state(json):
 			var add_count = 0
 			var dupe_count = 0
 			for step_index in script_additions.keys():
-				var step = script_additions[step_index]
-				if auto_control_script.has(step_index):
-					dupe_count += 1
+				if step_index == "current_step":
+					next_auto_step = script_additions[step_index]
 				else:
-					add_count += 1
-				auto_control_script[step_index] = step
+					var step = script_additions[step_index]
+					if auto_control_script.has(step_index):
+						dupe_count += 1
+					else:
+						add_count += 1
+					auto_control_script[step_index] = step
 			if (add_count > 0 or dupe_count > 0):
 				print("added ", add_count, " steps to navigation script and got ", dupe_count, " duplicates")
 		if auto_control_script.empty():
