@@ -67,7 +67,12 @@ func json_init(json):
 	global_rotation = json["rotation"]
 	global_position = json_to_vec(json["global_pos"])
 	velocity = json_to_vec(json["velocity"])
-	
+	var primary_color = json_to_color(json["primary_color"])
+	var secondary_color = json_to_color(json["secondary_color"])
+	print(primary_color)
+	print(secondary_color)
+	_set_primary_color(json_to_color(json["primary_color"]))
+	_set_secondary_color(json_to_color(json["secondary_color"]))
 	# If this is the player's ship, update the rotation of the compass needle
 	if is_player_ship:
 			get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
@@ -247,6 +252,9 @@ func angular_diff(a, b):
 func json_to_vec(json):
 	return Vector2(json["x"],json["y"])
 
+func json_to_color(json):
+	return Color8(json["r"], json["g"], json["b"])
+	
 func get_gravity_acceleration():
 	var total_acceleration = Vector2()
 	var bodies = get_tree().get_nodes_in_group("Planets")
