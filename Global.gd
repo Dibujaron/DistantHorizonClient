@@ -35,11 +35,13 @@ func get_gravity_acceleration(pos):
 	var total_acceleration = Vector2()
 	var bodies = get_tree().get_nodes_in_group("Planets")
 	
-	var inside_any_planet = false
 	for body in bodies:
 		var body_mass = body.mass
 		var body_position = body.global_position
+		var min_alt_squared = pow(body.min_orbital_altitude,2)
 		var r_squared = abs((body_position - pos).length_squared())
+		if(r_squared < min_alt_squared):
+			r_squared = min_alt_squared
 		var f_magnitude = gravity_constant * body_mass / r_squared
 		var acceleration = (body_position - pos).normalized() * f_magnitude
 		total_acceleration = total_acceleration + acceleration

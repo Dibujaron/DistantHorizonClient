@@ -39,7 +39,7 @@ func step(delta):
 	var totalThrust = requiredAccel + gravityCounter
 	var rotation = totalThrust.angle() + deg2rad(90)
 	current_offset = newTime
-	return [pos, rotation, velocity]
+	return [pos, rotation, velocity, totalThrust]
 	
 func t_for_time_offset(timeOffset):
 	return timeOffset / self.duration

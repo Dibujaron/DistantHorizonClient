@@ -12,9 +12,9 @@ var velocity_controller = PIDController.instance()
 var last_update = 0.0
 func _ready():
 	add_child(velocity_controller)
-	velocity_controller._Kp = 0.1
-	velocity_controller._Kd = 0.1
-	velocity_controller._Ki = 0.1
+	velocity_controller._Kp = 0.5#0.5#0.1
+	velocity_controller._Kd = 0.25#0.1
+	velocity_controller._Ki = 0.05#0.5 
 	
 func json_init(orbiter_info):
 	orbiter_name = orbiter_info["name"]
@@ -31,6 +31,8 @@ func json_update(orbiter_info):
 	expected_angular_pos = orbiter_info["angular_pos"]
 	var angular_pos = position.angle()
 	var current_error = Global.angular_diff(expected_angular_pos, angular_pos)
+	if(orbiter_name == "Stn_Innerstellar Launch" && OS.get_ticks_msec() % 100000 == 0):
+		print("angular error: ", rad2deg(current_error))
 	if elapsed_time > 0:
 		var delta = velocity_controller.calculate(current_error, elapsed_time)
 		current_angular_velocity = base_angular_velocity + delta
