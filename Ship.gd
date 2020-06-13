@@ -98,6 +98,16 @@ func json_receive_docked(json):
 			#position = station_port_relative + (my_port_relative * -1.0).rotated(rotation)
 	docked_from_port = my_port_info
 	docked_to_port = station_port
+	for engine in main_engines:
+		engine.set_enabled(false)
+	for thruster in port_thrusters:
+		thruster.set_enabled(false)
+	for thruster in starboard_thrusters:
+		thruster.set_enabled(false)
+	for thruster in fore_thrusters:
+		thruster.set_enabled(false)
+	for thruster in aft_thrusters:
+		thruster.set_enabled(false)
 	
 func json_receive_undocked(json):
 	json_sync_state(json)
@@ -161,10 +171,10 @@ func json_sync_state(json):
 				nav_target_pos = targ_pos
 				nav_target_vel = targ_vel
 				nav_bezier = Bezier.new()
-				nav_bezier.setup(global_position, velocity, nav_target_pos, nav_target_vel)
-			#var nav_target_vel = Vector2(0,0)
-			#var nav_target_pos = Vector2(0,0)
-			#var nav_bezier = null
+				nav_bezier.setup(global_position, velocity, nav_target_pos, nav_target_vel, main_engine_thrust)
+			var nav_target_vel = Vector2(0,0)
+			var nav_target_pos = Vector2(0,0)
+			var nav_bezier = null
 		else:
 			global_rotation = expected_rotation
 			var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
@@ -191,7 +201,7 @@ func _process(delta):
 	else:
 		if navigating:
 			if nav_bezier.has_next_step(delta):
-				var result = nav_bezier.step(delta)
+				var result = nav_bezier.step(delta, global_position)
 				global_position = result[0]
 				global_rotation = result[1]
 				velocity = result[2]
@@ -199,6 +209,7 @@ func _process(delta):
 				var enable = thrust.length_squared() > (0.1 * 0.1)
 				for engine in main_engines:
 					engine.set_enabled(enable)
+			pass
 		else:
 			if main_engines_active:
 				velocity += Vector2(0,-main_engine_thrust).rotated(global_rotation) * delta

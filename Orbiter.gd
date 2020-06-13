@@ -31,7 +31,7 @@ func json_update(orbiter_info):
 	expected_angular_pos = orbiter_info["angular_pos"]
 	var angular_pos = position.angle()
 	var current_error = Global.angular_diff(expected_angular_pos, angular_pos)
-	if(orbiter_name == "Stn_Innerstellar Launch" && OS.get_ticks_msec() % 100000 == 0):
+	if(orbiter_name == "Stn_Innerstellar Launch" && OS.get_ticks_msec() % 10000 == 0):
 		print("angular error: ", rad2deg(current_error))
 	if elapsed_time > 0:
 		var delta = velocity_controller.calculate(current_error, elapsed_time)

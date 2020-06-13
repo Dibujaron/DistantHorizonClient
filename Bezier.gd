@@ -6,77 +6,97 @@ var endPos: Vector2
 var endVel: Vector2
 var length
 var duration
-func setup(startPos: Vector2, startVel: Vector2, endPos: Vector2, endVel: Vector2):
+var resolution = 100
+var mainThrust
+var distToFlip
+var timeToFlip
+func setup(startPos: Vector2, startVel: Vector2, endPos: Vector2, endVel: Vector2, mainEngineThrust):
 	self.startPos = startPos
 	self.startVel = startVel
 	self.endPos = endPos
 	self.endVel = endVel
+	self.mainThrust = mainEngineThrust
 	self.length = compute_length()
-	self.duration = compute_duration()
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+	self.distToFlip = ((mainThrust * self.length) + (endVel.length() - startVel.length())) / (mainThrust * 2)
+	self.timeToFlip = travel_time(self.startVel.length(), self.mainThrust, distToFlip)
+	var decelDist = self.length - distToFlip
+	var decelTime = travel_time(self.endVel.length(), self.mainThrust, decelDist)
+	self.duration = self.timeToFlip + decelTime
 
-var current_offset = 0.0
+var timeOffsetFromStart = 0.0
 func has_next_step(delta):
-	var newT = t_for_time_offset(current_offset + delta)
-	return newT <= 1.0
+	var new_t = timeOffsetFromStart + delta
+	return new_t <= self.duration
 
-func step(delta):
-	var newTime = current_offset + delta
-	var newT = t_for_time_offset(newTime)
-	var pos = get_coordinates_at(newT)
-	var futureT = newT + t_for_time_offset(0.01)
-	var futurePos = get_coordinates_at(futureT)
-	var velocity = (futurePos - pos) * 100.0
-	var pastT = newT + t_for_time_offset(-0.01)
-	var pastPos = get_coordinates_at(pastT)
-	var pastVelocity = (pos - pastPos) * 100.0
-	var requiredAccelForFiftiethOfSecond = velocity - pastVelocity
-	var requiredAccel = requiredAccelForFiftiethOfSecond * 50.0
-	var gravity = Global.get_gravity_acceleration(pos)
-	var gravityCounter = gravity * -1.0
+func step(delta, priorPosition):
+	var newTime = timeOffsetFromStart + delta
+	var state = state_at_time(newTime, delta, priorPosition)
+	timeOffsetFromStart = newTime
+	return state
+
+	
+func state_at_time(time, delta, priorPosition):
+	var startSpeed = startVel.length()
+	var maxAccel = self.mainThrust
+	var accelTime = time if time < self.timeToFlip else timeToFlip
+	var decelTime = time - timeToFlip if time > timeToFlip else 0.0
+	var accelDist = startSpeed * accelTime + 0.5 * maxAccel * accelTime * accelTime
+	var speedAtFlip = sqrt(startSpeed * startSpeed + 2 * maxAccel * accelDist)
+	var decelDist = speedAtFlip * decelTime + 0.5 * -maxAccel * decelTime * decelTime
+	var totalDist = accelDist + decelDist
+	var t = t_for_distance(totalDist)
+	var newPosition = get_coordinates_at(t)
+	var newVelocity = (newPosition - priorPosition) * delta
+	var gravity = Global.get_gravity_acceleration(newPosition)
+	var gravityCounter = gravity * - 1.0
+	var tangent = newVelocity.normalized()
+	var accelVec = tangent * maxAccel
+	var requiredAccel = accelVec if time < timeToFlip else accelVec * -1.0
 	var totalThrust = requiredAccel + gravityCounter
-	var rotation = totalThrust.angle() + deg2rad(90)
-	current_offset = newTime
-	return [pos, rotation, velocity, totalThrust]
+	var newRotation = totalThrust.angle() + deg2rad(90)
+	return [newPosition, newRotation, newVelocity, totalThrust]
 	
-func t_for_time_offset(timeOffset):
-	return timeOffset / self.duration
-
-
-func compute_duration():
-	var a = abs(endVel.length() - startVel.length())
-	var u = startVel.length()
-	var s = self.length
-	if a == 0:
-		if u != 0:
-			return s / u
-		else:
-			return INF
-	else:
-		var sqrt_res = sqrt((2 * a * s) + (u * u))
-		var r1 = -1 * ((sqrt_res + u) / a)
-		if r1 == NAN or r1 < 0:
-			var r2 = (sqrt_res - u) / a
-			if r2 == NAN or r2 < 0:
-				print("error no valid result for duration")
-			else:
-				return r2
-		else:
-			return r1
-	
+var coordinate_length_cache = []
 func compute_length():
-	var resolution = 100.0
-	var fraction = 1.0 / resolution
+	var fraction = 1.0 / self.resolution
 	var length = 0.0
 	var last_coordinates = self.startPos
+	coordinate_length_cache.append([last_coordinates, 0.0])
 	for i in range(0, resolution):
 		var coords = get_coordinates_at(fraction * i)
 		var dist = (coords - last_coordinates).length()
 		length += dist
+		coordinate_length_cache.append([coords, length])
 		last_coordinates = coords
 	return length
+
+func distance_for_t(t):
+	var lower = int(t * self.resolution)
+	var cached = coordinate_length_cache[lower]
+	var closest_cached_pos = cached[0] #position
+	var closest_cached_dist = cached[1] #distance
+	var pos_for_t = get_coordinates_at(t)
+	var dist_from_closest = (pos_for_t - closest_cached_pos).length()
+	return closest_cached_dist + dist_from_closest
+	
+func t_for_distance(distance_from_start):
+	var lower_limit = 0.0
+	var upper_limit = 1.0
+
+	var prior_m = 0.0
+	while lower_limit < upper_limit:
+		var m = (lower_limit + upper_limit) / 2.0
+		if m == prior_m:
+			return m
+		var dist_for_m = distance_for_t(m)
+		if dist_for_m < distance_from_start:
+			lower_limit = m
+		elif dist_for_m > distance_from_start:
+			upper_limit = m
+		else:
+			return m
+		prior_m = m
+	return lower_limit
 
 func get_coordinates_at(t: float):
 	return bezier_calc(startPos, startPos + startVel, endPos - endVel, endPos, t)
@@ -92,6 +112,22 @@ func bezier_calc(p0: Vector2, p1: Vector2, p2: Vector2, p3: Vector2, t: float):
 
 	var s = r0.linear_interpolate(r1, t)
 	return s
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
+func travel_time(startSpeed, accel, distance):
+	var a = accel
+	var d = distance
+	var v = startSpeed
+	if a == 0.0:
+		if v == 0.0:
+			return INF
+		else:
+			return d / v
+	else:
+		var sqrtRes = sqrt((2 * a * d) + (v * v))
+		var r1 = -1 * ((sqrtRes + v) / a)
+		if r1 == NAN || r1 < 0:
+			var r2 = (sqrtRes - v) / a
+			return r2 #could be nan or negative but no way to throw here so just let it go
+		else:
+			return r1
+				
