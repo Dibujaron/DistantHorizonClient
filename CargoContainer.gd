@@ -2,8 +2,8 @@ extends Node2D
 
 
 var enabled = false;
-export var color = "red"
 
+export var colors = [Color.red, Color.orange, Color.yellow, Color.blue, Color.green, Color.purple, Color.gray, Color.brown]
 func _ready():
 	add_to_group("CargoContainers")
 	$AnimatedSprite.play("empty")
@@ -12,7 +12,8 @@ func _ready():
 func enable():
 	if not enabled:
 		enabled = true
-		$AnimatedSprite.play(color)
+		$AnimatedSprite.play("full")
+		$AnimatedSprite.modulate = colors[randi() % colors.size()]
 	
 func disable():
 	if enabled:

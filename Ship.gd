@@ -41,6 +41,9 @@ var velocity = Vector2(0,0)
 var initialized = false
 var is_player_ship = false
 
+var hold_size = 0
+var hold_occupied = 0
+
 export var default_primary_color = Color.blue
 export var default_secondary_color = Color.white
 
@@ -66,6 +69,7 @@ func json_init(json):
 	rotation_error_adjust = rotation_power / 10
 	global_rotation = json["rotation"]
 	global_position = Global.json_to_vec(json["global_pos"])
+	hold_size = json["hold_size"]
 	velocity = Global.json_to_vec(json["velocity"])
 	var primary_color = Global.json_to_color(json["primary_color"])
 	var secondary_color = Global.json_to_color(json["secondary_color"])
@@ -148,6 +152,7 @@ var last_sync_time = 0.0
 func json_sync_state(json):
 	var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
 	navigating = json["navigating"]
+	hold_occupied = json["hold_occupied"]
 	if docked():
 		var expected_position = Global.json_to_vec(json["global_pos"])
 		global_position = expected_position
@@ -162,9 +167,6 @@ func json_sync_state(json):
 		if is_player_ship:
 			get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
 		if navigating:
-			#global_position = expected_position
-			#velocity = expected_velocity
-			#global_rotation = expected_rotation
 			var targ_vel = Global.json_to_vec(json["targ_velocity"])
 			var targ_pos = Global.json_to_vec(json["targ_position"])
 			if nav_target_vel != targ_vel or nav_target_pos != targ_pos:

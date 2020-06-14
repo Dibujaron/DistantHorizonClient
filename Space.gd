@@ -6,7 +6,8 @@ extends Node2D
 # var b = "text"
 export var ship_scenes = {
 	"phe.thumper": preload("res://Ship_PHE_Thumper.tscn"),
-	"rijay.mockingbird": preload("res://Ship_Rijay_Mockingbird.tscn")
+	"rijay.mockingbird": preload("res://Ship_Rijay_Mockingbird.tscn"),
+	"rijay.swallow": preload("res://Ship_Rijay_Swallow.tscn")
 }
 
 var initialized_orbiters = false

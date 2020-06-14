@@ -96,7 +96,7 @@ func _process(delta):
 	
 func zoom_in():
 	var camera = $Camera2D
-	if camera.zoom.x > 0.5:
+	if camera.zoom.x > 0.25:
 		camera.zoom = camera.zoom * zoom_factor	
 		var new_zoom = camera.zoom.x
 		var parallax_bg = get_tree().get_root().get_node("Space").get_node("ParallaxBackground")

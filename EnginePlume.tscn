@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://EnginePlume.gd" type="Script" id=1]
 [ext_resource path="res://sprites/effects/Plume_Small.png" type="Texture" id=2]
 [ext_resource path="res://sprites/effects/Plume_Large.png" type="Texture" id=3]
 [ext_resource path="res://sprites/effects/Plume_Tiny.png" type="Texture" id=4]
 [ext_resource path="res://sprites/effects/Plume_Larger.png" type="Texture" id=5]
+[ext_resource path="res://sprites/effects/Plume_XSmall.png" type="Texture" id=6]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -18,6 +19,11 @@ animations = [ {
 "name": "plume_large",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "plume_small",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "plume_larger",
@@ -28,9 +34,9 @@ animations = [ {
 "name": "plume_tiny",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "plume_small",
+"name": "plume_xsmall",
 "speed": 5.0
 } ]
 
@@ -40,4 +46,4 @@ anim_name = "plume_small"
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "plume_larger"
+animation = "plume_xsmall"

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/container_gray.png-b3a03ae2cb716a55fb52290867cf2f32.stex"
+path="res://.import/container_full.png-76c639ef9fd6dd4608fad763ffa39d4d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/ships/containers/container_gray.png"
-dest_files=[ "res://.import/container_gray.png-b3a03ae2cb716a55fb52290867cf2f32.stex" ]
+source_file="res://sprites/ships/containers/container_full.png"
+dest_files=[ "res://.import/container_full.png-76c639ef9fd6dd4608fad763ffa39d4d.stex" ]
 
 [params]
 

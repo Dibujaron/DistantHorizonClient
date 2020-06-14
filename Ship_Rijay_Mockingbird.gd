@@ -12,4 +12,4 @@ func _ready():
 	starboard_thrusters = [get_node("ManuSF"), get_node("ManuSA")]
 	fore_thrusters = [get_node("ManuFP"), get_node("ManuFS")]
 	aft_thrusters = [get_node("ManuAP"), get_node("ManuAS")]
-	docking_ports = [get_node("DockPortP"), get_node("DockPortS")]
+	docking_ports = []
