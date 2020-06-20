@@ -23,12 +23,8 @@ func init(trade_menu, commodity_info, hold_contents):
 	self.commodity_identifying_name = commodity_info["identifying_name"]
 	if not initialized:
 		print("has not beein initialized before")
-		get_node("VBoxContainer/BuyBox/Buy1").connect("pressed", self, "_buy_1_pressed")
-		get_node("VBoxContainer/BuyBox/Buy10").connect("pressed", self, "_buy_10_pressed")
-		get_node("VBoxContainer/BuyBox/Buy100").connect("pressed", self, "_buy_100_pressed")
-		get_node("VBoxContainer/SellBox/Sell1").connect("pressed", self, "_sell_1_pressed")
-		get_node("VBoxContainer/SellBox/Sell10").connect("pressed", self, "_sell_10_pressed")
-		get_node("VBoxContainer/SellBox/Sell100").connect("pressed", self, "_sell_100_pressed")
+		get_node("HBoxContainer/Buy").connect("pressed", self, "_buy_pressed")
+		get_node("HBoxContainer/Sell").connect("pressed", self, "_sell_pressed")
 	initialized = true
 	draw()
 
@@ -37,59 +33,36 @@ func update():
 	draw()
 	
 func draw():
-	var vbox = get_node("VBoxContainer")
-	var commodity_label = vbox.get_node("Commodity")
-	commodity_label.text = commodity_display_name
+	var hbox = get_node("HBoxContainer")
 	
-	var in_hold_box = vbox.get_node("InHoldBox")
-	var in_hold_ct = in_hold_box.get_node("InHoldCt")
+	var in_hold_ct = hbox.get_node("InHoldCt")
 	var quantity_in_hold = hold_contents[commodity_identifying_name]
 	in_hold_ct.text = str(quantity_in_hold)
 	
-	var for_sale_box = vbox.get_node("ForSaleBox")
-	var for_sale_ct = for_sale_box.get_node("ForSaleCt")
+	var commodity_box = hbox.get_node("CommodityBox")
+	var commodity_label = commodity_box.get_node("Commodity")
+	commodity_label.text = commodity_display_name	
+	var commodity_price = commodity_box.get_node("Price")
+	var price_val = commodity_info["buy_price"]
+	commodity_price.text = "$" + str(price_val)
+	
+	var for_sale_ct = hbox.get_node("ForSaleCt")
 	var quantity_for_sale = commodity_info["quantity_available"]
-	print("quantity available: ", quantity_for_sale)
 	for_sale_ct.text = str(quantity_for_sale)
 	
-	var sell_box = vbox.get_node("SellBox")
-	var sell_price_label = sell_box.get_node("SellPrice")
-	var sell_price_val = commodity_info["sell_price"]
-	sell_price_label.text = str(sell_price_val)
 	
-	var buy_box = vbox.get_node("BuyBox")
-	var buy_price_label = buy_box.get_node("BuyPrice")
-	var buy_price_val = commodity_info["buy_price"]
-	buy_price_label.text = str(buy_price_val)
-	
-func _buy_1_pressed():
+func _buy_pressed():
 	buy(1)
-	
-func _buy_10_pressed():
-	buy(10)
-	
-func _buy_100_pressed():
-	buy(100)
 	
 func buy(desired_num):
 	var client = get_tree().get_root().get_node("Space").get_node("WebSocketClient")
 	client.purchase_from_station(commodity_identifying_name, desired_num)
 	update()
 	
-func _sell_1_pressed():
+func _sell_pressed():
 	sell(1)
-	
-func _sell_10_pressed():
-	sell(10)
-	
-func _sell_100_pressed():
-	sell(100)
 
 func sell(desired_num):
 	var client = get_tree().get_root().get_node("Space").get_node("WebSocketClient")
 	client.sell_to_station(commodity_identifying_name, desired_num)
 	update()
-	#update the UI
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

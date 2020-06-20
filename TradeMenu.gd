@@ -34,6 +34,9 @@ func init(json):
 			instantiate_commodity_menu(commodity_info, hold_contents)
 	update() 
 	
+func instantiate_buy_menu(commodity_info, hold_contents):
+	pass
+	
 func instantiate_commodity_menu(commodity_info, hold_contents):
 	var menu_scene = load("res://CommodityMenu.tscn")
 	var vbox = get_node("HBoxContainer/VBoxContainer")

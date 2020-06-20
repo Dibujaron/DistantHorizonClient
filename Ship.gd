@@ -56,11 +56,13 @@ func docked():
 	
 func _set_primary_color(color):
 	$Color1.modulate = color
-	$Color1Shaded.modulate = Color.from_hsv(color.h, color.s, color.v - 0.1)
+	if has_node("Color1Shaded"):
+		$Color1Shaded.modulate = Color.from_hsv(color.h, color.s, color.v - 0.1)
 	
 func _set_secondary_color(color):
 	$Color2.modulate = color
-	$Color2Shaded.modulate = Color.from_hsv(color.h, color.s, color.v - 0.1)
+	if has_node("Color2Shaded"):
+		$Color2Shaded.modulate = Color.from_hsv(color.h, color.s, color.v - 0.1)
 	
 func json_init(json):
 	main_engine_thrust = json["main_engine_thrust"]

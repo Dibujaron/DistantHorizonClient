@@ -1,23 +1,16 @@
 extends Node2D
 
-# Declare member variables here. Examples:
-# var a = 2mmmmmmmmmmmmmmmmmmmmmmmmmmm
-# var b = "text"zzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-
-export var socket_url = "ws://23.254.142.198:25611/ws/"
-#export var socket_url = "ws://localhost:25611/ws/"
+#export var socket_url = "ws://23.254.142.198:25611/ws/"
+export var socket_url = "ws://localhost:25611/ws/"
 export (NodePath) var space_path
 onready var space = get_node(space_path)
-# Called when the node enters the scene tree for the first time.
+
 var _client = WebSocketClient.new()
 var connected = false
 func _ready():
 	_client.connect("connection_closed", self, "_closed")
 	_client.connect("connection_error", self, "_closed")
 	_client.connect("connection_established", self, "_connected")
-	# This signal is emitted when not using the Multiplayer API every time
-	# a full packet is received.
-	# Alternatively, you could check get_peer(1).get_available_packets() in a loop.
 	_client.connect("data_received", self, "_on_data")
 	print("attempting to connect to ", socket_url, "...")
 	_client.connect_to_url(socket_url)

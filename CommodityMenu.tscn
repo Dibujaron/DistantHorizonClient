@@ -1,141 +1,71 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://CommodityMenu.gd" type="Script" id=1]
+[ext_resource path="res://sprites/arrow.png" type="Texture" id=2]
+[ext_resource path="res://sprites/arrow_right.png" type="Texture" id=3]
 
 [node name="CommodityMenu" type="MarginContainer"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_right = 500.0
+margin_bottom = 20.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_right = 284.0
-margin_bottom = 116.0
-
-[node name="Label" type="Label" parent="VBoxContainer"]
-margin_right = 284.0
-margin_bottom = 14.0
-
-[node name="Commodity" type="Label" parent="VBoxContainer"]
-margin_top = 18.0
-margin_right = 284.0
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 387.0
 margin_bottom = 32.0
+custom_constants/separation = 50
+alignment = 1
+
+[node name="InHoldCt" type="Label" parent="HBoxContainer"]
+margin_top = 9.0
+margin_right = 24.0
+margin_bottom = 23.0
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buy" type="Button" parent="HBoxContainer"]
+margin_left = 74.0
+margin_right = 102.0
+margin_bottom = 32.0
+icon = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CommodityBox" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 152.0
+margin_right = 235.0
+margin_bottom = 32.0
+alignment = 1
+
+[node name="Commodity" type="Label" parent="HBoxContainer/CommodityBox"]
+margin_right = 83.0
+margin_bottom = 14.0
 text = "COMMODITY"
 
-[node name="InHoldBox" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 36.0
-margin_right = 284.0
-margin_bottom = 50.0
+[node name="Price" type="Label" parent="HBoxContainer/CommodityBox"]
+margin_top = 18.0
+margin_right = 83.0
+margin_bottom = 32.0
+text = "$1"
+align = 1
 
-[node name="InHoldWords" type="Label" parent="VBoxContainer/InHoldBox"]
-margin_right = 53.0
-margin_bottom = 14.0
-text = "In hold: "
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Sell" type="Button" parent="HBoxContainer"]
+margin_left = 285.0
+margin_right = 313.0
+margin_bottom = 32.0
+icon = ExtResource( 3 )
 
-[node name="InHoldCt" type="Label" parent="VBoxContainer/InHoldBox"]
-margin_left = 57.0
-margin_right = 81.0
-margin_bottom = 14.0
+[node name="ForSaleCt" type="Label" parent="HBoxContainer"]
+margin_left = 363.0
+margin_top = 9.0
+margin_right = 387.0
+margin_bottom = 23.0
 text = "100"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="ForSaleBox" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 54.0
-margin_right = 284.0
-margin_bottom = 68.0
-
-[node name="ForSaleWords" type="Label" parent="VBoxContainer/ForSaleBox"]
-margin_right = 54.0
-margin_bottom = 14.0
-text = "For Sale:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ForSaleCt" type="Label" parent="VBoxContainer/ForSaleBox"]
-margin_left = 58.0
-margin_right = 82.0
-margin_bottom = 14.0
-text = "100"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BuyBox" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 72.0
-margin_right = 284.0
-margin_bottom = 92.0
-
-[node name="BuyPriceWords" type="Label" parent="VBoxContainer/BuyBox"]
-margin_top = 3.0
-margin_right = 76.0
-margin_bottom = 17.0
-text = "Buy price: $"
-
-[node name="BuyPrice" type="Label" parent="VBoxContainer/BuyBox"]
-margin_left = 80.0
-margin_top = 3.0
-margin_right = 104.0
-margin_bottom = 17.0
-text = "100"
-
-[node name="Buy1" type="Button" parent="VBoxContainer/BuyBox"]
-margin_left = 108.0
-margin_right = 156.0
-margin_bottom = 20.0
-text = "Buy 1"
-
-[node name="Buy10" type="Button" parent="VBoxContainer/BuyBox"]
-margin_left = 160.0
-margin_right = 216.0
-margin_bottom = 20.0
-text = "Buy 10"
-
-[node name="Buy100" type="Button" parent="VBoxContainer/BuyBox"]
-margin_left = 220.0
-margin_right = 284.0
-margin_bottom = 20.0
-text = "Buy 100"
-
-[node name="SellBox" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 96.0
-margin_right = 284.0
-margin_bottom = 116.0
-
-[node name="SellPriceWords" type="Label" parent="VBoxContainer/SellBox"]
-margin_top = 3.0
-margin_right = 75.0
-margin_bottom = 17.0
-text = "Sell price: $"
-
-[node name="SellPrice" type="Label" parent="VBoxContainer/SellBox"]
-margin_left = 79.0
-margin_top = 3.0
-margin_right = 103.0
-margin_bottom = 17.0
-text = "100"
-
-[node name="Sell1" type="Button" parent="VBoxContainer/SellBox"]
-margin_left = 107.0
-margin_right = 154.0
-margin_bottom = 20.0
-text = "Sell 1"
-
-[node name="Sell10" type="Button" parent="VBoxContainer/SellBox"]
-margin_left = 158.0
-margin_right = 213.0
-margin_bottom = 20.0
-text = "Sell 10"
-
-[node name="Sell100" type="Button" parent="VBoxContainer/SellBox"]
-margin_left = 217.0
-margin_right = 280.0
-margin_bottom = 20.0
-text = "Sell 100"
