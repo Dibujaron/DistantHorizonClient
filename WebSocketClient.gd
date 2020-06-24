@@ -67,7 +67,12 @@ func sell_to_station(commodity_name, quantity):
 	dict["commodity_name"] = commodity_name
 	dict["quantity"] = quantity
 	send_message(JSON.print(dict))
-		
+	
+func undock():
+	var dict = {}
+	dict["message_type"] = "undock"
+	send_message(JSON.print(dict))
+	
 func send_message(message):
 	var err = _client.get_peer(1).put_packet(str(message).to_utf8())
 	

@@ -91,8 +91,10 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_dock"):
 		print("attempting dock.")
 		var dict = {}
-		dict["message_type"] = "dock_or_undock"
+		dict["message_type"] = "dock"
 		socket_client.send_message(JSON.print(dict))
+	if Input.is_action_just_pressed("ui_undock"):
+		socket_client.undock()
 	
 func zoom_in():
 	var camera = $Camera2D

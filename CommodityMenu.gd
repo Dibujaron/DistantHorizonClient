@@ -22,9 +22,11 @@ func init(trade_menu, commodity_info, hold_contents):
 	self.commodity_display_name = commodity_info["display_name"]
 	self.commodity_identifying_name = commodity_info["identifying_name"]
 	if not initialized:
-		print("has not beein initialized before")
+		print("has not been initialized before")
 		get_node("HBoxContainer/Buy").connect("pressed", self, "_buy_pressed")
 		get_node("HBoxContainer/Sell").connect("pressed", self, "_sell_pressed")
+		var path = "res://sprites/items/" + self.commodity_identifying_name + ".png"
+		get_node("HBoxContainer/CommodityBox/ImgContainer/ItemImg").texture = load(path)
 	initialized = true
 	draw()
 
@@ -43,7 +45,7 @@ func draw():
 	var commodity_label = commodity_box.get_node("Commodity")
 	commodity_label.text = commodity_display_name	
 	var commodity_price = commodity_box.get_node("Price")
-	var price_val = commodity_info["buy_price"]
+	var price_val = commodity_info["price"]
 	commodity_price.text = "$" + str(price_val)
 	
 	var for_sale_ct = hbox.get_node("ForSaleCt")

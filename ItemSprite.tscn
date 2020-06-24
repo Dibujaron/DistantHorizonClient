@@ -1,0 +1,82 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://sprites/items/food.png" type="Texture" id=1]
+[ext_resource path="res://sprites/items/copper.png" type="Texture" id=2]
+[ext_resource path="res://sprites/items/thorium_b.png" type="Texture" id=3]
+[ext_resource path="res://sprites/items/munitions.png" type="Texture" id=4]
+[ext_resource path="res://sprites/items/rush.png" type="Texture" id=5]
+[ext_resource path="res://sprites/items/encrypted_data.png" type="Texture" id=6]
+[ext_resource path="res://sprites/items/hydrogen.png" type="Texture" id=7]
+[ext_resource path="res://sprites/items/luxuries.png" type="Texture" id=8]
+[ext_resource path="res://sprites/items/thorium.png" type="Texture" id=9]
+[ext_resource path="res://sprites/items/iron.png" type="Texture" id=10]
+[ext_resource path="res://sprites/items/biological_cells.png" type="Texture" id=11]
+[ext_resource path="res://sprites/items/superconductor.png" type="Texture" id=12]
+[ext_resource path="res://sprites/items/machinery.png" type="Texture" id=13]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "munitions",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "rush",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "superconductor",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 9 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "thorium",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "biological_cells",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "food",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "luxuries",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "encrypted_data",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "copper_ore",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "iron_ore",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "hydrogen",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 13 ) ],
+"loop": true,
+"name": "machinery",
+"speed": 5.0
+} ]
+
+[node name="ItemSprite" type="AnimatedSprite"]
+frames = SubResource( 1 )
+animation = "thorium"
