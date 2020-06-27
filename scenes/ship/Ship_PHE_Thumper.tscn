@@ -1,0 +1,210 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://scenes/ship/DockingPortMale.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/ship/CargoContainer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ship/EnginePlume.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ship/Ship_PHE_Thumper.gd" type="Script" id=4]
+[ext_resource path="res://sprites/ships/PHE/Thumper/const_color.png" type="Texture" id=5]
+[ext_resource path="res://sprites/ships/PHE/Thumper/c1.png" type="Texture" id=6]
+[ext_resource path="res://sprites/ships/PHE/Thumper/c2.png" type="Texture" id=7]
+[ext_resource path="res://sprites/ships/PHE/Thumper/c2_shaded.png" type="Texture" id=8]
+[ext_resource path="res://sprites/ships/PHE/Thumper/c1_shaded.png" type="Texture" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 10, 20.7196 )
+
+[node name="Ship_PHE_Thumper" type="Area2D"]
+z_index = 1
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+default_primary_color = Color( 1, 0.415686, 0, 1 )
+
+[node name="Color1Shaded" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+
+[node name="Color1" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+
+[node name="Color2Shaded" type="AnimatedSprite" parent="."]
+frames = SubResource( 3 )
+
+[node name="Color2" type="AnimatedSprite" parent="."]
+frames = SubResource( 4 )
+
+[node name="ConstantColor" type="AnimatedSprite" parent="."]
+frames = SubResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 6 )
+
+[node name="EngineP" parent="." instance=ExtResource( 3 )]
+position = Vector2( -15, 34 )
+z_index = -1
+anim_name = "plume_larger"
+
+[node name="EngineS" parent="." instance=ExtResource( 3 )]
+position = Vector2( 15, 34 )
+z_index = -1
+anim_name = "plume_larger"
+
+[node name="ManuSA" parent="." instance=ExtResource( 3 )]
+position = Vector2( 22, 27 )
+rotation = -1.5708
+anim_name = "plume_tiny"
+
+[node name="ManuSF" parent="." instance=ExtResource( 3 )]
+position = Vector2( 20, -21 )
+rotation = -1.5708
+anim_name = "plume_tiny"
+
+[node name="ManuPF" parent="." instance=ExtResource( 3 )]
+position = Vector2( -19, -22 )
+rotation = 1.5708
+anim_name = "plume_tiny"
+
+[node name="ManuPA" parent="." instance=ExtResource( 3 )]
+position = Vector2( -21, 26 )
+rotation = 1.5708
+anim_name = "plume_tiny"
+
+[node name="ManuAP" parent="." instance=ExtResource( 3 )]
+position = Vector2( -3, 31 )
+anim_name = "plume_tiny"
+
+[node name="ManuAS" parent="." instance=ExtResource( 3 )]
+position = Vector2( 3, 31 )
+anim_name = "plume_tiny"
+
+[node name="ManuFP" parent="." instance=ExtResource( 3 )]
+position = Vector2( -14, 18 )
+rotation = 3.14159
+anim_name = "plume_tiny"
+
+[node name="ManuFS" parent="." instance=ExtResource( 3 )]
+position = Vector2( 16, 18 )
+rotation = 3.14159
+anim_name = "plume_tiny"
+
+[node name="DockPortP" parent="." instance=ExtResource( 1 )]
+position = Vector2( -19, 26 )
+rotation = 1.5708
+port_name = "shp_port"
+
+[node name="DockPortS" parent="." instance=ExtResource( 1 )]
+position = Vector2( 20, 26 )
+rotation = -1.5708
+port_name = "shp_stbd"
+
+[node name="Container_B6" parent="." instance=ExtResource( 2 )]
+position = Vector2( -6, 10 )
+
+[node name="Container_C6" parent="." instance=ExtResource( 2 )]
+position = Vector2( 2, 10 )
+
+[node name="Container_B5" parent="." instance=ExtResource( 2 )]
+position = Vector2( -6, 4 )
+
+[node name="Container_C5" parent="." instance=ExtResource( 2 )]
+position = Vector2( 2, 4 )
+
+[node name="Container_B4" parent="." instance=ExtResource( 2 )]
+position = Vector2( -6, -2 )
+
+[node name="Container_C4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 2, -2 )
+
+[node name="Container_B3" parent="." instance=ExtResource( 2 )]
+position = Vector2( -6, -8 )
+
+[node name="Container_C3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 2, -8 )
+
+[node name="Container_B2" parent="." instance=ExtResource( 2 )]
+position = Vector2( -6, -14 )
+
+[node name="Container_C2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 2.06597, -14.1319 )
+
+[node name="Container_B1" parent="." instance=ExtResource( 2 )]
+position = Vector2( -6, -20 )
+
+[node name="Container_C1" parent="." instance=ExtResource( 2 )]
+position = Vector2( 2, -20 )
+
+[node name="Container_A6" parent="." instance=ExtResource( 2 )]
+position = Vector2( -12, 10 )
+
+[node name="Container_D6" parent="." instance=ExtResource( 2 )]
+position = Vector2( 8.132, 10 )
+
+[node name="Container_A5" parent="." instance=ExtResource( 2 )]
+position = Vector2( -12, 4 )
+
+[node name="Container_D5" parent="." instance=ExtResource( 2 )]
+position = Vector2( 8.132, 4 )
+
+[node name="Container_A4" parent="." instance=ExtResource( 2 )]
+position = Vector2( -12, -2 )
+
+[node name="Container_D4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 8.132, -2 )
+
+[node name="Container_A3" parent="." instance=ExtResource( 2 )]
+position = Vector2( -12, -8 )
+
+[node name="Container_D3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 8.132, -8 )
+
+[node name="Container_A2" parent="." instance=ExtResource( 2 )]
+position = Vector2( -12, -14 )
+
+[node name="Container_D2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 8, -14 )
+
+[node name="Container_A1" parent="." instance=ExtResource( 2 )]
+position = Vector2( -12, -20 )
+
+[node name="Container_D1" parent="." instance=ExtResource( 2 )]
+position = Vector2( 8, -20 )

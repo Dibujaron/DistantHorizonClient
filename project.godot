@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "PID_Controller",
 "language": "GDScript",
-"path": "res://PIDController.gd"
+"path": "res://scenes/orbiter/PIDController.gd"
 } ]
 _global_script_class_icons={
 "PID_Controller": ""
@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="DistantHorizon1"
-run/main_scene="res://WelcomeScene.tscn"
+run/main_scene="res://scenes/WelcomeScene.tscn"
 boot_splash/image="res://sprites/logo/logo_text_trans.png"
 boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
 config/icon="res://sprites/logo/logo.png"
@@ -29,7 +29,7 @@ config/windows_native_icon="res://sprites/logo/icon.ico"
 
 [autoload]
 
-Global="*res://Global.gd"
+Global="*res://scenes/Global.gd"
 
 [input]
 

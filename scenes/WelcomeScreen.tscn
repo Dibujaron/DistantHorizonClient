@@ -1,0 +1,124 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sprites/logo/logo_text_trans.png" type="Texture" id=1]
+[ext_resource path="res://scenes/WelcomeScreen.gd" type="Script" id=2]
+
+[node name="WelcomeScreen" type="MarginContainer"]
+margin_right = 368.0
+margin_bottom = 388.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 368.0
+margin_bottom = 477.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 368.0
+margin_bottom = 172.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+margin_right = 368.0
+margin_bottom = 172.0
+texture = ExtResource( 1 )
+
+[node name="Spacer" type="Label" parent="VBoxContainer"]
+margin_top = 176.0
+margin_right = 368.0
+margin_bottom = 190.0
+align = 1
+
+[node name="Welcome2" type="Label" parent="VBoxContainer"]
+margin_top = 194.0
+margin_right = 368.0
+margin_bottom = 259.0
+text = "- Fly your ship -
+- Dock at space stations -
+- Buy cargo for cheap -
+- Sell it elsewhere for a profit! -"
+align = 1
+
+[node name="Spacer2" type="Label" parent="VBoxContainer"]
+margin_top = 263.0
+margin_right = 368.0
+margin_bottom = 277.0
+align = 1
+
+[node name="Controls" type="Label" parent="VBoxContainer"]
+margin_top = 281.0
+margin_right = 368.0
+margin_bottom = 363.0
+text = "Controls:
+Fire main engines: [W] or [Space]
+Rotate ship: [A/D]
+Zoom camera: Mouse Wheel or [R/F] or [Q/E]
+Dock at station: [LSHIFT]"
+
+[node name="Spacer3" type="Label" parent="VBoxContainer"]
+margin_top = 367.0
+margin_right = 368.0
+margin_bottom = 381.0
+align = 1
+
+[node name="JoinButton" type="Button" parent="VBoxContainer"]
+margin_top = 385.0
+margin_right = 368.0
+margin_bottom = 405.0
+text = "Join Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Spacer4" type="Label" parent="VBoxContainer"]
+margin_top = 409.0
+margin_right = 368.0
+margin_bottom = 423.0
+align = 1
+
+[node name="Spacer6" type="Label" parent="VBoxContainer"]
+margin_top = 427.0
+margin_right = 368.0
+margin_bottom = 441.0
+align = 1
+
+[node name="Spacer5" type="Label" parent="VBoxContainer"]
+margin_top = 445.0
+margin_right = 368.0
+margin_bottom = 459.0
+align = 1
+
+[node name="CommunityButtons" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 463.0
+margin_right = 368.0
+margin_bottom = 477.0
+alignment = 1
+
+[node name="Discuss this project on" type="Label" parent="VBoxContainer/CommunityButtons"]
+margin_left = 53.0
+margin_right = 200.0
+margin_bottom = 14.0
+text = "Discuss this project on"
+
+[node name="Discord" type="LinkButton" parent="VBoxContainer/CommunityButtons"]
+margin_left = 204.0
+margin_right = 253.0
+margin_bottom = 14.0
+text = "Discord"
+
+[node name="or" type="Label" parent="VBoxContainer/CommunityButtons"]
+margin_left = 257.0
+margin_right = 270.0
+margin_bottom = 14.0
+text = "or"
+
+[node name="Reddit" type="LinkButton" parent="VBoxContainer/CommunityButtons"]
+margin_left = 274.0
+margin_right = 315.0
+margin_bottom = 14.0
+text = "Reddit"
