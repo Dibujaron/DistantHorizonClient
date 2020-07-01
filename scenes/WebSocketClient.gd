@@ -1,7 +1,7 @@
 extends Node2D
 
-export var socket_url = "ws://23.254.142.198:25611/ws/"
-#export var socket_url = "ws://localhost:25611/ws/"
+#export var socket_url = "ws://23.254.142.198:25611/ws/"
+export var socket_url = "ws://localhost:25611/ws/"
 export (NodePath) var space_path
 onready var space = get_node(space_path)
 

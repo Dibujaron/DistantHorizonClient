@@ -80,7 +80,10 @@ func json_init(json):
 	# If this is the player's ship, update the rotation of the compass needle
 	if is_player_ship:
 			get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
-	
+	var docked = json["docked"]
+	if docked:
+		var docked_info = json["docked_info"]
+		json_receive_docked(docked_info)
 	#json_update_inputs(json)
 	initialized = true
 
@@ -93,15 +96,6 @@ func json_receive_docked(json):
 		if station.orbiter_name == station_name:
 			docked_to_station = station
 			break
-			#var space_node = get_tree().get_root().get_node("Space")
-			#space_node.remove_child(self)
-			#station.add_child(self)
-			#velocity = Vector2(0,0)
-			#var station_port_relative = Global.json_to_vec(station_port["relative_position"])
-			#var my_port_relative = Global.json_to_vec(my_port_info["relative_position"])
-			#rotation = station_port["relative_rotation"] + my_port_info["relative_rotation"]
-			#rotation_error = 0.0
-			#position = station_port_relative + (my_port_relative * -1.0).rotated(rotation)
 	docked_from_port = my_port_info
 	docked_to_port = station_port
 	for engine in main_engines:

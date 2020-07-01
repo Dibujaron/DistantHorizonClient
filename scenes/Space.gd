@@ -1,16 +1,5 @@
 extends Node2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-export var ship_scenes = {
-	"phe.thumper": preload("res://scenes/ship/Ship_PHE_Thumper.tscn"),
-	"rijay.mockingbird": preload("res://scenes/ship/Ship_Rijay_Mockingbird.tscn"),
-	"rijay.swallow": preload("res://scenes/ship/Ship_Rijay_Swallow.tscn"),
-	"radi.kx6": preload("res://scenes/ship/Ship_RADI_kx6.tscn")
-}
-
 var initialized_orbiters = false
 var initialized_ships = false
 var planets = {}
@@ -32,7 +21,7 @@ func receive_trade_menu_info(message):
 	var canvas = $GuiCanvas
 	var menu = canvas.get_node("TradeMenu")
 	if not menu:
-		menu = load("res://scenes/trade/TradeMenu.tscn").instance()
+		menu = preload("res://scenes/station/trade/TradeMenu.tscn").instance()
 		canvas.add_child(menu)
 	menu.init(message)
 
@@ -119,7 +108,7 @@ func initialize_ships(message):
 	my_ship.is_player_ship = true
 	
 func init_ship(ship_info):
-	var ship_scene = ship_scenes[ship_info["type"]]
+	var ship_scene = Global.ship_scenes[ship_info["type"]]
 	var ship = ship_scene.instance()
 	var ship_id = ship_info["id"]
 	ships[ship_id] = ship
@@ -150,7 +139,7 @@ func initialize_orbiters(message):
 			add_child(planet)
 		planet.json_init(planet_info)
 		
-	var station_scene = preload("res://scenes/orbiter/TradeStation.tscn")
+	var station_scene = preload("res://scenes/station/Station.tscn")
 	for station_info in json_stations:
 		var station = station_scene.instance()
 		station.name = station_info["name"]

@@ -46,7 +46,7 @@ func instantiate_commodity_menu(commodity_info, hold_contents):
 	
 	var itemIcon = commodity_columns.get_node("ItemCol/" + commodity_identifying_name)
 	if itemIcon == null:
-		itemIcon = load("res://scenes/trade/CommodityIconInfo.tscn").instance()
+		itemIcon = preload("res://scenes/station/trade/CommodityIconInfo.tscn").instance()
 		itemIcon.set_name(commodity_identifying_name)
 		commodity_columns.get_node("ItemCol").add_child(itemIcon)
 	itemIcon.init(commodity_info)
@@ -64,7 +64,7 @@ func instantiate_commodity_menu(commodity_info, hold_contents):
 	
 	var buyButton = commodity_columns.get_node("BuyCol/" + commodity_identifying_name)
 	if buyButton == null:
-		buyButton = load("res://scenes/trade/BuyFromStationButton.tscn").instance()
+		buyButton = preload("res://scenes/station/trade/BuyFromStationButton.tscn").instance()
 		buyButton.set_name(commodity_identifying_name)
 		buyButton.rect_min_size = Vector2(0, itemIconHeight)
 		commodity_columns.get_node("BuyCol").add_child(buyButton)
@@ -72,7 +72,7 @@ func instantiate_commodity_menu(commodity_info, hold_contents):
 	
 	var sellButton = commodity_columns.get_node("SellCol/" + commodity_identifying_name)
 	if sellButton == null:
-		sellButton = load("res://scenes/trade/sellToStationButton.tscn").instance()
+		sellButton = preload("res://scenes/station/trade/sellToStationButton.tscn").instance()
 		sellButton.set_name(commodity_identifying_name)
 		sellButton.rect_min_size = Vector2(0, itemIconHeight)
 		commodity_columns.get_node("SellCol").add_child(sellButton)
