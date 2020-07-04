@@ -7,7 +7,6 @@ extends Area2D
 
 export var zoom_factor = 0.5
 var start_position
-var gravity_constant
 export var initial_velocity = Vector2(-300, 0)
 var ship
 # Called when the node enters the scene tree for the first time.

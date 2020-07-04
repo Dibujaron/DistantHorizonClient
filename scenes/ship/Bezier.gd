@@ -25,8 +25,7 @@ func setup(startPos: Vector2, startVel: Vector2, endPos: Vector2, endVel: Vector
 
 var timeOffsetFromStart = 0.0
 func has_next_step(delta):
-	var new_t = timeOffsetFromStart + delta
-	return new_t <= self.duration
+	return previousDistance < self.length
 
 func step(delta, priorPosition):
 	var newTime = timeOffsetFromStart + delta
@@ -34,7 +33,7 @@ func step(delta, priorPosition):
 	timeOffsetFromStart = newTime
 	return state
 
-	
+var previousDistance = 0
 func state_at_time(time, delta, priorPosition):
 	var startSpeed = startVel.length()
 	var maxAccel = self.mainThrust
@@ -54,6 +53,7 @@ func state_at_time(time, delta, priorPosition):
 	var requiredAccel = accelVec if time < timeToFlip else accelVec * -1.0
 	var totalThrust = requiredAccel + gravityCounter
 	var newRotation = totalThrust.angle() + deg2rad(90)
+	previousDistance = totalDist
 	return [newPosition, newRotation, newVelocity, totalThrust]
 	
 var coordinate_length_cache = []
@@ -99,7 +99,7 @@ func t_for_distance(distance_from_start):
 	return lower_limit
 
 func get_coordinates_at(t: float):
-	return bezier_calc(startPos, startPos + startVel, endPos - endVel, endPos, t)
+	return bezier_calc(startPos, startPos + (startVel * 10), endPos - (endVel * 10), endPos, t)
 	
 #copied from the docs
 func bezier_calc(p0: Vector2, p1: Vector2, p2: Vector2, p3: Vector2, t: float):

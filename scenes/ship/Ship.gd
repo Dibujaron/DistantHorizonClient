@@ -109,6 +109,9 @@ func json_receive_docked(json):
 	for thruster in aft_thrusters:
 		thruster.set_enabled(false)
 	
+	if not is_player_ship:
+		visible = false
+	
 func json_receive_undocked(json):
 	json_sync_state(json)
 	var expected_rotation = json["rotation"]
@@ -120,6 +123,7 @@ func json_receive_undocked(json):
 	docked_to_station = null
 	docked_from_port = null
 	docked_to_port = null
+	visible = true
 	
 var left_press_time = 0
 var left_press_start_tick = 0
@@ -169,7 +173,7 @@ func json_sync_state(json):
 				nav_target_pos = targ_pos
 				nav_target_vel = targ_vel
 				nav_bezier = Bezier.new()
-				nav_bezier.setup(global_position, velocity, nav_target_pos, nav_target_vel, main_engine_thrust)
+				nav_bezier.setup(expected_position, expected_velocity, nav_target_pos, nav_target_vel, main_engine_thrust)
 			var nav_target_vel = Vector2(0,0)
 			var nav_target_pos = Vector2(0,0)
 		else:
