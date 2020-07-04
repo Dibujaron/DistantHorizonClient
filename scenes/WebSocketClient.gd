@@ -40,10 +40,10 @@ func _on_data():
 			get_parent().receive_ship_inputs_update(json)
 		elif message_type == "ship_heartbeats":
 			get_parent().receive_ship_heartbeats(json)
-		elif message_type == "trade_menu_info":
-			get_parent().receive_trade_menu_info(json)
-		elif message_type == "trade_menu_close":
-			get_parent().receive_trade_menu_close(json)
+		elif message_type == "station_menu_info":
+			get_parent().receive_station_menu_info(json)
+		elif message_type == "station_menu_close":
+			get_parent().receive_station_menu_close(json)
 		elif message_type == "ship_docked":
 			get_parent().receive_ship_docked(json)
 		elif message_type == "ship_undocked":

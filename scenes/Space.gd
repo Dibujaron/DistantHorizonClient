@@ -17,17 +17,17 @@ func receive_world_update(message):
 	else:
 		json_update_orbiters(message)
 		
-func receive_trade_menu_info(message):
+func receive_station_menu_info(message):
 	var canvas = $GuiCanvas
-	var menu = canvas.get_node("TradeMenu")
+	var menu = canvas.get_node("StationMenu")
 	if not menu:
-		menu = preload("res://scenes/station/trade/TradeMenu.tscn").instance()
+		menu = preload("res://scenes/station/StationMenu.tscn").instance()
 		canvas.add_child(menu)
 	menu.init(message)
 
-func receive_trade_menu_close(message):
+func receive_station_menu_close(message):
 	var canvas = $GuiCanvas
-	var menu = canvas.get_node("TradeMenu")
+	var menu = canvas.get_node("StationMenu")
 	if menu:
 		canvas.remove_child(menu)
 		

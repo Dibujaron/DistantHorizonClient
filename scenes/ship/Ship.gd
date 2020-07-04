@@ -172,7 +172,6 @@ func json_sync_state(json):
 				nav_bezier.setup(global_position, velocity, nav_target_pos, nav_target_vel, main_engine_thrust)
 			var nav_target_vel = Vector2(0,0)
 			var nav_target_pos = Vector2(0,0)
-			var nav_bezier = null
 		else:
 			global_rotation = expected_rotation
 			var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)

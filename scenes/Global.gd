@@ -55,6 +55,3 @@ func get_gravity_acceleration(pos):
 		var acceleration = (body_position - pos).normalized() * f_magnitude
 		total_acceleration = total_acceleration + acceleration
 	return total_acceleration
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
