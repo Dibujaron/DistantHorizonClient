@@ -34,6 +34,13 @@ func angular_diff(a, b):
 	#var res = diff if abs(diff) < 180 else diff + (360 * -sign(diff))
 	#return deg2rad(res)
 	
+func find_station(station_name):
+	var stations = get_tree().get_nodes_in_group("Stations")
+	for station in stations:
+		if station.orbiter_name == station_name:
+			return station
+	return null
+	
 func json_to_vec(json):
 	return Vector2(json["x"],json["y"])
 

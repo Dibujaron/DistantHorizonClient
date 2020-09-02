@@ -133,6 +133,7 @@ func initialize_orbiters(message):
 		var planet = planets[planet_info["name"]]
 		var parent_name = planet_info["parent"]
 		if parent_name:
+			planet.has_parent = true
 			var parent_node = planets[parent_name]
 			parent_node.add_child(planet)
 		else:
@@ -146,6 +147,7 @@ func initialize_orbiters(message):
 		stations[station.name] = station
 		station.add_to_group("stations")
 		if station_info["parent"]:
+			station.has_parent = true
 			var parent_name = station_info["parent"]
 			var parent_node = planets[parent_name]
 			parent_node.add_child(station)

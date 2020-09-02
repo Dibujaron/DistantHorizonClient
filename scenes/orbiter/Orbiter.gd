@@ -10,6 +10,7 @@ var expected_pos
 const PIDController = preload("res://scenes/orbiter/PIDController.tscn")
 var velocity_controller = PIDController.instance()
 var last_update = 0.0
+var has_parent = false
 func _ready():
 	add_child(velocity_controller)
 	velocity_controller._Kp = 0.5#0.5#0.1
@@ -48,3 +49,17 @@ func _process(delta):
 	if initialized and orbital_radius > 0:
 		var angle_offset = current_angular_velocity * delta
 		position = position.rotated(angle_offset)
+
+func relativePosAtTime(delta):
+	var angle_offset = current_angular_velocity * delta
+	return position.rotated(angle_offset)
+
+func globalPosAtTime(delta):
+	if has_parent:
+		var parent = get_parent()
+		return parent.globalPosAtTime(delta) + relativePosAtTime(delta)
+	else:
+		return relativePosAtTime(delta)
+		
+func velocityAtTime(delta):
+	return globalPosAtTime(delta + 1) - globalPosAtTime(0) 

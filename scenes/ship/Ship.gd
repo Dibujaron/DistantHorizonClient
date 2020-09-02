@@ -28,8 +28,9 @@ var docked_from_port = null
 var currently_inside_planet = false
 
 var navigating = false
-var nav_target_vel = Vector2(0,0)
-var nav_target_pos = Vector2(0,0)
+var nav_target_station = null
+var nav_target_offset_position = Vector2(0,0)
+var nav_target_arrival_time = 0
 var nav_bezier = null
 var Bezier = load("res://scenes/ship/Bezier.gd")
 var main_engine_thrust = 0.0
@@ -91,11 +92,7 @@ func json_receive_docked(json):
 	var my_port_info = json["ship_port"]
 	var station_name = json["station_identifying_name"]
 	var station_port = json["station_port"]
-	var stations = get_tree().get_nodes_in_group("Stations")
-	for station in stations:
-		if station.orbiter_name == station_name:
-			docked_to_station = station
-			break
+	docked_to_station = Global.find_station(station_name)
 	docked_from_port = my_port_info
 	docked_to_port = station_port
 	for engine in main_engines:
@@ -167,15 +164,7 @@ func json_sync_state(json):
 		if is_player_ship:
 			get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
 		if navigating:
-			var targ_vel = Global.json_to_vec(json["targ_velocity"])
-			var targ_pos = Global.json_to_vec(json["targ_position"])
-			if nav_target_vel != targ_vel or nav_target_pos != targ_pos:
-				nav_target_pos = targ_pos
-				nav_target_vel = targ_vel
-				nav_bezier = Bezier.new()
-				nav_bezier.setup(expected_position, expected_velocity, nav_target_pos, nav_target_vel, main_engine_thrust)
-			var nav_target_vel = Vector2(0,0)
-			var nav_target_pos = Vector2(0,0)
+			pass
 		else:
 			global_rotation = expected_rotation
 			var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
@@ -201,15 +190,15 @@ func _process(delta):
 		global_position = docked_to_global_pos + (my_port_relative * -1.0).rotated(global_rotation)
 	else:
 		if navigating:
-			if nav_bezier.has_next_step(delta):
-				var result = nav_bezier.step(delta, global_position)
-				global_position = result[0]
-				global_rotation = result[1]
-				velocity = result[2]
-				var thrust = result[3]
-				var enable = thrust.length_squared() > (0.1 * 0.1)
-				for engine in main_engines:
-					engine.set_enabled(enable)
+			#if nav_bezier.has_next_step(delta):
+			#	var result = nav_bezier.step(delta)
+			#	global_position = result[0]
+			#	global_rotation = result[1]
+			#	velocity = result[2]
+			#	var thrust = result[3]
+			#	var enable = thrust.length_squared() > (0.1 * 0.1)
+			#	for engine in main_engines:
+			#		engine.set_enabled(enable)
 			pass
 		else:
 			if main_engines_active:

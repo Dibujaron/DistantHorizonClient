@@ -13,3 +13,7 @@ func json_update(station_info):
 
 func _process(delta):
 	look_at(get_parent().global_position)
+
+func globalRotationAtTime(time):
+	var vecToParentAtTime = relativePosAtTime(time) * -1.0
+	return vecToParentAtTime.angle()
