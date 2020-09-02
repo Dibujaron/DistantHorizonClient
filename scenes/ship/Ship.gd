@@ -13,6 +13,7 @@ var fore_thrusters
 var aft_thrusters
 var docking_ports
 
+var is_ai_controlled
 #modified by controls of child component
 var main_engines_active = false
 var port_thrusters_active = false
@@ -27,12 +28,6 @@ var docked_to_port = null
 var docked_from_port = null
 var currently_inside_planet = false
 
-var navigating = false
-var nav_target_station = null
-var nav_target_offset_position = Vector2(0,0)
-var nav_target_arrival_time = 0
-var nav_bezier = null
-var Bezier = load("res://scenes/ship/Bezier.gd")
 var main_engine_thrust = 0.0
 var manu_engine_thrust = 0.0
 var rotation_power = 0.0
@@ -78,14 +73,12 @@ func json_init(json):
 	var secondary_color = Global.json_to_color(json["secondary_color"])
 	_set_primary_color(primary_color)
 	_set_secondary_color(secondary_color)
-	# If this is the player's ship, update the rotation of the compass needle
 	if is_player_ship:
 			get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
 	var docked = json["docked"]
 	if docked:
 		var docked_info = json["docked_info"]
 		json_receive_docked(docked_info)
-	#json_update_inputs(json)
 	initialized = true
 
 func json_receive_docked(json):
@@ -148,8 +141,8 @@ func json_update_inputs(json):
 var last_sync_time = 0.0
 func json_sync_state(json):
 	var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
-	navigating = json["navigating"]
 	hold_occupied = json["hold_occupied"]
+	is_ai_controlled = json["controller_type"] == "ai"
 	if docked():
 		var expected_position = Global.json_to_vec(json["global_pos"])
 		global_position = expected_position
@@ -163,7 +156,7 @@ func json_sync_state(json):
 		# If this is the player's ship, update the rotation of the compass needle
 		if is_player_ship:
 			get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
-		if navigating:
+		if is_ai_controlled:
 			pass
 		else:
 			global_rotation = expected_rotation
@@ -189,7 +182,7 @@ func _process(delta):
 		var docked_to_global_pos = docked_to_station.global_position + station_port_relative.rotated(docked_to_station.global_rotation)
 		global_position = docked_to_global_pos + (my_port_relative * -1.0).rotated(global_rotation)
 	else:
-		if navigating:
+		if is_ai_controlled:
 			#if nav_bezier.has_next_step(delta):
 			#	var result = nav_bezier.step(delta)
 			#	global_position = result[0]
@@ -225,7 +218,7 @@ func _process(delta):
 	tick_count += 1
 		
 func _physics_process(delta):
-	if not navigating: # manually controlled
+	if not is_ai_controlled: # manually controlled
 		velocity += Global.get_gravity_acceleration(global_position) * delta
 	physics_tick_count += 1
 	

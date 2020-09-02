@@ -1,7 +1,5 @@
 extends Node2D
 
-#export var socket_url = "ws://23.254.142.198:25611/ws/"
-export var socket_url = "ws://localhost:25611/ws/"
 export (NodePath) var space_path
 onready var space = get_node(space_path)
 
@@ -12,15 +10,15 @@ func _ready():
 	_client.connect("connection_error", self, "_closed")
 	_client.connect("connection_established", self, "_connected")
 	_client.connect("data_received", self, "_on_data")
-	print("attempting to connect to ", socket_url, "...")
-	_client.connect_to_url(socket_url)
+	print("attempting to connect to ", Global.server_url(), "...")
+	_client.connect_to_url(Global.server_url())
 
 func _closed(was_clean = false):
 	print("Closed, clean: ", was_clean)
 	set_process(false)
 
 func _connected(proto = ""):
-	print("Connection established to server ", socket_url, ".")
+	print("Connection established to server ", Global.server_url(), ".")
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
