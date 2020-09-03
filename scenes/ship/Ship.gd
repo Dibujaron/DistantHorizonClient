@@ -73,8 +73,6 @@ func json_init(json):
 	var secondary_color = Global.json_to_color(json["secondary_color"])
 	_set_primary_color(primary_color)
 	_set_secondary_color(secondary_color)
-	if is_player_ship:
-			get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
 	var docked = json["docked"]
 	if docked:
 		var docked_info = json["docked_info"]
@@ -153,9 +151,7 @@ func json_sync_state(json):
 		var expected_rotation = json["rotation"]
 		var expected_position = Global.json_to_vec(json["global_pos"])
 		var expected_velocity = Global.json_to_vec(json["velocity"])
-		# If this is the player's ship, update the rotation of the compass needle
-		if is_player_ship:
-			get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
+		
 		if is_ai_controlled:
 			pass
 		else:
@@ -183,15 +179,6 @@ func _process(delta):
 		global_position = docked_to_global_pos + (my_port_relative * -1.0).rotated(global_rotation)
 	else:
 		if is_ai_controlled:
-			#if nav_bezier.has_next_step(delta):
-			#	var result = nav_bezier.step(delta)
-			#	global_position = result[0]
-			#	global_rotation = result[1]
-			#	velocity = result[2]
-			#	var thrust = result[3]
-			#	var enable = thrust.length_squared() > (0.1 * 0.1)
-			#	for engine in main_engines:
-			#		engine.set_enabled(enable)
 			pass
 		else:
 			if main_engines_active:
@@ -205,20 +192,14 @@ func _process(delta):
 			if aft_thrusters_active:
 				velocity += Vector2(0, -manu_engine_thrust).rotated(global_rotation) * delta
 			if tiller_left:
-				global_rotation -= rotation_power * delta #todo multiply by delta
-				# If this is the player's ship, update the rotation of the compass needle
-				if is_player_ship:
-					get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
+				global_rotation -= rotation_power * delta
 			if tiller_right:
 				global_rotation += rotation_power * delta
-				# If this is the player's ship, update the rotation of the compass needle
-				if is_player_ship:
-					get_tree().get_root().get_node("/root/Space/GuiCanvas/HUD/Compass/Needle").global_rotation = global_rotation
 			global_position += velocity * delta
 	tick_count += 1
 		
 func _physics_process(delta):
-	if not is_ai_controlled: # manually controlled
+	if not is_ai_controlled:
 		velocity += Global.get_gravity_acceleration(global_position) * delta
 	physics_tick_count += 1
 	

@@ -64,16 +64,13 @@ func receive_ship_inputs_update(message):
 		
 func receive_ship_heartbeats(message):
 	var json_ships = message["ship_heartbeats"]
-		#TODO handle removing ships better than this
-	#var updated_ships = []
 	for ship_info in json_ships:
 		var ship_id = ship_info["id"]
 		if ships.has(ship_id):
 			var ship = ships[ship_id]
 			ship.json_sync_state(ship_info)
 		else:
-			print("got heartbeat for unitialized ship ", ship_id)
-		#updated_ships.append(ship_id)
+			print("error got heartbeat for unitialized ship ", ship_id)
 		
 func json_update_orbiters(message):
 	var world_state = message["world_state"]
@@ -91,20 +88,21 @@ func json_update_orbiters(message):
 func initialize_ships_startup(message):
 	initialize_added_ships(message)
 	
+	print("initializing player's ship.")
 	var my_ship_id = message["ship_id"]
 	var my_ship = ships[my_ship_id]
 	var pilot = $PlayerPilot
 	remove_child(pilot)
 	my_ship.add_child(pilot)
-	# Setting HUD to be visible now that they've actually joined
-	$GuiCanvas.get_node("HUD").visible = true
-	# Tell this ship that it's the player's so it can update the HUD
+	$GuiCanvas/HUD.visible = true
+	$GuiCanvas/HUD.link_ship(my_ship)
 	my_ship.is_player_ship = true
 	
 func initialize_added_ships(message):
 	var json_ships = message["ships_added"]
 	for ship_info in json_ships:
 		init_ship(ship_info)
+	print("initialized ", json_ships.size(), " new ships.")
 		
 func init_ship(ship_info):
 	var ship_id = ship_info["id"]
@@ -116,7 +114,6 @@ func init_ship(ship_info):
 		ships[ship_id] = ship
 		add_child(ship)
 		ship.json_init(ship_info)
-		print("initialized ship ", ship_id, " there are ", ships.size(), " ships registered.")
 
 func cleanup_removed_ships(removed_info):
 	var removed_ids = removed_info["ships_removed"]
@@ -167,12 +164,3 @@ func initialize_orbiters(message):
 		else:
 			add_child(station)
 		station.json_init(station_info)
-
-func json_to_vec(json):
-	return Vector2(json["x"],json["y"])
-
-	
-#some operations briefly set the camera to 0,0. This flashes the sun. No way to fix so just hide the sun.
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://sprites/hud/compass_needle.png" type="Texture" id=1]
+[ext_resource path="res://sprites/hud/compass.png" type="Texture" id=2]
+[ext_resource path="res://scenes/player/Compass.gd" type="Script" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), null ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="Compass" type="AnimatedSprite"]
+position = Vector2( 49, 50 )
+z_index = 4096
+frames = SubResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Needle" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )

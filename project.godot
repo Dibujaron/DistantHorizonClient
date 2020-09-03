@@ -147,6 +147,10 @@ ui_undock={
  ]
 }
 
+[logging]
+
+file_logging/enable_file_logging=true
+
 [physics]
 
 common/physics_fps=50

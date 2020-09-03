@@ -19,7 +19,7 @@ func _ready():
 	
 func json_init(orbiter_info):
 	orbiter_name = orbiter_info["name"]
-	position = json_to_vec(orbiter_info["relative_pos"])
+	position = Global.json_to_vec(orbiter_info["relative_pos"])
 	base_angular_velocity = float(orbiter_info["angular_velocity"])
 	current_angular_velocity = base_angular_velocity
 	orbital_radius = orbiter_info["orbital_radius"]
@@ -29,21 +29,13 @@ func json_init(orbiter_info):
 func json_update(orbiter_info):
 	var current_time = OS.get_ticks_msec() / 1000.0
 	var elapsed_time = current_time - last_update
-	#position = json_to_vec(orbiter_info["relative_pos"])
 	expected_angular_pos = orbiter_info["angular_pos"]
 	var angular_pos = position.angle()
 	var current_error = Global.angular_diff(expected_angular_pos, angular_pos)
-	#if(orbiter_name == "Stn_Innerstellar Launch"):
-	#	print("angular error: ", rad2deg(current_error))
 	if elapsed_time > 0:
 		var delta = velocity_controller.calculate(current_error, elapsed_time)
 		current_angular_velocity = base_angular_velocity + delta
 	last_update = OS.get_ticks_msec() / 1000.0
-
-	
-	
-func json_to_vec(json):
-	return Vector2(json["x"],json["y"])
 	
 func _process(delta):
 	if initialized and orbital_radius > 0:
