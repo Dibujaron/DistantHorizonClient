@@ -46,6 +46,11 @@ func _on_data():
 			get_parent().receive_ship_docked(json)
 		elif message_type == "ship_undocked":
 			get_parent().receive_ship_undocked(json)
+		elif message_type == "ships_added":
+			get_parent().receive_ships_added(json)
+		elif message_type == "ships_removed":
+			get_parent().receive_ships_removed(json)
+			
 	else:
 		print(parse_result.error_string)
 

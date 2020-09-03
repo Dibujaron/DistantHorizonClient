@@ -1,7 +1,7 @@
 extends Node2D
 
 var initialized_orbiters = false
-var initialized_ships = false
+var startup_initialized_ships = false
 var planets = {}
 var stations = {}
 var ships = {}
@@ -32,12 +32,18 @@ func receive_station_menu_close(message):
 		canvas.remove_child(menu)
 		
 func receive_initial_ships(message):
-	if not initialized_ships:
-		initialize_ships(message)
-		initialized_ships = true
+	if not startup_initialized_ships:
+		initialize_ships_startup(message)
+		startup_initialized_ships = true
 	else:
 		print("error received initial ships message twice.")
 	
+func receive_ships_added(message):
+	initialize_added_ships(message)
+	
+func receive_ships_removed(message):
+	cleanup_removed_ships(message)
+
 func receive_ship_docked(message):
 	var docked_message = message["ship_docked"]
 	var ship_id = docked_message["id"]
@@ -69,16 +75,6 @@ func receive_ship_heartbeats(message):
 			print("got heartbeat for unitialized ship ", ship_id)
 		#updated_ships.append(ship_id)
 		
-	#var removed_ships = []
-	#for ship_id in ships:
-	#	if not updated_ships.has(ship_id):
-	#		removed_ships.append(ship_id)
-	
-	#for ship_id in removed_ships:
-	#	var ship = ships[ship_id]
-	#	ship.get_parent().remove_child(ship)
-	#	ships.erase(ship_id)
-		
 func json_update_orbiters(message):
 	var world_state = message["world_state"]
 	var json_planets = world_state["planets"]
@@ -91,13 +87,11 @@ func json_update_orbiters(message):
 	for station_info in json_stations:
 		var station = stations[station_info["name"]]
 		station.json_update(station_info)
-	
-func initialize_ships(message):
-	var json_ships = message["ships_initial_state"]
-	var my_ship_id = message["ship_id"]
-	for ship_info in json_ships:
-		init_ship(ship_info)
 		
+func initialize_ships_startup(message):
+	initialize_added_ships(message)
+	
+	var my_ship_id = message["ship_id"]
 	var my_ship = ships[my_ship_id]
 	var pilot = $PlayerPilot
 	remove_child(pilot)
@@ -107,15 +101,34 @@ func initialize_ships(message):
 	# Tell this ship that it's the player's so it can update the HUD
 	my_ship.is_player_ship = true
 	
+func initialize_added_ships(message):
+	var json_ships = message["ships_added"]
+	for ship_info in json_ships:
+		init_ship(ship_info)
+		
 func init_ship(ship_info):
-	var ship_scene = Global.ship_scenes[ship_info["type"]]
-	var ship = ship_scene.instance()
 	var ship_id = ship_info["id"]
-	ships[ship_id] = ship
-	add_child(ship)
-	ship.json_init(ship_info)
-	print("initialized ship ", ship_id, " there are ", ships.size(), " ships registered.")
+	if ships.has(ship_id):
+		print("error attempted to register ship ", ship_id, " but it is already registered.")
+	else :
+		var ship_scene = Global.ship_scenes[ship_info["type"]]
+		var ship = ship_scene.instance()
+		ships[ship_id] = ship
+		add_child(ship)
+		ship.json_init(ship_info)
+		print("initialized ship ", ship_id, " there are ", ships.size(), " ships registered.")
 
+func cleanup_removed_ships(removed_info):
+	var removed_ids = removed_info["ships_removed"]
+	for ship_id in removed_ids:
+		if ships.has(ship_id):
+			var ship = ships[ship_id]
+			ship.get_parent().remove_child(ship)
+			ships.erase(ship_id)
+			print("removed ship ", ship_id, " there are ", ships.size(), " ships registered.")
+		else:
+			print("error attempted to remove unregistered ship ", ship_id)
+		
 func initialize_orbiters(message):
 	var player_id = message["player_id"]
 	var world_state = message["world_state"]
