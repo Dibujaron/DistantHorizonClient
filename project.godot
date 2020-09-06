@@ -151,10 +151,6 @@ ui_undock={
 
 file_logging/enable_file_logging=true
 
-[physics]
-
-common/physics_fps=50
-
 [rendering]
 
 quality/driver/driver_name="GLES2"

@@ -1,11 +1,11 @@
 extends Node2D
 
 var initialized_orbiters = false
-var startup_initialized_ships = false
 var planets = {}
 var stations = {}
 var ships = {}
 
+var has_initialized_own_ship = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -30,14 +30,7 @@ func receive_station_menu_close(message):
 	var menu = canvas.get_node("StationMenu")
 	if menu:
 		canvas.remove_child(menu)
-		
-func receive_initial_ships(message):
-	if not startup_initialized_ships:
-		initialize_ships_startup(message)
-		startup_initialized_ships = true
-	else:
-		print("error received initial ships message twice.")
-	
+
 func receive_ships_added(message):
 	initialize_added_ships(message)
 	
@@ -100,20 +93,27 @@ func initialize_ships_startup(message):
 	
 func initialize_added_ships(message):
 	var json_ships = message["ships_added"]
+	var my_ship_id = message["ship_id"]
 	for ship_info in json_ships:
-		init_ship(ship_info)
+		var ship_id = ship_info["id"]
+		if ships.has(ship_id):
+			print("error attempted to register ship ", ship_id, " but it is already registered.")
+		else:
+			var ship_scene = Global.ship_scenes[ship_info["type"]]
+			var ship = ship_scene.instance()
+			ships[ship_id] = ship
+			add_child(ship)
+			ship.json_init(ship_info)
+			if my_ship_id == ship_id and not has_initialized_own_ship:
+				print("initializing player's ship.")
+				var pilot = $PlayerPilot
+				remove_child(pilot)
+				ship.add_child(pilot)
+				$GuiCanvas/HUD.visible = true
+				$GuiCanvas/HUD.link_ship(ship)
+				ship.is_player_ship = true
+				has_initialized_own_ship = true
 	print("initialized ", json_ships.size(), " new ships.")
-		
-func init_ship(ship_info):
-	var ship_id = ship_info["id"]
-	if ships.has(ship_id):
-		print("error attempted to register ship ", ship_id, " but it is already registered.")
-	else :
-		var ship_scene = Global.ship_scenes[ship_info["type"]]
-		var ship = ship_scene.instance()
-		ships[ship_id] = ship
-		add_child(ship)
-		ship.json_init(ship_info)
 
 func cleanup_removed_ships(removed_info):
 	var removed_ids = removed_info["ships_removed"]

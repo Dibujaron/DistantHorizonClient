@@ -1,14 +1,6 @@
 extends Control
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 func init(ship_class_info, color1, color2):
 	var identifying_name = ship_class_info["identifying_name"]
@@ -27,7 +19,3 @@ func init(ship_class_info, color1, color2):
 	$VBoxContainer/MainThrust.set_field_value(main_thrust)
 	$VBoxContainer/ManuThrust.set_field_value(manu_thrust)
 	$VBoxContainer/HoldSize.set_field_value(hold_size)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

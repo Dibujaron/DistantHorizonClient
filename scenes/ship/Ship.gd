@@ -40,6 +40,7 @@ var is_player_ship = false
 var hold_size = 0
 var hold_occupied = 0
 
+var script_follower = load("res://scenes/ship/ScriptFollower.gd")
 export var default_primary_color = Color.blue
 export var default_secondary_color = Color.white
 
@@ -97,7 +98,7 @@ func json_receive_docked(json):
 	for thruster in aft_thrusters:
 		thruster.set_enabled(false)
 	
-	if not is_player_ship:
+	if not is_player_ship and Global.should_vanish_docked_ai_ships():
 		visible = false
 	
 func json_receive_undocked(json):
@@ -113,9 +114,6 @@ func json_receive_undocked(json):
 	docked_to_port = null
 	visible = true
 	
-var left_press_time = 0
-var left_press_start_tick = 0
-var left_press_start_phys_tick = 0
 func json_update_inputs(json):
 	main_engines_active = json["main_engines"]
 	port_thrusters_active = json["port_thrusters"]
@@ -137,6 +135,8 @@ func json_update_inputs(json):
 	json_sync_state(json)
 	
 var last_sync_time = 0.0
+var steps = []
+
 func json_sync_state(json):
 	var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
 	hold_occupied = json["hold_occupied"]
@@ -148,13 +148,14 @@ func json_sync_state(json):
 		global_rotation = expected_rotation
 		velocity = Vector2(0,0)
 	else:
-		var expected_rotation = json["rotation"]
-		var expected_position = Global.json_to_vec(json["global_pos"])
-		var expected_velocity = Global.json_to_vec(json["velocity"])
-		
 		if is_ai_controlled:
-			pass
+			var controller_heartbeat = json["controller_heartbeat"]
+			script_follower.accept_steps(controller_heartbeat)
 		else:
+			#todo these should really be in controller_heartbeat
+			var expected_rotation = json["rotation"]
+			var expected_position = Global.json_to_vec(json["global_pos"])
+			var expected_velocity = Global.json_to_vec(json["velocity"])
 			global_rotation = expected_rotation
 			var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
 			var true_pos_after_time = global_position + (velocity * sync_delta)
@@ -179,7 +180,11 @@ func _process(delta):
 		global_position = docked_to_global_pos + (my_port_relative * -1.0).rotated(global_rotation)
 	else:
 		if is_ai_controlled:
-			pass
+			var step = script_follower.pop_next_step()
+			if step:
+				global_position = Global.json_to_vec(step["global_position"])
+				velocity = Global.json_to_vec(step["global_velocity"])
+				global_rotation = step["global_rotation"]
 		else:
 			if main_engines_active:
 				velocity += Vector2(0,-main_engine_thrust).rotated(global_rotation) * delta

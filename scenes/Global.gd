@@ -19,6 +19,9 @@ export var ship_scenes = {
 
 var gravity_constant = gravity_constant_base * pow(10, gravity_constant_exp) * gravity_constant_fudge
 
+func should_vanish_docked_ai_ships():
+	return false
+	
 func server_url():
 	if OS.is_debug_build():
 		return debug_server_url
