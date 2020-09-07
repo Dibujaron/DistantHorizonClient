@@ -7,7 +7,7 @@ var token = JavaScript.eval("")
 export var gravity_constant_fudge = 25.0
 export var gravity_constant_base = 6.67408
 export var gravity_constant_exp = -11.0
-export var production_server_url = "ws://23.254.142.198:25611/ws/"
+export var production_server_url = "ws://localhost:25611/ws/"
 export var debug_server_url = "ws://localhost:25611/ws/"
 
 export var ship_scenes = {

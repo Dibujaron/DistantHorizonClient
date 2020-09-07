@@ -33,8 +33,9 @@ func json_init(planet_info):
 	if new_type != type:
 		type = new_type
 		$AnimatedSprite.play(type)
-	$AnimatedSprite.global_scale.x = planet_info["scale"]
-	$AnimatedSprite.global_scale.y = planet_info["scale"]
+	var scale_fac = planet_info["scale"]
+	var planet_scale = Vector2(scale_fac, scale_fac)
+	$AnimatedSprite.global_scale = planet_scale
 
 func json_update(planet_info):
 	.json_update(planet_info)

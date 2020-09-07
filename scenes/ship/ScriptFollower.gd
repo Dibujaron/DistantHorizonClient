@@ -24,6 +24,7 @@ func pop_next_step():
 		else:
 			var step = steps.pop_front()
 			last_step_returned = step
+			current_step_index += 1
 			return step
 	else:
 		return last_step_returned #just hover if we have no more steps, dock message will arrive momentarily.

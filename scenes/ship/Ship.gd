@@ -40,7 +40,7 @@ var is_player_ship = false
 var hold_size = 0
 var hold_occupied = 0
 
-var script_follower = load("res://scenes/ship/ScriptFollower.gd")
+var script_follower = preload("res://scenes/ship/ScriptFollower.gd").new()
 export var default_primary_color = Color.blue
 export var default_secondary_color = Color.white
 
@@ -183,7 +183,7 @@ func _process(delta):
 			var step = script_follower.pop_next_step()
 			if step:
 				global_position = Global.json_to_vec(step["global_position"])
-				velocity = Global.json_to_vec(step["global_velocity"])
+				velocity = Vector2(0,0)
 				global_rotation = step["global_rotation"]
 		else:
 			if main_engines_active:
