@@ -4,7 +4,7 @@ var chosenPrimaryColor: Color = Color.blue
 var chosenSecondaryColor: Color = Color.white
 
 var token = JavaScript.eval("")
-export var gravity_constant_fudge = 25.0
+export var gravity_constant_fudge = 50.0
 export var gravity_constant_base = 6.67408
 export var gravity_constant_exp = -11.0
 export var production_server_url = "ws://localhost:25611/ws/"
