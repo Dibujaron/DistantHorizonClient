@@ -13,7 +13,6 @@ var fore_thrusters
 var aft_thrusters
 var docking_ports
 
-var is_ai_controlled
 #modified by controls of child component
 var main_engines_active = false
 var port_thrusters_active = false
@@ -40,7 +39,6 @@ var is_player_ship = false
 var hold_size = 0
 var hold_occupied = 0
 
-var script_follower = preload("res://scenes/ship/ScriptFollower.gd").new()
 export var default_primary_color = Color.blue
 export var default_secondary_color = Color.white
 
@@ -140,7 +138,6 @@ var steps = []
 func json_sync_state(json):
 	var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
 	hold_occupied = json["hold_occupied"]
-	is_ai_controlled = json["controller_type"] == "ai"
 	if docked():
 		var expected_position = Global.json_to_vec(json["global_pos"])
 		global_position = expected_position
@@ -148,19 +145,15 @@ func json_sync_state(json):
 		global_rotation = expected_rotation
 		velocity = Vector2(0,0)
 	else:
-		if is_ai_controlled:
-			var controller_heartbeat = json["controller_heartbeat"]
-			script_follower.accept_steps(controller_heartbeat)
-		else:
-			#todo these should really be in controller_heartbeat
-			var expected_rotation = json["rotation"]
-			var expected_position = Global.json_to_vec(json["global_pos"])
-			var expected_velocity = Global.json_to_vec(json["velocity"])
-			global_rotation = expected_rotation
-			var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
-			var true_pos_after_time = global_position + (velocity * sync_delta)
-			var velocity_adj = expected_pos_after_time - true_pos_after_time
-			velocity += velocity_adj
+		#todo these should really be in controller_heartbeat
+		var expected_rotation = json["rotation"]
+		var expected_position = Global.json_to_vec(json["global_pos"])
+		var expected_velocity = Global.json_to_vec(json["velocity"])
+		global_rotation = expected_rotation
+		var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
+		var true_pos_after_time = global_position + (velocity * sync_delta)
+		var velocity_adj = expected_pos_after_time - true_pos_after_time
+		velocity += velocity_adj
 	last_sync_time = OS.get_ticks_msec()
 
 var tick_count = 0
@@ -179,33 +172,25 @@ func _process(delta):
 		var docked_to_global_pos = docked_to_station.global_position + station_port_relative.rotated(docked_to_station.global_rotation)
 		global_position = docked_to_global_pos + (my_port_relative * -1.0).rotated(global_rotation)
 	else:
-		if is_ai_controlled:
-			var step = script_follower.pop_next_step()
-			if step:
-				global_position = Global.json_to_vec(step["global_position"])
-				velocity = Vector2(0,0)
-				global_rotation = step["global_rotation"]
-		else:
-			if main_engines_active:
-				velocity += Vector2(0,-main_engine_thrust).rotated(global_rotation) * delta
-			if starboard_thrusters_active:
-				velocity += Vector2(-manu_engine_thrust, 0).rotated(global_rotation) * delta
-			if port_thrusters_active:
-				velocity += Vector2(manu_engine_thrust, 0).rotated(global_rotation) * delta
-			if fore_thrusters_active:
-				velocity += Vector2(0, manu_engine_thrust).rotated(global_rotation) * delta
-			if aft_thrusters_active:
-				velocity += Vector2(0, -manu_engine_thrust).rotated(global_rotation) * delta
-			if tiller_left:
-				global_rotation -= rotation_power * delta
-			if tiller_right:
-				global_rotation += rotation_power * delta
-			global_position += velocity * delta
+		if main_engines_active:
+			velocity += Vector2(0,-main_engine_thrust).rotated(global_rotation) * delta
+		if starboard_thrusters_active:
+			velocity += Vector2(-manu_engine_thrust, 0).rotated(global_rotation) * delta
+		if port_thrusters_active:
+			velocity += Vector2(manu_engine_thrust, 0).rotated(global_rotation) * delta
+		if fore_thrusters_active:
+			velocity += Vector2(0, manu_engine_thrust).rotated(global_rotation) * delta
+		if aft_thrusters_active:
+			velocity += Vector2(0, -manu_engine_thrust).rotated(global_rotation) * delta
+		if tiller_left:
+			global_rotation -= rotation_power * delta
+		if tiller_right:
+			global_rotation += rotation_power * delta
+		global_position += velocity * delta
 	tick_count += 1
 		
 func _physics_process(delta):
-	if not is_ai_controlled:
-		velocity += Global.get_gravity_acceleration(global_position) * delta
+	velocity += Global.get_gravity_acceleration(global_position) * delta
 	physics_tick_count += 1
 	
 func get_inside_planet():
