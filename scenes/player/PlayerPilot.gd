@@ -20,81 +20,91 @@ func _input(event):
 			zoom_out()
 	
 func _process(delta):
-	var updated = false
-	if Input.is_action_just_pressed("ui_zoom_in"):
-		zoom_in()
-	if Input.is_action_just_pressed("ui_zoom_out"):
-		zoom_out()
-		
-	if Input.is_action_just_pressed("ui_rotate_right"):
-		updated=true
-		rotate_right_pressed=true
-	if Input.is_action_just_released("ui_rotate_right"):
-		updated=true
-		rotate_right_pressed=false
 	
-	if Input.is_action_just_pressed("ui_rotate_left"):
-		updated=true
-		rotate_left_pressed=true
-	if Input.is_action_just_released("ui_rotate_left"):
-		updated=true
-		rotate_left_pressed=false
+	if not Global.get_chat_hud().is_chat_focused():
+		var updated = false
+		if Input.is_action_just_pressed("ui_zoom_in"):
+			zoom_in()
+		if Input.is_action_just_pressed("ui_zoom_out"):
+			zoom_out()
+		if Input.is_action_just_pressed("ui_rotate_right"):
+			updated=true
+			rotate_right_pressed=true
+		if Input.is_action_just_released("ui_rotate_right"):
+			updated=true
+			rotate_right_pressed=false
 		
-	if Input.is_action_just_pressed("ui_fire_engines"):
-		updated=true
-		main_engines_pressed=true
-	if Input.is_action_just_released("ui_fire_engines"):
-		updated=true
-		main_engines_pressed=false
-		
-	if Input.is_action_just_pressed("ui_strafe_left"):
-		updated=true
-		stbd_thrusters_pressed=true
-	if Input.is_action_just_released("ui_strafe_left"):
-		updated=true
-		stbd_thrusters_pressed=false
-
-	if Input.is_action_just_pressed("ui_strafe_right"):
-		updated=true
-		port_thrusters_pressed=true
-	if Input.is_action_just_released("ui_strafe_right"):
-		updated=true
-		port_thrusters_pressed=false
-		
-	if Input.is_action_just_pressed("ui_strafe_forward"):
-		updated=true
-		aft_thrusters_pressed=true
-	if Input.is_action_just_released("ui_strafe_forward"):
-		updated=true
-		aft_thrusters_pressed=false
-		
-	if Input.is_action_just_pressed("ui_strafe_backward"):
-		updated=true
-		fore_thrusters_pressed=true
-		
-	if Input.is_action_just_released("ui_strafe_backward"):
-		updated=true
-		fore_thrusters_pressed=false
+		if Input.is_action_just_pressed("ui_rotate_left"):
+			updated=true
+			rotate_left_pressed=true
+		if Input.is_action_just_released("ui_rotate_left"):
+			updated=true
+			rotate_left_pressed=false
+			
+		if Input.is_action_just_pressed("ui_fire_engines"):
+			updated=true
+			main_engines_pressed=true
+		if Input.is_action_just_released("ui_fire_engines"):
+			updated=true
+			main_engines_pressed=false
+			
+		if Input.is_action_just_pressed("ui_strafe_left"):
+			updated=true
+			stbd_thrusters_pressed=true
+		if Input.is_action_just_released("ui_strafe_left"):
+			updated=true
+			stbd_thrusters_pressed=false
 	
-	if updated:
-		var dict = {}
-		dict["message_type"] = "ship_inputs"
-		dict["main_engines_pressed"] = main_engines_pressed
-		dict["port_thrusters_pressed"] = port_thrusters_pressed
-		dict["stbd_thrusters_pressed"] = stbd_thrusters_pressed
-		dict["fore_thrusters_pressed"] = fore_thrusters_pressed
-		dict["aft_thrusters_pressed"] = aft_thrusters_pressed
-		dict["rotate_left_pressed"] = rotate_left_pressed
-		dict["rotate_right_pressed"] = rotate_right_pressed
-		socket_client.send_message(JSON.print(dict))
+		if Input.is_action_just_pressed("ui_strafe_right"):
+			updated=true
+			port_thrusters_pressed=true
+		if Input.is_action_just_released("ui_strafe_right"):
+			updated=true
+			port_thrusters_pressed=false
+			
+		if Input.is_action_just_pressed("ui_strafe_forward"):
+			updated=true
+			aft_thrusters_pressed=true
+		if Input.is_action_just_released("ui_strafe_forward"):
+			updated=true
+			aft_thrusters_pressed=false
+			
+		if Input.is_action_just_pressed("ui_strafe_backward"):
+			updated=true
+			fore_thrusters_pressed=true
+			
+		if Input.is_action_just_released("ui_strafe_backward"):
+			updated=true
+			fore_thrusters_pressed=false
+			
+		if updated:
+			var dict = {}
+			dict["message_type"] = "ship_inputs"
+			dict["main_engines_pressed"] = main_engines_pressed
+			dict["port_thrusters_pressed"] = port_thrusters_pressed
+			dict["stbd_thrusters_pressed"] = stbd_thrusters_pressed
+			dict["fore_thrusters_pressed"] = fore_thrusters_pressed
+			dict["aft_thrusters_pressed"] = aft_thrusters_pressed
+			dict["rotate_left_pressed"] = rotate_left_pressed
+			dict["rotate_right_pressed"] = rotate_right_pressed
+			socket_client.send_json_message(JSON.print(dict))
+			
+		if Input.is_action_just_pressed("ui_dock"):
+			print("attempting dock.")
+			var dict = {}
+			dict["message_type"] = "dock"
+			socket_client.send_json_message(JSON.print(dict))
+		if Input.is_action_just_pressed("ui_undock"):
+			socket_client.undock()
+			
+		if Input.is_action_just_pressed("ui_focus_chat"):
+			Global.get_chat_hud().focus_chat()
+	else:
+		if Input.is_action_just_pressed("ui_send_chat"):
+			Global.get_chat_hud().send_chat_message()
 		
-	if Input.is_action_just_pressed("ui_dock"):
-		print("attempting dock.")
-		var dict = {}
-		dict["message_type"] = "dock"
-		socket_client.send_message(JSON.print(dict))
-	if Input.is_action_just_pressed("ui_undock"):
-		socket_client.undock()
+		if Input.is_action_just_pressed("ui_cancel_chat"):
+			Global.get_chat_hud().cancel_message()
 	
 func zoom_in():
 	var camera = $Camera2D

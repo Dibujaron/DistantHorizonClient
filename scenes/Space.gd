@@ -109,8 +109,10 @@ func initialize_added_ships(message):
 				var pilot = $PlayerPilot
 				remove_child(pilot)
 				ship.add_child(pilot)
-				$GuiCanvas/HUD.visible = true
-				$GuiCanvas/HUD.link_ship(ship)
+				$GuiCanvas/BottomRightHUD.visible = true
+				$GuiCanvas/BottomRightHUD.link_ship(ship)
+				$GuiCanvas/BottomLeftHUD.visible = true
+				$GuiCanvas/BottomLeftHUD.link_ship(ship) #todo clean this up
 				ship.is_player_ship = true
 				has_initialized_own_ship = true
 	print("initialized ", json_ships.size(), " new ships.")

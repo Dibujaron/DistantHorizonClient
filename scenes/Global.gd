@@ -62,3 +62,15 @@ func get_gravity_acceleration(pos):
 		var acceleration = (body_position - pos).normalized() * f_magnitude
 		total_acceleration = total_acceleration + acceleration
 	return total_acceleration
+	
+func get_space():
+	return get_tree().get_root().get_node("Space")
+	
+func get_chat_hud():
+	return get_space().get_node("GuiCanvas").get_node("BottomLeftHUD")
+	
+func get_compass_hud():
+	return get_space().get_node("GuiCanvas").get_node("BottomRightHUD")
+
+func get_socket_client():
+	return get_space().get_node("WebSocketClient")
