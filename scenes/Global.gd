@@ -10,6 +10,8 @@ export var gravity_constant_exp = -11.0
 export var production_server_url = "ws://localhost:25611/ws/"
 export var debug_server_url = "ws://localhost:25611/ws/"
 
+var primary_player = null
+
 export var ship_scenes = {
 	"phe.thumper": preload("res://scenes/ship/Ship_PHE_Thumper.tscn"),
 	"rijay.mockingbird": preload("res://scenes/ship/Ship_Rijay_Mockingbird.tscn"),
@@ -74,3 +76,13 @@ func get_compass_hud():
 
 func get_socket_client():
 	return get_space().get_node("WebSocketClient")
+
+func set_primary_player(player):
+	self.primary_player = player	
+	
+func get_primary_player():
+	return primary_player
+	
+func get_current_zoom():
+	return get_primary_player().get_node("Camera2D").zoom.x
+

@@ -12,6 +12,9 @@ var aft_thrusters_pressed = false
 var rotate_left_pressed = false
 var rotate_right_pressed = false
 
+func _ready():
+	Global.set_primary_player(self)
+	
 func _input(event):
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == BUTTON_WHEEL_UP:
