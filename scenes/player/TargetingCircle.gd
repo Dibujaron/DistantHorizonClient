@@ -11,8 +11,11 @@ var current_zoom = 0
 var prior_global_rotation_degs = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	Global.set_targeting_circle(self)
 
+func is_circle_visible():
+	return $TargetingVisibilityNotifier.is_on_screen()
+	
 func _process(delta):
 	var rotation_amt = rotation_degrees_per_second * delta
 	var new_rotation = prior_global_rotation_degs + rotation_amt

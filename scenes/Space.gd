@@ -163,7 +163,7 @@ func initialize_orbiters(message):
 			var parent_name = station_info["parent"]
 			var parent_node = planets[parent_name]
 			parent_node.add_child(station)
-			if(station.name == "Stn_Rakuria"):
+			if(station.name == "Stn_Skydogs"):
 				var circle = preload("res://scenes/player/TargetingCircle.tscn").instance()
 				station.add_child(circle)
 				

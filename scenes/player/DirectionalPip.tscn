@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/player/DirectionalPip.gd" type="Script" id=1]
+[ext_resource path="res://sprites/effects/targeting_pip.png" type="Texture" id=2]
+[ext_resource path="res://sprites/effects/directional_pip.png" type="Texture" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "line",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "triangle",
+"speed": 5.0
+} ]
+
+[node name="DirectionalPip" type="Node2D"]
+visible = false
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+rotation = 1.5708
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 1 )
+animation = "triangle"
