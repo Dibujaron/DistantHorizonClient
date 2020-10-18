@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/WebSocketClient.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Space.gd" type="Script" id=2]
 [ext_resource path="res://scenes/player/PlayerPilot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/player/BottomRightHUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/player/BottomLeftHUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/menu/NavigationMenu.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/player/ParallaxBackground.tscn" type="PackedScene" id=7]
 
 [node name="Space" type="Node2D"]
@@ -16,9 +17,10 @@ __meta__ = {
 [node name="GuiCanvas" type="CanvasLayer" parent="."]
 
 [node name="BottomRightHUD" parent="GuiCanvas" instance=ExtResource( 4 )]
-margin_right = -150.0
 
 [node name="BottomLeftHUD" parent="GuiCanvas" instance=ExtResource( 5 )]
+
+[node name="NavigationMenu" parent="GuiCanvas" instance=ExtResource( 6 )]
 
 [node name="ParallaxBackground" parent="." instance=ExtResource( 7 )]
 

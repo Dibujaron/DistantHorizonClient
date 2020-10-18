@@ -96,7 +96,12 @@ func json_receive_docked(json):
 	for thruster in aft_thrusters:
 		thruster.set_enabled(false)
 	
-	if not is_player_ship and Global.should_vanish_docked_ai_ships():
+	if is_player_ship:
+		var targeting_circle = Global.get_targeting_circle()
+		if targeting_circle.is_enabled():
+			if targeting_circle.get_nav_target() == station_name:
+				targeting_circle.stop_navigating()
+	elif Global.should_vanish_docked_ai_ships():
 		visible = false
 	
 func json_receive_undocked(json):

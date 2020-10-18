@@ -7,7 +7,7 @@ var token = JavaScript.eval("")
 export var gravity_constant_fudge = 50.0
 export var gravity_constant_base = 6.67408
 export var gravity_constant_exp = -11.0
-export var production_server_url = "ws://localhost:25611/ws/"
+export var production_server_url = "ws://distant-horizon.io:25611/ws/"
 export var debug_server_url = "ws://localhost:25611/ws/"
 
 var primary_player = null
@@ -69,12 +69,23 @@ func get_gravity_acceleration(pos):
 func get_space():
 	return get_tree().get_root().get_node("Space")
 	
+func get_gui_canvas():
+	return get_space().get_node("GuiCanvas")
 func get_chat_hud():
-	return get_space().get_node("GuiCanvas").get_node("BottomLeftHUD")
+	return get_gui_canvas().get_node("BottomLeftHUD")
 	
 func get_compass_hud():
-	return get_space().get_node("GuiCanvas").get_node("BottomRightHUD")
+	return get_gui_canvas().get_node("BottomRightHUD")
 
+func get_navigation_menu():
+	return get_gui_canvas().get_node("NavigationMenu")
+	
+func get_station_menu():
+	return get_gui_canvas().get_node_or_null("StationMenu")
+
+func is_station_menu_open():
+	return get_station_menu() != null
+	
 func get_socket_client():
 	return get_space().get_node("WebSocketClient")
 
@@ -83,6 +94,13 @@ func set_primary_player(player):
 	
 func get_primary_player():
 	return primary_player
+	
+func get_primary_player_ship():
+	var parent = get_primary_player().get_parent()
+	if parent == get_space():
+		return null
+	else:
+		return parent
 	
 func set_targeting_circle(circle):
 	self.targeting_circle = circle

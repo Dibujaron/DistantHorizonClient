@@ -25,7 +25,7 @@ func _process(delta):
 	var ship_position = get_parent().global_position
 	var targeting_circle = Global.get_targeting_circle()
 	if targeting_circle != null:
-		if targeting_circle.is_circle_visible():
+		if not targeting_circle.is_enabled() or targeting_circle.is_on_screen():
 			hide()
 		else:
 			show()

@@ -16,7 +16,7 @@ export var frame_medium = 0
 
 export var pip_radius_far = 0
 export var scale_factor_base_far = 0.03
-export var threshold_far = 4
+export var threshold_far = 8
 export var frame_far = 1
 
 var current_zoom = 0

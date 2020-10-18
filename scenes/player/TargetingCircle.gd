@@ -9,12 +9,34 @@ export var scale_factor_base_close = 0.1
 export var scale_factor_base_far = 0.05
 var current_zoom = 0
 var prior_global_rotation_degs = 0
+var current_target = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.set_targeting_circle(self)
 
-func is_circle_visible():
+func is_on_screen():
 	return $TargetingVisibilityNotifier.is_on_screen()
+	
+func navigate_to(stn_name):
+	var stn = Global.get_space().stations[stn_name]
+	if stn != null:
+		current_target = stn_name
+		var parent = get_parent()
+		if parent != null:
+			parent.remove_child(self)
+		stn.add_child(self)
+		show()
+	else:
+		print("invalid station for navigation", stn_name)
+	
+func get_nav_target():
+	return current_target
+	
+func stop_navigating():
+	hide()
+	
+func is_enabled():
+	return visible
 	
 func _process(delta):
 	var rotation_amt = rotation_degrees_per_second * delta

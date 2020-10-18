@@ -1,10 +1,12 @@
 extends "res://scenes/orbiter/Orbiter.gd"
 
+var display_name
 func _ready():
 	add_to_group("Stations")
 
 func json_init(station_info):
 	.json_init(station_info)
+	display_name = station_info["display_name"]
 	$AnimatedSprite.play("default")
 	global_scale = Vector2(1.0, 1.0)
 

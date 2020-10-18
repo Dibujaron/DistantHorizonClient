@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/menu/NavigationMenuItem.gd" type="Script" id=1]
+[ext_resource path="res://scenes/menu/NavigateButton.gd" type="Script" id=2]
+
+[node name="NavigationMenuItem" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DistanceVal" type="Label" parent="."]
+margin_top = 13.0
+margin_right = 37.0
+margin_bottom = 27.0
+text = "$DIST"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AwayFromLabel" type="Label" parent="."]
+margin_left = 41.0
+margin_top = 13.0
+margin_right = 54.0
+margin_bottom = 27.0
+text = "to"
+
+[node name="StationNameVal" type="Label" parent="."]
+margin_left = 58.0
+margin_top = 13.0
+margin_right = 166.0
+margin_bottom = 27.0
+text = "$STATION_NAME"
+
+[node name="NavigateButton" type="Button" parent="."]
+margin_left = 170.0
+margin_right = 237.0
+margin_bottom = 40.0
+text = "Navigate"
+script = ExtResource( 2 )
+
+[node name="NavigationMenuItem" type="Control" parent="."]
+margin_left = 241.0
+margin_right = 241.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
