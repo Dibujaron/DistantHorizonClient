@@ -11,10 +11,18 @@ var type = "Star"
 var mass = 0
 var min_orbital_altitude = 0
 export var type_scale_map = {
-	"Star": 1.0,
-	"Continental": 0.2,
-	"Moon": 0.1,
-	"Gas": 0.75
+	"StarRedGiant": 1.0,
+	"StarYellow": 1.0,
+	"StarWhiteDwarf": 1.0,
+	"ContinentalForest": 0.2,
+	"ContinentalDesert": 0.2,
+	"ContinentalPlains": 0.2,
+	"ContinentalOcean": 0.2,
+	"ContinentalIce": 0.2,
+	"RockyVolcanic": 0.1,
+	"RockyIce": 0.1,
+	"RockyBarren": 0.1,
+	"GasGiant": 0.75
 }
 
 func get_mass():

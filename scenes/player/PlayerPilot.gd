@@ -36,7 +36,7 @@ func _process(delta):
 		if Input.is_action_just_released("ui_rotate_right"):
 			updated=true
 			rotate_right_pressed=false
-		
+			
 		if Input.is_action_just_pressed("ui_rotate_left"):
 			updated=true
 			rotate_left_pressed=true
@@ -90,13 +90,13 @@ func _process(delta):
 			dict["aft_thrusters_pressed"] = aft_thrusters_pressed
 			dict["rotate_left_pressed"] = rotate_left_pressed
 			dict["rotate_right_pressed"] = rotate_right_pressed
-			socket_client.send_json_message(JSON.print(dict))
+			socket_client.queue_outgoing_message(dict)
 			
 		if Input.is_action_just_pressed("ui_dock"):
 			print("attempting dock.")
 			var dict = {}
 			dict["message_type"] = "dock"
-			socket_client.send_json_message(JSON.print(dict))
+			socket_client.queue_outgoing_message(dict)
 		if Input.is_action_just_pressed("ui_undock"):
 			socket_client.undock()
 			

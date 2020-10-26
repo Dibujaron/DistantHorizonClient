@@ -162,7 +162,6 @@ func json_sync_state(json):
 	last_sync_time = OS.get_ticks_msec()
 
 var tick_count = 0
-var physics_tick_count = 0
 func _process(delta):
 	var inside_planet = get_inside_planet()	#if we just stopped being inside a planet, trigger z switch
 	if currently_inside_planet and not inside_planet:
@@ -191,12 +190,9 @@ func _process(delta):
 			global_rotation -= rotation_power * delta
 		if tiller_right:
 			global_rotation += rotation_power * delta
+		velocity += Global.get_gravity_acceleration(global_position) * delta
 		global_position += velocity * delta
 	tick_count += 1
-		
-func _physics_process(delta):
-	velocity += Global.get_gravity_acceleration(global_position) * delta
-	physics_tick_count += 1
 	
 func get_inside_planet():
 	var bodies = get_tree().get_nodes_in_group("Planets")
