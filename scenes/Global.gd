@@ -10,6 +10,7 @@ export var gravity_constant_exp = -11.0
 export var production_server_url = "ws://distant-horizon.io:25611/ws/"
 export var debug_server_url = "ws://localhost:25611/ws/"
 
+export var request_batching = true
 var primary_player = null
 var targeting_circle = null
 
@@ -31,12 +32,7 @@ func server_url():
 		return debug_server_url
 	else:
 		return production_server_url
-		
-func angular_diff(a, b):
-	var vecA = polar2cartesian(1, a)
-	var vecB = polar2cartesian(1, b)
-	return vecB.angle_to(vecA)
-	
+
 func find_station(station_name):
 	var stations = get_tree().get_nodes_in_group("Stations")
 	for station in stations:
@@ -110,4 +106,8 @@ func get_targeting_circle():
 	
 func get_current_zoom():
 	return get_primary_player().get_node("Camera2D").zoom.x
+	
+func angular_diff(from, to):
+	return fposmod(to - from + PI, PI * 2) - PI
+	
 

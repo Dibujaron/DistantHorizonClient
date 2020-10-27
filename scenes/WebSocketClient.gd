@@ -36,8 +36,11 @@ func _process(delta):
 		
 func _on_data():
 	var msg = read_json_message()
-	incoming_message_queue.push_back(msg)
-	
+	if Global.request_batching:
+		incoming_message_queue.push_back(msg)
+	else:
+		process_message(msg)
+		
 func process_message(json):
 	var message_type = json["message_type"]
 	if message_type == "world_state":
@@ -64,7 +67,11 @@ func process_message(json):
 		Global.get_chat_hud().receive_chat_message(json)
 
 func queue_outgoing_message(msg_dict):
-	outgoing_message_queue.push_back(JSON.print(msg_dict))
+	var json_msg = JSON.print(msg_dict)
+	if Global.request_batching:
+		outgoing_message_queue.push_back(json_msg)
+	else:
+		send_json_message(json_msg)
 	
 func purchase_from_station(commodity_name, quantity):
 	var dict = {}

@@ -41,7 +41,7 @@ var hold_occupied = 0
 
 export var default_primary_color = Color.blue
 export var default_secondary_color = Color.white
-
+export var max_rotation_correction = 0.0001
 func _ready():
 	_set_primary_color(default_primary_color)
 	_set_secondary_color(default_secondary_color)
@@ -63,7 +63,6 @@ func json_init(json):
 	main_engine_thrust = json["main_engine_thrust"]
 	manu_engine_thrust = json["manu_engine_thrust"]
 	rotation_power = json["rotation_power"]
-	rotation_error_adjust = rotation_power / 10
 	global_rotation = json["rotation"]
 	global_position = Global.json_to_vec(json["global_pos"])
 	hold_size = json["hold_size"]
@@ -138,7 +137,6 @@ func json_update_inputs(json):
 	json_sync_state(json)
 	
 var last_sync_time = 0.0
-var steps = []
 
 func json_sync_state(json):
 	var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
@@ -150,11 +148,16 @@ func json_sync_state(json):
 		global_rotation = expected_rotation
 		velocity = Vector2(0,0)
 	else:
-		#todo these should really be in controller_heartbeat
 		var expected_rotation = json["rotation"]
+		var true_rotation = global_rotation
+		var new_rotation_error = Global.angular_diff(expected_rotation, true_rotation)
+		if is_zero_approx(new_rotation_error):
+			rotation_error = 0.0
+		else:
+			rotation_error = new_rotation_error
+
 		var expected_position = Global.json_to_vec(json["global_pos"])
 		var expected_velocity = Global.json_to_vec(json["velocity"])
-		global_rotation = expected_rotation
 		var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
 		var true_pos_after_time = global_position + (velocity * sync_delta)
 		var velocity_adj = expected_pos_after_time - true_pos_after_time
@@ -190,6 +193,21 @@ func _process(delta):
 			global_rotation -= rotation_power * delta
 		if tiller_right:
 			global_rotation += rotation_power * delta
+		if not is_zero_approx(rotation_error):
+			if rotation_error > 0.0:
+				if rotation_error > max_rotation_correction:
+					global_rotation -= max_rotation_correction
+					rotation_error -= max_rotation_correction
+				else:
+					global_rotation -= rotation_error
+					rotation_error = 0.0
+			else:
+				if abs(rotation_error) > max_rotation_correction:
+					global_rotation += max_rotation_correction
+					rotation_error += max_rotation_correction
+				else:
+					global_rotation += rotation_error
+					rotation_error = 0.0
 		velocity += Global.get_gravity_acceleration(global_position) * delta
 		global_position += velocity * delta
 	tick_count += 1
