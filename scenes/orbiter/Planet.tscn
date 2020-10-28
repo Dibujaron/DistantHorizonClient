@@ -15,14 +15,24 @@ animations = [ {
 "name": "ContinentalForest",
 "speed": 1.0
 }, {
-"frames": [ ExtResource( 6 ) ],
+"frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "ContinentalDesert",
-"speed": 5.0
+"name": "GasGiant",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 5 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "StarRedGiant",
+"speed": 1.0
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "ContinentalPlains",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "RockyIce",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
@@ -30,15 +40,20 @@ animations = [ {
 "name": "ContinentalOcean",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 3 ) ],
+"frames": [ ExtResource( 7 ), ExtResource( 5 ), ExtResource( 2 ) ],
 "loop": true,
-"name": "GasGiant",
+"name": "StarYellow",
 "speed": 1.0
 }, {
-"frames": [ ExtResource( 4 ) ],
+"frames": [ ExtResource( 7 ), ExtResource( 5 ), ExtResource( 2 ) ],
 "loop": true,
-"name": "RockyBarren",
+"name": "StarWhiteDwarf",
 "speed": 1.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "ContinentalDesert",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
@@ -47,28 +62,13 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "RockyVolcanic",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 7 ), ExtResource( 5 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "StarWhiteDwarf",
-"speed": 1.0
-}, {
-"frames": [ ExtResource( 7 ), ExtResource( 5 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "StarRedGiant",
+"name": "RockyBarren",
 "speed": 1.0
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "RockyIce",
+"name": "RockyVolcanic",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 7 ), ExtResource( 5 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "StarYellow",
-"speed": 1.0
 } ]
 
 [node name="Planet" type="Node2D"]

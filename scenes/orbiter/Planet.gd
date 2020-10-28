@@ -10,20 +10,6 @@ var tidal_lock = false
 var type = "Star"
 var mass = 0
 var min_orbital_altitude = 0
-export var type_scale_map = {
-	"StarRedGiant": 1.0,
-	"StarYellow": 1.0,
-	"StarWhiteDwarf": 1.0,
-	"ContinentalForest": 0.2,
-	"ContinentalDesert": 0.2,
-	"ContinentalPlains": 0.2,
-	"ContinentalOcean": 0.2,
-	"ContinentalIce": 0.2,
-	"RockyVolcanic": 0.1,
-	"RockyIce": 0.1,
-	"RockyBarren": 0.1,
-	"GasGiant": 0.75
-}
 
 func get_mass():
 	return mass
@@ -44,6 +30,7 @@ func json_init(planet_info):
 	var scale_fac = planet_info["scale"]
 	var planet_scale = Vector2(scale_fac, scale_fac)
 	$AnimatedSprite.global_scale = planet_scale
+
 
 func json_update(planet_info):
 	.json_update(planet_info)

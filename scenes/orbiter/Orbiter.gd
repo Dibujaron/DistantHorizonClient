@@ -19,7 +19,9 @@ func _ready():
 	
 func json_init(orbiter_info):
 	orbiter_name = orbiter_info["name"]
-	position = Global.json_to_vec(orbiter_info["relative_pos"])
+	var parent_position = get_parent().global_position
+	var relative_position = Global.json_to_vec(orbiter_info["relative_pos"])
+	global_position = parent_position + relative_position
 	base_angular_velocity = float(orbiter_info["angular_velocity"])
 	current_angular_velocity = base_angular_velocity
 	orbital_radius = orbiter_info["orbital_radius"]
@@ -31,7 +33,7 @@ func json_update(orbiter_info):
 	var elapsed_time = current_time - last_update
 	expected_angular_pos = orbiter_info["angular_pos"]
 	var angular_pos = position.angle()
-	var current_error = Global.angular_diff(expected_angular_pos, angular_pos)
+	var current_error = Global.angular_diff(angular_pos, expected_angular_pos)
 	if elapsed_time > 0:
 		var delta = velocity_controller.calculate(current_error, elapsed_time)
 		current_angular_velocity = base_angular_velocity + delta

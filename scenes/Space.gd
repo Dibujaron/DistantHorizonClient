@@ -166,7 +166,7 @@ func initialize_orbiters(message):
 		else:
 			add_child(station)
 		station.json_init(station_info)
-		if station.name == "Stn_Arion_Spaceport":
+		if station.name == "Stn_Regalis_Hydro":
 			var circle = preload("res://scenes/player/TargetingCircle.tscn").instance()
 			circle.navigate_to(station.name)
 	Global.get_navigation_menu().init()
