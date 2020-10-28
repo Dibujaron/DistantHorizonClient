@@ -28,19 +28,19 @@ margin_right = 234.0
 margin_bottom = 14.0
 
 [node name="--- Welcome to" type="Label" parent="HBoxContainer/VBoxContainer/HeaderLabel"]
-margin_right = 97.0
+margin_right = 15.0
 margin_bottom = 14.0
-text = "--- Welcome to"
+text = "---"
 
 [node name="StationName" type="Label" parent="HBoxContainer/VBoxContainer/HeaderLabel"]
-margin_left = 101.0
-margin_right = 147.0
+margin_left = 19.0
+margin_right = 65.0
 margin_bottom = 14.0
 text = "$NAME"
 
 [node name="---" type="Label" parent="HBoxContainer/VBoxContainer/HeaderLabel"]
-margin_left = 151.0
-margin_right = 166.0
+margin_left = 69.0
+margin_right = 84.0
 margin_bottom = 14.0
 text = "---"
 
@@ -90,6 +90,9 @@ margin_bottom = 126.0
 
 [node name="DepartButton" type="Button" parent="HBoxContainer/VBoxContainer"]
 margin_top = 130.0
-margin_right = 234.0
+margin_right = 200.0
 margin_bottom = 150.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 2
+size_flags_vertical = 2
 text = "Depart"
