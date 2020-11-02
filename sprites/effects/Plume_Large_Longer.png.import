@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/c2.png-a42749199702d673000f0b13cc7c5f2c.stex"
+path="res://.import/Plume_Large_Longer.png-239f5bc96b9549a6c78c5665c35594bd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/ships/Rijay/Apollo/c2.png"
-dest_files=[ "res://.import/c2.png-a42749199702d673000f0b13cc7c5f2c.stex" ]
+source_file="res://sprites/effects/Plume_Large_Longer.png"
+dest_files=[ "res://.import/Plume_Large_Longer.png-239f5bc96b9549a6c78c5665c35594bd.stex" ]
 
 [params]
 

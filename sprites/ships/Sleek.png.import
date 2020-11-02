@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/constant_color.png-be6739e99db70d8867f64e37e8293a27.stex"
+path="res://.import/Sleek.png-661cd8fe599cdf0cdff1bf2b808bce3c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/ships/Rijay/Apollo/constant_color.png"
-dest_files=[ "res://.import/constant_color.png-be6739e99db70d8867f64e37e8293a27.stex" ]
+source_file="res://sprites/ships/Sleek.png"
+dest_files=[ "res://.import/Sleek.png-661cd8fe599cdf0cdff1bf2b808bce3c.stex" ]
 
 [params]
 
