@@ -15,7 +15,7 @@ func init(parent, station_name):
 	station = Global.get_space().stations[station_name]
 	update()
 	
-func update():
+func do_update():
 	if station != null:
 		var player_ship = Global.get_primary_player_ship()
 		if player_ship and player_ship.docked() and player_ship.docked_to_station == station:

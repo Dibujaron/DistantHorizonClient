@@ -16,7 +16,7 @@ func init():
 		var inst = menu_item_scene.instance()
 		$VBoxContainer.add_child(inst)
 		inst.init(self, stn_name)
-	update()
+	do_update()
 		
 func on_navigation_selected(stn_name):
 	print("navigating to ", stn_name)
@@ -38,7 +38,7 @@ func _process(delta):
 		ticks_since_update = 0
 	ticks_since_update += 1
 	
-func update():
+func do_update():
 	var children = $VBoxContainer.get_children()
 	var children_sorted = children.duplicate()
 	children_sorted.sort_custom(self, "sort_by_distance")
@@ -48,7 +48,7 @@ func update():
 		$VBoxContainer.move_child(child, i)
 					
 	for child in $VBoxContainer.get_children():
-		child.update()
+		child.do_update()
 
 func sort_by_distance(a,b):
 	var dist_a = a.get_dist_squared()

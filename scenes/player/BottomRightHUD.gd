@@ -16,14 +16,18 @@ func get_linked_ship():
 	return linked_ship
 
 var ticks_since_update = 0
+var enabled = false
 func _process(delta):
-	if ticks_since_update >= update_every_n_ticks:
-		update()
+	var targeting_circle = Global.get_targeting_circle()
+	var should_be_enabled = targeting_circle != null and targeting_circle.is_enabled()
+	if enabled != should_be_enabled or ticks_since_update >= update_every_n_ticks:
+		do_update(targeting_circle)
+		enabled = should_be_enabled
 		ticks_since_update = 0
 	ticks_since_update += 1
-func update():
+	
+func do_update(targeting_circle):
 	var target_dist_label = $DistToTargetLabel
-	var targeting_circle = Global.get_targeting_circle()
 	if targeting_circle != null and targeting_circle.is_enabled():
 		var offset = targeting_circle.global_position - get_linked_ship().global_position
 		var dist = offset.length()

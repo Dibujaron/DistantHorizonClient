@@ -113,10 +113,8 @@ func angular_diff(from, to):
 func pretty_print_distance(dist):
 	if dist >= 500000:
 		return str(stepify(dist / 1000000,0.01)) + " Muu"
-	elif dist > 10000:
-		return str(round(dist / 1000)) + " Kuu"
 	elif dist > 1000:
-		return str(stepify(dist / 1000,0.01)) + " Kuu"
+		return str(round(dist / 1000)) + " Kuu"
 	else:
 		return str(round(dist)) + " uu"
 
