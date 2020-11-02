@@ -27,7 +27,7 @@ func update():
 		var player = Global.get_primary_player()
 		var player_position = player.global_position
 		var distance = get_distance()
-		$DistanceVal.text = str(int(round(distance))) + "uu"
+		$DistanceVal.text = Global.pretty_print_distance(distance)
 		
 func get_distance():
 	return get_offset_vector().length()
