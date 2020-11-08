@@ -121,27 +121,27 @@ func zoom_in():
 		#parallax_bg.get_node("LayerTop").motion_scale *= zoom_factor
 		#parallax_bg.get_node("LayerMiddle").motion_scale *= zoom_factor
 		#parallax_bg.get_node("LayerLower").motion_scale *= zoom_factor
-		if new_zoom <= 2:
-			parallax_bg.get_node("LayerTop").show()
 		if new_zoom <= 4:
+			parallax_bg.get_node("LayerTop").show()
+		if new_zoom <= 16:
 			parallax_bg.get_node("LayerMiddle").show()
-		if new_zoom <= 8:
-			parallax_bg.get_node("LayerLower").show()
+		#if new_zoom <= 8:
+		#	parallax_bg.get_node("LayerLower").show()
 		#print("camera zoom is ", camera.zoom)
 
 func zoom_out():
 	var camera = $Camera2D
-	if camera.zoom.x < 64:
+	if camera.zoom.x < 32:
 		camera.zoom = camera.zoom / zoom_factor
 		var parallax_bg = get_tree().get_root().get_node("Space").get_node("ParallaxBackground")
 		#parallax_bg.get_node("LayerTop").motion_scale /= zoom_factor
 		#parallax_bg.get_node("LayerMiddle").motion_scale /= zoom_factor
 		#parallax_bg.get_node("LayerLower").motion_scale /= zoom_factor
 		var new_zoom = camera.zoom.x
-		if new_zoom > 2:
-			parallax_bg.get_node("LayerTop").hide()
 		if new_zoom > 4:
+			parallax_bg.get_node("LayerTop").hide()
+		if new_zoom > 16:
 			parallax_bg.get_node("LayerMiddle").hide()
-		if new_zoom > 8:
-			parallax_bg.get_node("LayerLower").hide()
+		#if new_zoom > 8:
+		#	parallax_bg.get_node("LayerLower").hide()
 		#print("camera zoom is ", camera.zoom)
