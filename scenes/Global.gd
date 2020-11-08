@@ -13,7 +13,8 @@ export var debug_server_url = "ws://localhost:25611/ws/"
 export var request_batching = true
 var primary_player = null
 var targeting_circle = null
-
+var display_username = null
+var qualified_username = null
 export var ship_scenes = {
 	"phe.thumper": preload("res://scenes/ship/Ship_PHE_Thumper.tscn"),
 	"rijay.mockingbird": preload("res://scenes/ship/Ship_Rijay_Mockingbird.tscn"),
@@ -27,6 +28,21 @@ var gravity_constant = gravity_constant_base * pow(10, gravity_constant_exp) * g
 
 func should_vanish_docked_ai_ships():
 	return false
+	
+func init_user_info(msg):
+	var info = msg["user"]
+	if info["message"] and info["message"] == "401: Unauthorized":
+		display_username = "Guest"
+		qualified_username = null
+	else:
+		display_username = info["username"]
+		qualified_username = info["username"] + "#" + info["discriminator"]
+
+func get_display_username():
+	return display_username
+	
+func get_qualified_username():
+	return qualified_username
 	
 func server_url():
 	if OS.is_debug_build():
