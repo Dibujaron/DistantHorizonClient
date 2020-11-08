@@ -6,6 +6,7 @@
 [ext_resource path="res://sprites/background/background.png" type="Texture" id=4]
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
+scroll_base_scale = Vector2( 2, 2 )
 scroll_ignore_camera_zoom = true
 
 [node name="LayerBackground" type="ParallaxLayer" parent="."]
