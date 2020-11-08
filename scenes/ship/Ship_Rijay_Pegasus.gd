@@ -8,3 +8,6 @@ func _ready():
 	fore_thrusters = []
 	aft_thrusters = []
 	docking_ports = []
+
+func _get_center_mass():
+	return Vector2(0, -5)

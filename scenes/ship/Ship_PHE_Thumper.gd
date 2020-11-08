@@ -7,13 +7,15 @@ extends "res://scenes/ship/Ship.gd"
 # Called when the node enters the scene tree for the first time.
 var hold_occupied_old = 0
 func _ready():
-	
 	main_engines = [get_node("EngineP"), get_node("EngineS")]
 	port_thrusters = [get_node("ManuPF"), get_node("ManuPA")]
 	starboard_thrusters = [get_node("ManuSF"), get_node("ManuSA")]
 	fore_thrusters = [get_node("ManuFP"), get_node("ManuFS")]
 	aft_thrusters = [get_node("ManuAP"), get_node("ManuAS")]
 	docking_ports = []
+	
+func _get_center_mass():
+	return Vector2(0, -5)
 	
 func _process(delta):
 	var hold_occupied_new = self.hold_occupied

@@ -6,7 +6,7 @@
 [ext_resource path="res://sprites/ships/PHE/Longhorn/c2.png" type="Texture" id=4]
 [ext_resource path="res://sprites/ships/PHE/Longhorn/constant_color.png" type="Texture" id=5]
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
@@ -14,7 +14,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
@@ -49,10 +49,10 @@ position = Vector2( 8, 14.5 )
 anim_name = "plume_large"
 
 [node name="Color1" type="AnimatedSprite" parent="."]
-frames = SubResource( 2 )
+frames = SubResource( 1 )
 
 [node name="Color2" type="AnimatedSprite" parent="."]
-frames = SubResource( 1 )
+frames = SubResource( 2 )
 
 [node name="ConstantColor" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )

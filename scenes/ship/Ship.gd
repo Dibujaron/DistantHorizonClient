@@ -45,7 +45,12 @@ export var max_rotation_correction = 0.0001
 func _ready():
 	_set_primary_color(default_primary_color)
 	_set_secondary_color(default_secondary_color)
+	var center_mass_offset = _get_center_mass()
+	for child in get_children():
+		child.position = child.position + center_mass_offset
 	
+func _get_center_mass():
+	return Vector2(0,0)
 func docked():
 	return docked_to_station and docked_from_port and docked_to_port
 	
