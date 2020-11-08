@@ -41,6 +41,9 @@ func init_user_info(msg):
 func get_display_username():
 	return display_username
 	
+func is_user_guest():
+	return get_qualified_username() == null
+	
 func get_qualified_username():
 	return qualified_username
 	

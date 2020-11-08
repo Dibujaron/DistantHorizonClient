@@ -25,7 +25,11 @@ func _on_request_completed(result, response_code, headers, body):
 	Global.init_user_info(json.result)
 	var join_button = get_node("VBoxContainer/JoinButton")
 	join_button.disabled = false
-	join_button.text = "Join game as " + Global.get_display_username()
+	var username_label = get_node("VBoxContainer/UsernameLabel")
+	if Global.is_user_guest():
+		username_label.text = "Warning: playing as guest, progress will not be saved!"
+	else:
+		username_label.text = "Welcome, " + Global.get_display_username() + "!"
 	
 func _join_game():
 	get_tree().change_scene("res://scenes/Space.tscn")
