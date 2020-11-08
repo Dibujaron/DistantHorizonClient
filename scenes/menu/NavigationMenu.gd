@@ -34,7 +34,7 @@ func _process(delta):
 	margin_left = margin
 	
 	if ticks_since_update >= update_every_n_ticks:
-		update()
+		do_update()
 		ticks_since_update = 0
 	ticks_since_update += 1
 	
