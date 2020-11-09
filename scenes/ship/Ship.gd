@@ -177,7 +177,7 @@ func _process(delta):
 	currently_inside_planet = inside_planet
 	
 	if docked():
-		var my_port_relative = Global.json_to_vec(docked_from_port.relative_position)
+		var my_port_relative = Global.json_to_vec(docked_from_port.relative_position) + _get_center_mass()
 		var station_port_relative = Global.json_to_vec(docked_to_port.relative_position)
 		var rotation_offset = docked_to_port.relative_rotation + docked_from_port.relative_rotation
 		global_rotation = docked_to_station.global_rotation + rotation_offset
