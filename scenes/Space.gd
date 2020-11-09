@@ -129,7 +129,6 @@ func cleanup_removed_ships(removed_info):
 			print("error attempted to remove unregistered ship ", ship_id)
 		
 func initialize_orbiters(message):
-	var player_id = message["player_id"]
 	var world_state = message["world_state"]
 	var json_planets = world_state["planets"]
 	var json_stations = world_state["stations"]

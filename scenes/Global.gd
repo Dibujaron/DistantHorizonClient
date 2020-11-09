@@ -7,7 +7,8 @@ var token = JavaScript.eval("")
 export var gravity_constant_fudge = 50.0
 export var gravity_constant_base = 6.67408
 export var gravity_constant_exp = -11.0
-export var production_server_url = "ws://distant-horizon.io:25611/ws/"
+
+var production_server_url = null
 export var debug_server_url = "ws://localhost:25611/ws/"
 
 export var request_batching = true
@@ -15,6 +16,9 @@ var primary_player = null
 var targeting_circle = null
 var display_username = null
 var qualified_username = null
+var login_key = null
+var authenticated = false
+
 export var ship_scenes = {
 	"phe.thumper": preload("res://scenes/ship/Ship_PHE_Thumper.tscn"),
 	"rijay.mockingbird": preload("res://scenes/ship/Ship_Rijay_Mockingbird.tscn"),
@@ -29,14 +33,18 @@ var gravity_constant = gravity_constant_base * pow(10, gravity_constant_exp) * g
 func should_vanish_docked_ai_ships():
 	return false
 	
-func init_user_info(msg):
-	var info = msg["user"]
-	if info["message"] and info["message"] == "401: Unauthorized":
+func init_session_info(msg):
+	production_server_url = msg["server_address"]
+	var logged_in = msg["logged_in"]
+	authenticated = logged_in
+	if logged_in:
+		var user_info = msg["user"]
+		display_username = user_info["username"]
+		qualified_username = user_info["username"] + "#" + user_info["discriminator"]
+		login_key = msg["client_key"]
+	else:
 		display_username = "Guest"
 		qualified_username = null
-	else:
-		display_username = info["username"]
-		qualified_username = info["username"] + "#" + info["discriminator"]
 
 func get_display_username():
 	return display_username

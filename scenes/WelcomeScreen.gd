@@ -10,8 +10,11 @@ func _ready():
 	get_node("VBoxContainer/CommunityButtons/Discord").connect("pressed", self, "_open_discord")
 	get_node("VBoxContainer/CommunityButtons/Reddit").connect("pressed", self, "_open_reddit")
 	$HTTPRequest.connect("request_completed", self, "_on_request_completed")
-	$HTTPRequest.request("http://distant-horizon.io/me")
 	join_button.disabled = true
+	var error = $HTTPRequest.request("http://distant-horizon.io/client_start_login")
+	if error != OK:
+		var username_label = get_node("VBoxContainer/UsernameLabel")
+		username_label.text = "Error: failed to connect to session server."
 	
 func _process(delta):
 	var screen_size = get_viewport_rect().size
@@ -22,7 +25,7 @@ func _process(delta):
 
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
-	Global.init_user_info(json.result)
+	Global.init_session_info(json.result)
 	var join_button = get_node("VBoxContainer/JoinButton")
 	join_button.disabled = false
 	var username_label = get_node("VBoxContainer/UsernameLabel")

@@ -22,7 +22,14 @@ func _closed(was_clean = false):
 
 func _connected(proto = ""):
 	print("Connection established to server ", Global.server_url(), ".")
-
+	var dict = {}
+	var authenticated = Global.authenticated
+	dict["message_type"] = "init"
+	dict["authenticated"] = authenticated
+	if authenticated:
+		dict["client_key"] = Global.login_key
+	send_json_message(dict)
+	
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
 		_client.disconnect_from_host(1000, "game closed")
