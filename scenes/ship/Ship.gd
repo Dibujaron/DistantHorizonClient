@@ -63,7 +63,13 @@ func _set_secondary_color(color):
 	$Color2.modulate = color
 	if has_node("Color2Shaded"):
 		$Color2Shaded.modulate = Color.from_hsv(color.h, color.s, color.v - 0.1)
-	
+
+func should_be_visible():
+	if is_player_ship:
+		return true
+	else:
+		return not (docked() and Global.should_vanish_docked_ai_ships())
+		
 func json_init(json):
 	main_engine_thrust = json["main_engine_thrust"]
 	manu_engine_thrust = json["manu_engine_thrust"]

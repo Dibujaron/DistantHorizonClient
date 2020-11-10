@@ -95,6 +95,7 @@ func get_space():
 	
 func get_gui_canvas():
 	return get_space().get_node("GuiCanvas")
+	
 func get_chat_hud():
 	return get_gui_canvas().get_node("BottomLeftHUD")
 	

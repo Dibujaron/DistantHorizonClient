@@ -1,15 +1,31 @@
 extends Node2D
 
 var initialized_orbiters = false
+var initialized_ships = false
+var has_initialized_own_ship = false
+
 var planets = {}
 var stations = {}
 var ships = {}
-
-var has_initialized_own_ship = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
+func initialization_complete():
+	return initialized_orbiters and initialized_ships and has_initialized_own_ship
+	
+var objects_visible = false
+func _process(delta):
+	if not objects_visible and initialization_complete():
+		for planet in planets.values():
+			planet.show()
+		for station in stations.values():
+			station.show()
+		for ship in ships.values():
+			if ship.should_be_visible():
+				ship.show()
+		objects_visible = true
+		
 func receive_world_update(message):
 	if not initialized_orbiters:
 		initialize_orbiters(message)
@@ -78,19 +94,6 @@ func json_update_orbiters(message):
 		var station = stations[station_info["name"]]
 		station.json_update(station_info)
 		
-func initialize_ships_startup(message):
-	initialize_added_ships(message)
-	
-	print("initializing player's ship.")
-	var my_ship_id = message["ship_id"]
-	var my_ship = ships[my_ship_id]
-	var pilot = $PlayerPilot
-	remove_child(pilot)
-	my_ship.add_child(pilot)
-	$GuiCanvas/HUD.visible = true
-	$GuiCanvas/HUD.link_ship(my_ship)
-	my_ship.is_player_ship = true
-	
 func initialize_added_ships(message):
 	var json_ships = message["ships_added"]
 	var my_ship_id = message["ship_id"]
@@ -101,6 +104,8 @@ func initialize_added_ships(message):
 		else:
 			var ship_scene = Global.ship_scenes[ship_info["type"]]
 			var ship = ship_scene.instance()
+			if not initialization_complete():
+				ship.hide()
 			ships[ship_id] = ship
 			add_child(ship)
 			ship.json_init(ship_info)
@@ -115,6 +120,7 @@ func initialize_added_ships(message):
 				$GuiCanvas/BottomLeftHUD.link_ship(ship) #todo clean this up
 				ship.is_player_ship = true
 				has_initialized_own_ship = true
+	initialized_ships = true
 	print("initialized ", json_ships.size(), " new ships.")
 
 func cleanup_removed_ships(removed_info):
@@ -136,6 +142,8 @@ func initialize_orbiters(message):
 	var planet_scene = preload("res://scenes/orbiter/Planet.tscn")
 	for planet_info in json_planets:
 		var planet = planet_scene.instance()
+		if not initialization_complete():
+			planet.hide()
 		planet.name = planet_info["name"]
 		planets[planet.name] = planet
 		planet.add_to_group("planets")
@@ -154,6 +162,8 @@ func initialize_orbiters(message):
 	var station_scene = preload("res://scenes/station/Station.tscn")
 	for station_info in json_stations:
 		var station = station_scene.instance()
+		if not initialization_complete():
+			station.hide()
 		station.name = station_info["name"]
 		stations[station.name] = station
 		station.add_to_group("stations")

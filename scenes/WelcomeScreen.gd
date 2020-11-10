@@ -4,7 +4,9 @@ extends MarginContainer
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+
 func _ready():
+	hide()
 	var join_button = get_node("VBoxContainer/JoinButton")
 	join_button.connect("pressed", self, "_join_game")
 	get_node("VBoxContainer/CommunityButtons/Discord").connect("pressed", self, "_open_discord")
@@ -15,6 +17,7 @@ func _ready():
 	if error != OK:
 		var username_label = get_node("VBoxContainer/UsernameLabel")
 		username_label.text = "Error: failed to connect to session server."
+		show()
 	
 func _process(delta):
 	var screen_size = get_viewport_rect().size
@@ -33,6 +36,7 @@ func _on_request_completed(result, response_code, headers, body):
 		username_label.text = "Warning: playing as guest, progress will not be saved!"
 	else:
 		username_label.text = "Welcome, " + Global.get_display_username() + "!"
+	show()
 	
 func _join_game():
 	get_tree().change_scene("res://scenes/Space.tscn")

@@ -12,6 +12,7 @@ var prior_global_rotation_degs = 0
 var current_target = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	hide()
 	Global.set_targeting_circle(self)
 
 func is_on_screen():
@@ -45,7 +46,6 @@ func _process(delta):
 	prior_global_rotation_degs = new_rotation
 	var new_zoom = Global.get_current_zoom()
 	if new_zoom != current_zoom:
-		print("zoom factor is ", new_zoom)
 		var new_scale_factor = scale_factor_base_close
 		if new_zoom >= 32:
 			new_scale_factor = scale_factor_base_far
