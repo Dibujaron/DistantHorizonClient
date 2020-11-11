@@ -9,6 +9,7 @@ var recent_projections_vel = []
 var target_position = Vector2(0,0)
 
 var best_velocity = Vector2(0,0)
+#var best_position = Vector2(0,0)
 func _ready():
 	pass # Replace with function body.
 
@@ -44,6 +45,7 @@ func _process(delta):
 	var avg_position = sum_position / recent_projections_pos.size()
 	var avg_velocity = sum_velocity / recent_projections_vel.size()
 	best_velocity = velocity_projected
+	
 	global_rotation = avg_velocity.angle()
 	global_position = avg_position
 # Called every frame. 'delta' is the elapsed time since the previous frame.
