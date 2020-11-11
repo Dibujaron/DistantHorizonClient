@@ -118,7 +118,7 @@ func initialize_added_ships(message):
 				$GuiCanvas/BottomRightHUD.link_ship(ship)
 				$GuiCanvas/BottomLeftHUD.visible = true
 				$GuiCanvas/BottomLeftHUD.link_ship(ship) #todo clean this up
-				ship.is_player_ship = true
+				ship.init_as_player_ship()
 				has_initialized_own_ship = true
 	initialized_ships = true
 	print("initialized ", json_ships.size(), " new ships.")
