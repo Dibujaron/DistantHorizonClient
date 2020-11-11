@@ -7,4 +7,4 @@ func initialize(ship):
 	for i in range(0, num_breadcrumbs):
 		var breadcrumb = breadcrumb_scene.instance()
 		add_child(breadcrumb)
-		breadcrumb.initialize(i, ship)
+		breadcrumb.initialize(i + 1, ship)

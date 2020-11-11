@@ -2,10 +2,11 @@ extends Node2D
 
 export var breadcrumb_interval = 1.0
 export var calculation_steps_per_interval = 10.0
+export var projections_to_keep = 20
 var step_length = breadcrumb_interval / calculation_steps_per_interval
 var my_ship = null
 var steps_to_project = 0
-
+var recent_projections = []
 var target_position = Vector2(0,0)
 func _ready():
 	pass # Replace with function body.
@@ -33,7 +34,16 @@ func _process(delta):
 			velocity_projected += Vector2(0, -manu_engine_thrust).rotated(ship_rotation) * step_length
 		velocity_projected += Global.get_gravity_acceleration(position_projected) * delta
 		position_projected += velocity_projected * delta
-	global_position = position_projected
+		
+	recent_projections.push_front(position_projected)
+	if recent_projections.size() > projections_to_keep:
+		recent_projections.pop_back()
+	
+	var sum = Vector2(0,0)
+	for proj in recent_projections:
+		sum += proj
+	var recent_avg = sum / recent_projections.size()
+	global_position = recent_avg
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
