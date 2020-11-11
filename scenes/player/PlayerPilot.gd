@@ -127,7 +127,7 @@ func zoom_in():
 			parallax_bg.get_node("LayerMiddle").show()
 		#if new_zoom <= 8:
 		#	parallax_bg.get_node("LayerLower").show()
-		#print("camera zoom is ", camera.zoom)
+		print("camera zoom is ", camera.zoom.x)
 
 func zoom_out():
 	var camera = $Camera2D
@@ -144,4 +144,4 @@ func zoom_out():
 			parallax_bg.get_node("LayerMiddle").hide()
 		#if new_zoom > 8:
 		#	parallax_bg.get_node("LayerLower").hide()
-		#print("camera zoom is ", camera.zoom)
+		print("camera zoom is ", camera.zoom.x)
