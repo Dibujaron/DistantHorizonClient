@@ -55,5 +55,11 @@ func globalPosAtTime(delta):
 	else:
 		return relativePosAtTime(delta)
 		
+func getTopParent():
+	if has_parent:
+		return get_parent().getTopParent()
+	else:
+		return self
+		
 func velocityAtTime(delta):
 	return globalPosAtTime(delta + 1) - globalPosAtTime(0) 

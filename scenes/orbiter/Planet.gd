@@ -26,10 +26,10 @@ func json_init(planet_info):
 	var new_type = planet_info["type"]
 	if new_type != type:
 		type = new_type
-		$AnimatedSprite.play(type)
+		$SpriteHolder/AnimatedSprite.play(type)
 	var scale_fac = planet_info["scale"]
 	var planet_scale = Vector2(scale_fac, scale_fac)
-	$AnimatedSprite.global_scale = planet_scale
+	$SpriteHolder.global_scale = planet_scale
 
 
 func json_update(planet_info):
@@ -37,10 +37,13 @@ func json_update(planet_info):
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if tidal_lock:
-		$AnimatedSprite.look_at(get_parent().global_position)
-	else:
-		$AnimatedSprite.rotation += rotation_speed * delta
+	var top_parent = getTopParent()
+	if top_parent != self:
+		$SpriteHolder.look_at(top_parent.global_position)
+	#if tidal_lock:
+	#	$AnimatedSprite.look_at(get_parent().global_position)
+	#else:
+	#	$AnimatedSprite.rotation += rotation_speed * delta
 
 func json_to_vec(json):
 	return Vector2(json["x"],json["y"])

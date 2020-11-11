@@ -28,7 +28,7 @@ func _process(delta):
 	
 func do_update(targeting_circle):
 	var target_dist_label = $DistToTargetLabel
-	if targeting_circle and targeting_circle.is_enabled():
+	if targeting_circle and targeting_circle.is_enabled() and get_linked_ship():
 		var offset = targeting_circle.global_position - get_linked_ship().global_position
 		var dist = offset.length()
 		target_dist_label.text = "Distance to target: " + Global.pretty_print_distance(dist)
