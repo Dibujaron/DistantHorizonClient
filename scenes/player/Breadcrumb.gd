@@ -1,19 +1,16 @@
 extends Node2D
 
-export var breadcrumb_interval_base = 1.0
-export var calculation_steps_per_base_interval = 10.0
-export var projections_to_keep = 20.0
-var step_length = 1.0/60.0#breadcrumb_interval_base / calculation_steps_per_base_interval
-var my_ship = null
-var recent_projections = []
+export var calculation_steps = 30
+export var projections_to_keep = 30
+var step_length = 1.0/60.0
+
+var recent_projections_pos = []
+var recent_projections_vel = []
 var target_position = Vector2(0,0)
-var my_index = 0
+
+var best_velocity = Vector2(0,0)
 func _ready():
 	pass # Replace with function body.
-
-func initialize(var index, var ship):
-	my_index = index
-	my_ship = ship
 
 func _process(delta):
 	global_rotation = 0
@@ -21,27 +18,32 @@ func _process(delta):
 
 	global_scale.x = zoom
 	global_scale.y = zoom
-	var steps_to_project = breadcrumb_interval_base * my_index * calculation_steps_per_base_interval
-	var position_projected = my_ship.global_position
-	var velocity_projected = my_ship.velocity
-	for i in range(0, steps_to_project):
-		var ship_rotation = my_ship.global_rotation
-		var main_engine_thrust = my_ship.main_engine_thrust
-		var manu_engine_thrust = my_ship.manu_engine_thrust
+	var parent = get_parent()
+	var position_projected = parent.global_position
+	var velocity_projected = parent.best_velocity
+	for i in range(0, calculation_steps):
 		velocity_projected += Global.get_gravity_acceleration(position_projected) * step_length
 		position_projected += velocity_projected * step_length
 		
-	recent_projections.push_front([position_projected, velocity_projected])
-	if recent_projections.size() > projections_to_keep:
-		recent_projections.pop_back()
+	recent_projections_pos.push_front(position_projected)
+	if recent_projections_pos.size() > projections_to_keep:
+		recent_projections_pos.pop_back()
+		
+	recent_projections_vel.push_front(velocity_projected)
+	if recent_projections_vel.size() > projections_to_keep:
+		recent_projections_vel.pop_back()
 	
 	var sum_position = Vector2(0,0)
 	var sum_velocity = Vector2(0,0)
-	for proj in recent_projections:
-		sum_position += proj[0]
-		sum_velocity += proj[1]
-	var avg_position = sum_position / recent_projections.size()
-	var avg_velocity = sum_velocity / recent_projections.size()
+	for proj_pos in recent_projections_pos:
+		sum_position += proj_pos
+	
+	for proj_vel in recent_projections_vel:
+		sum_velocity += proj_vel
+		
+	var avg_position = sum_position / recent_projections_pos.size()
+	var avg_velocity = sum_velocity / recent_projections_vel.size()
+	best_velocity = velocity_projected
 	global_rotation = avg_velocity.angle()
 	global_position = avg_position
 # Called every frame. 'delta' is the elapsed time since the previous frame.
