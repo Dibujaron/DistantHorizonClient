@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
+[ext_resource path="res://themes/Pixelar.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/player/BottomRightHUD.gd" type="Script" id=3]
 
 [node name="BottomRightHUD" type="VBoxContainer"]
@@ -13,14 +14,14 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource( 1 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="DistToTargetLabel" type="Label" parent="."]
-margin_right = 96.0
-margin_bottom = 14.0
+margin_bottom = 16.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
