@@ -35,9 +35,9 @@ func _on_start_login_request_complete(result, response_code, headers, body):
 			show()
 	
 func _on_confirm_login_request_complete(result, response_code, headers, body):
-	var response = body.get_string_from_utf8()
-	print("completed confirm login request, response is ", response)
-	if response == "true":
+	var json = JSON.parse(body.get_string_from_utf8()).result
+	print("completed confirm login request, response is ", json)
+	if json["confirmed"]:
 		activate_menu()
 	else:
 		var username_label = get_node("VBoxContainer/UsernameLabel")
