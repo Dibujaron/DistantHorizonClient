@@ -1,6 +1,6 @@
 extends Node2D
 
-export var num_breadcrumbs = 5
+export var num_breadcrumbs = 1
 var best_velocity = Vector2(0,0)
 #var best_position = Vector2(0,0)
 func _ready():

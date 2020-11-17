@@ -3,13 +3,13 @@ extends Node
 var chosenPrimaryColor: Color = Color.blue
 var chosenSecondaryColor: Color = Color.white
 
-var token = JavaScript.eval("")
 export var gravity_constant_fudge = 50.0
 export var gravity_constant_base = 6.67408
 export var gravity_constant_exp = -11.0
+var debug_logins = true
 
-var production_server_url = null
-export var debug_server_url = "ws://localhost:25611/ws/"
+var production_server_address = null
+export var debug_server_address = "localhost:25611"
 
 export var request_batching = true
 var primary_player = null
@@ -34,7 +34,8 @@ func should_vanish_docked_ai_ships():
 	return false
 	
 func init_session_info(msg):
-	production_server_url = msg["server_address"]
+	print("got message ", msg)
+	production_server_address = msg["server_address"]
 	var logged_in = msg["logged_in"]
 	authenticated = logged_in
 	if logged_in:
@@ -42,9 +43,17 @@ func init_session_info(msg):
 		display_username = user_info["username"]
 		qualified_username = user_info["username"] + "#" + user_info["discriminator"]
 		login_key = msg["client_key"]
+		print("session initialized with username ", qualified_username)
+	elif OS.is_debug_build() and debug_logins:
+		display_username = "DebugUser"
+		qualified_username = "Debug#0000"
+		login_key = "debug"
+		authenticated = true
+		print("fake debug user session initialized.")
 	else:
 		display_username = "Guest"
 		qualified_username = null
+		print("session started as guest.")
 
 func get_display_username():
 	return display_username
@@ -55,11 +64,11 @@ func is_user_guest():
 func get_qualified_username():
 	return qualified_username
 	
-func server_url():
+func server_address():
 	if OS.is_debug_build():
-		return debug_server_url
+		return debug_server_address
 	else:
-		return production_server_url
+		return production_server_address
 
 func find_station(station_name):
 	var stations = get_tree().get_nodes_in_group("Stations")

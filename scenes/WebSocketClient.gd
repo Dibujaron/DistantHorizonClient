@@ -13,21 +13,23 @@ func _ready():
 	_client.connect("connection_error", self, "_closed")
 	_client.connect("connection_established", self, "_connected")
 	_client.connect("data_received", self, "_on_data")
-	print("attempting to connect to ", Global.server_url(), "...")
-	_client.connect_to_url(Global.server_url())
+	var ws_url = "ws://" + Global.server_address() + "/ws/"
+	print("attempting to connect to ", ws_url, "...")
+	_client.connect_to_url(ws_url)
 
 func _closed(was_clean = false):
 	print("Closed, clean: ", was_clean)
 	set_process(false)
 
 func _connected(proto = ""):
-	print("Connection established to server ", Global.server_url(), ".")
+	print("Connection established to server ", Global.server_address(), ".")
 	var dict = {}
 	var authenticated = Global.authenticated
 	dict["message_type"] = "init"
 	dict["authenticated"] = authenticated
 	if authenticated:
 		dict["client_key"] = Global.login_key
+	print("sending initial websocket message to complete login.")
 	send_json_message(dict)
 	
 func _notification(what):
