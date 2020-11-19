@@ -51,9 +51,9 @@ func _ready():
 	
 func init_as_player_ship():
 	is_player_ship = true
-	var breadcrumb_scene = preload("res://scenes/player/Breadcrumbs.tscn")
-	var breadcrumbs = breadcrumb_scene.instance()
-	add_child(breadcrumbs)
+	#var breadcrumb_scene = preload("res://scenes/player/Breadcrumbs.tscn")
+	#var breadcrumbs = breadcrumb_scene.instance()
+	#add_child(breadcrumbs)
 	
 func _get_center_mass():
 	return Vector2(0,0)

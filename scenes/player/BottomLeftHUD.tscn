@@ -29,7 +29,7 @@ __meta__ = {
 
 [node name="ChatDisplay" type="RichTextLabel" parent="ChatVBox"]
 margin_right = 600.0
-margin_bottom = 15.0
+margin_bottom = 19.0
 fit_content_height = true
 scroll_active = false
 scroll_following = true
@@ -39,9 +39,9 @@ __meta__ = {
 }
 
 [node name="ChatInput" type="LineEdit" parent="ChatVBox"]
-margin_top = 19.0
+margin_top = 23.0
 margin_right = 600.0
-margin_bottom = 45.0
+margin_bottom = 51.0
 rect_min_size = Vector2( 600, 20 )
 caret_blink = true
 caret_blink_speed = 0.5

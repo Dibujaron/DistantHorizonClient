@@ -29,6 +29,7 @@ func _connected(proto = ""):
 	dict["authenticated"] = authenticated
 	if authenticated:
 		dict["client_key"] = Global.login_key
+		dict["actor_name"] = Global.actor_name
 	print("sending initial websocket message to complete login.")
 	send_json_message(dict)
 	

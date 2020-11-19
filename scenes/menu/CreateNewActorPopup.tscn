@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/menu/CreateNewActorPopup.gd" type="Script" id=1]
+
+[node name="CreateNewActorPopup" type="Popup"]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainBox" type="VBoxContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="NameEntryBox" type="HBoxContainer" parent="MainBox"]
+margin_right = 153.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="MainBox/NameEntryBox"]
+margin_top = 5.0
+margin_right = 91.0
+margin_bottom = 19.0
+text = "Captain name:"
+
+[node name="NameEntry" type="LineEdit" parent="MainBox/NameEntryBox"]
+margin_left = 95.0
+margin_right = 153.0
+margin_bottom = 24.0
+placeholder_text = "enter name..."
+
+[node name="CreateButton" type="Button" parent="MainBox"]
+margin_top = 28.0
+margin_right = 153.0
+margin_bottom = 48.0
+text = "Create character"
+
+[node name="CancelButton" type="Button" parent="MainBox"]
+margin_top = 52.0
+margin_right = 153.0
+margin_bottom = 72.0
+text = "Cancel"

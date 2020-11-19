@@ -5,18 +5,26 @@ extends MarginContainer
 # var a = 2
 # var b = "text"
 
+# game start flow should be this:
+# if you select guest on mainscreen: "guest" -> game start (done)
+# if you select login on mainscreen:
+#    if no characters: create new character -> game start
+#    if one character: 'resume' or 'create new character' -> game start
+#    if multiple characters: 'resume' uses latest
+
 func _ready():
 	hide()
-	var join_button = get_node("VBoxContainer/JoinButton")
+	var join_button = get_node("MainBox/JoinButton")
 	join_button.connect("pressed", self, "_join_game")
-	get_node("VBoxContainer/CommunityButtons/Discord").connect("pressed", self, "_open_discord")
-	get_node("VBoxContainer/CommunityButtons/Reddit").connect("pressed", self, "_open_reddit")
+	var new_char_button = $MainBox/NewCharacterButton
+	new_char_button.connect("pressed", self, "_new_character_pressed")
 	$StartLoginRequest.connect("request_completed", self, "_on_start_login_request_complete")
 	$ConfirmLoginRequest.connect("request_completed", self, "_on_confirm_login_request_complete")
+	$ActorCreateOrDeleteRequest.connect("request_completed", self, "_on_refresh_actors_request_complete")
 	join_button.disabled = true
 	var error = $StartLoginRequest.request("http://distant-horizon.io/client_start_login")
 	if error != OK:
-		var username_label = get_node("VBoxContainer/UsernameLabel")
+		var username_label = get_node("MainBox/UsernameLabel")
 		username_label.text = "Error: failed to connect to session server."
 		
 func _on_start_login_request_complete(result, response_code, headers, body):
@@ -24,13 +32,13 @@ func _on_start_login_request_complete(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 	Global.init_session_info(json.result)
 	if Global.is_user_guest():
-		activate_menu()
+		_join_game() #skip ahead, don't need any more menus.
 	else:
 		var server_addr = Global.server_address()
 		var request_url = "http://" + server_addr + "/confirm_client_login/" + Global.login_key
 		var error = $ConfirmLoginRequest.request(request_url)
 		if error != OK:
-			var username_label = get_node("VBoxContainer/UsernameLabel")
+			var username_label = get_node("MainBox/UsernameLabel")
 			username_label.text = "Error: failed to connect to session server."
 			show()
 	
@@ -38,17 +46,52 @@ func _on_confirm_login_request_complete(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8()).result
 	print("completed confirm login request, response is ", json)
 	if json["confirmed"]:
-		activate_menu()
+		activate_menu(json["account_data"]["actors"])
 	else:
-		var username_label = get_node("VBoxContainer/UsernameLabel")
+		var username_label = get_node("MainBox/UsernameLabel")
 		username_label.text = "Error: failed to confirm login. Please restart game."
 		show()
+		
+func create_actor(actor_name):
+	create_or_delete_actor(actor_name, false)
 	
-func activate_menu():
+func delete_actor(actor_name):
+	create_or_delete_actor(actor_name, true)
+	
+func create_or_delete_actor(actor_name, is_delete):
+	var username = Global.qualified_username
+	var server_addr = Global.server_address()
+	var request_url = ""
+	if is_delete:
+		request_url = "http://" + server_addr + "/account/" + username + "/deleteActor"
+	else:
+		request_url = "http://" + server_addr + "/account/" + username + "/createActor"
+	var headers = ["Content-Type: application/json"]
+	print(request_url)
+	var query = "{display_name: " + actor_name + "}"
+	var error = $ActorCreateOrDeleteRequest.request(request_url, headers, false, HTTPClient.METHOD_POST, query)
+	if error != OK:
+		var username_label = get_node("MainBox/UsernameLabel")
+		username_label.text = "Error: failed to confirm login. Please restart game."
+		show()
+		
+func _on_refresh_actors_request_complete(result, response_code, headers, body):
+	var json = JSON.parse(body.get_string_from_utf8()).result
+	activate_menu(json["actors"])
+	
+func activate_menu(actors_json):
 	print("activating menu.")
-	var join_button = get_node("VBoxContainer/JoinButton")
+	for child in $MainBox/CharacterList.get_children():
+		$MainBox/CharacterList.remove_child(child)
+		
+	var existing_actor_scene = preload("res://scenes/menu/ExistingActor.tscn")
+	for actor_json in actors_json:
+		var inst = existing_actor_scene.instance()
+		$MainBox/CharacterList.add_child(inst)
+		inst.json_init(self, actor_json)
+	var join_button = get_node("MainBox/JoinButton")
 	join_button.disabled = false
-	var username_label = get_node("VBoxContainer/UsernameLabel")
+	var username_label = get_node("MainBox/UsernameLabel")
 	if Global.is_user_guest():
 		username_label.text = "Warning: playing as guest, progress will not be saved!"
 	else:
@@ -65,13 +108,5 @@ func _process(delta):
 func _join_game():
 	get_tree().change_scene("res://scenes/Space.tscn")
 	
-func _open_reddit():
-	OS.shell_open("https://old.reddit.com/r/distanthorizon/")
-	
-func _open_discord():
-	OS.shell_open("https://discord.gg/8UNdWxA")
-	
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _new_character_pressed():
+	$CreateNewActorPopup.popup_centered()

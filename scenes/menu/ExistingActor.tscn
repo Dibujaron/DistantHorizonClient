@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/menu/ExistingActor.gd" type="Script" id=1]
+[ext_resource path="res://scenes/menu/shipyard/LabeledField.tscn" type="PackedScene" id=2]
+
+[node name="ExistingActor" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.33484
+margin_right = -1.33484
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 20.0
+
+[node name="CaptainLabel" parent="TopBar" instance=ExtResource( 2 )]
+margin_right = 77.0
+margin_bottom = 20.0
+field_name = "Captain"
+
+[node name="Spacer" type="Label" parent="TopBar"]
+margin_left = 81.0
+margin_top = 3.0
+margin_right = 89.0
+margin_bottom = 17.0
+text = "  "
+
+[node name="BalanceLabel" parent="TopBar" instance=ExtResource( 2 )]
+margin_left = 93.0
+margin_right = 170.0
+margin_bottom = 20.0
+field_name = "Balance"
+
+[node name="Spacer2" type="Label" parent="TopBar"]
+margin_left = 174.0
+margin_top = 3.0
+margin_right = 182.0
+margin_bottom = 17.0
+text = "  "
+
+[node name="DockedAtLabel" parent="TopBar" instance=ExtResource( 2 )]
+margin_left = 186.0
+margin_right = 263.0
+margin_bottom = 20.0
+field_name = "Docked at"
+
+[node name="Spacer3" type="Label" parent="TopBar"]
+margin_left = 267.0
+margin_top = 3.0
+margin_right = 275.0
+margin_bottom = 17.0
+text = "  "
+
+[node name="SelectButton" type="Button" parent="TopBar"]
+margin_left = 279.0
+margin_right = 330.0
+margin_bottom = 20.0
+text = "Select"

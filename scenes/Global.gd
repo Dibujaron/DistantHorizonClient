@@ -16,6 +16,7 @@ var primary_player = null
 var targeting_circle = null
 var display_username = null
 var qualified_username = null
+var actor_name = null
 var login_key = null
 var authenticated = false
 
@@ -41,12 +42,12 @@ func init_session_info(msg):
 	if logged_in:
 		var user_info = msg["user"]
 		display_username = user_info["username"]
-		qualified_username = user_info["username"] + "#" + user_info["discriminator"]
+		qualified_username = user_info["username"] + user_info["discriminator"]
 		login_key = msg["client_key"]
 		print("session initialized with username ", qualified_username)
 	elif OS.is_debug_build() and debug_logins:
 		display_username = "DebugUser"
-		qualified_username = "Debug#0000"
+		qualified_username = "Debug0000"
 		login_key = "debug"
 		authenticated = true
 		print("fake debug user session initialized.")

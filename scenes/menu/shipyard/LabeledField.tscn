@@ -1,7 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scenes/station/shipyard/LabeledField.gd" type="Script" id=1]
-
+[ext_resource path="res://scenes/menu/shipyard/LabeledField.gd" type="Script" id=1]
 
 [node name="LabeledField" type="HBoxContainer"]
 margin_right = 40.0
@@ -17,7 +16,7 @@ margin_right = 38.0
 margin_bottom = 27.0
 text = "Label:"
 
-[node name="Value" type="Label" parent="."]
+[node name="FieldValue" type="Label" parent="."]
 margin_left = 42.0
 margin_top = 13.0
 margin_right = 77.0
