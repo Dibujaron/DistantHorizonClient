@@ -59,8 +59,6 @@ __meta__ = {
 
 [node name="StartLoginRequest" type="HTTPRequest" parent="."]
 
-[node name="ConfirmLoginRequest" type="HTTPRequest" parent="."]
-
 [node name="ActorCreateOrDeleteRequest" type="HTTPRequest" parent="."]
 
 [node name="CreateNewActorPopup" parent="." instance=ExtResource( 1 )]

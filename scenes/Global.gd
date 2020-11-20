@@ -43,7 +43,7 @@ func init_session_info(msg):
 		var user_info = msg["user"]
 		display_username = user_info["username"]
 		qualified_username = user_info["username"] + user_info["discriminator"]
-		login_key = msg["client_key"]
+		login_key = msg["server_data"]["token"]
 		print("session initialized with username ", qualified_username)
 	elif OS.is_debug_build() and debug_logins:
 		display_username = "DebugUser"

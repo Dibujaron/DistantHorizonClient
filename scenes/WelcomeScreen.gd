@@ -19,7 +19,6 @@ func _ready():
 	var new_char_button = $MainBox/NewCharacterButton
 	new_char_button.connect("pressed", self, "_new_character_pressed")
 	$StartLoginRequest.connect("request_completed", self, "_on_start_login_request_complete")
-	$ConfirmLoginRequest.connect("request_completed", self, "_on_confirm_login_request_complete")
 	$ActorCreateOrDeleteRequest.connect("request_completed", self, "_on_refresh_actors_request_complete")
 	join_button.disabled = true
 	var error = $StartLoginRequest.request("http://distant-horizon.io/client_start_login")
@@ -29,28 +28,13 @@ func _ready():
 		
 func _on_start_login_request_complete(result, response_code, headers, body):
 	print("completed start login request.")
-	var json = JSON.parse(body.get_string_from_utf8())
-	Global.init_session_info(json.result)
+	var json = JSON.parse(body.get_string_from_utf8()).result
+	Global.init_session_info(json)
 	if Global.is_user_guest():
 		_join_game() #skip ahead, don't need any more menus.
 	else:
-		var server_addr = Global.server_address()
-		var request_url = "http://" + server_addr + "/confirm_client_login/" + Global.login_key
-		var error = $ConfirmLoginRequest.request(request_url)
-		if error != OK:
-			var username_label = get_node("MainBox/UsernameLabel")
-			username_label.text = "Error: failed to connect to session server."
-			show()
-	
-func _on_confirm_login_request_complete(result, response_code, headers, body):
-	var json = JSON.parse(body.get_string_from_utf8()).result
-	print("completed confirm login request, response is ", json)
-	if json["confirmed"]:
-		activate_menu(json["account_data"]["actors"])
-	else:
-		var username_label = get_node("MainBox/UsernameLabel")
-		username_label.text = "Error: failed to confirm login. Please restart game."
-		show()
+		var actors = json["server_data"]["actors"]
+		activate_menu(actors)
 		
 func create_actor(actor_name):
 	create_or_delete_actor(actor_name, false)
