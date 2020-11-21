@@ -40,7 +40,7 @@ func init_session_info(msg):
 	var logged_in = msg["logged_in"]
 	authenticated = logged_in
 	if logged_in:
-		var user_info = msg["user"]
+		var user_info = msg["discord_user"]
 		display_username = user_info["username"]
 		qualified_username = user_info["username"] + user_info["discriminator"]
 		login_key = msg["server_data"]["token"]
