@@ -54,7 +54,7 @@ func create_or_delete_actor(actor_name, is_delete):
 		request_url = "http://distant-horizon.io/create_actor"
 	var headers = ["Content-Type: application/json"]
 	print(request_url)
-	var query = "{display_name: " + actor_name + "}"
+	var query = "{'display_name': '" + actor_name + "'}"
 	var error = $ActorCreateOrDeleteRequest.request(request_url, headers, false, HTTPClient.METHOD_POST, query)
 	if error != OK:
 		var username_label = get_node("MainBox/UsernameLabel")
