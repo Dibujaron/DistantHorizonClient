@@ -21,7 +21,7 @@ func _ready():
 	$StartLoginRequest.connect("request_completed", self, "_on_start_login_request_complete")
 	$ActorCreateOrDeleteRequest.connect("request_completed", self, "_on_refresh_actors_request_complete")
 	join_button.disabled = true
-	var error = $StartLoginRequest.request("http://distant-horizon.io/client_start_login")
+	var error = $StartLoginRequest.request("http://distant-horizon.io/client_login")
 	if error != OK:
 		var username_label = get_node("MainBox/UsernameLabel")
 		username_label.text = "Error: failed to connect to session server."
@@ -49,9 +49,9 @@ func create_or_delete_actor(actor_name, is_delete):
 	var server_addr = Global.server_address()
 	var request_url = ""
 	if is_delete:
-		request_url = "http://" + server_addr + "/account/" + username + "/deleteActor"
+		request_url = "http://distant-horizon.io/delete_actor"
 	else:
-		request_url = "http://" + server_addr + "/account/" + username + "/createActor"
+		request_url = "http://distant-horizon.io/create_actor"
 	var headers = ["Content-Type: application/json"]
 	print(request_url)
 	var query = "{display_name: " + actor_name + "}"
