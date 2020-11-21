@@ -64,7 +64,10 @@ func create_or_delete_actor(actor_name, is_delete):
 func _on_refresh_actors_request_complete(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8()).result
 	print("actor refreshing request complete, json is ", json)
-	activate_menu(json["actors"])
+	if json["success"]:
+		activate_menu(json["server_data"]["actors"])
+	else:
+		print("error: refresh actors request failed. response is ", json)
 	
 func activate_menu(actors_json):
 	print("activating menu.")
