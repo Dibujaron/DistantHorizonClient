@@ -65,7 +65,7 @@ func _on_refresh_actors_request_complete(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8()).result
 	print("actor refreshing request complete, json is ", json)
 	if json["success"]:
-		activate_menu(json["server_data"]["actors"])
+		activate_menu(json["acct_data"]["actors"])
 	else:
 		print("error: refresh actors request failed. response is ", json)
 	
