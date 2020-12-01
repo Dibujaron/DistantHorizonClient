@@ -4,7 +4,8 @@ extends Control
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var actor_name = ""
+var display_name = ""
+var unique_id = null
 var welcome_screen_controller = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,8 +14,9 @@ func _ready():
 
 func json_init(welcome_screen, actorJson):
 	welcome_screen_controller = welcome_screen
-	actor_name = actorJson["display_name"]
-	$TopBar/CaptainLabel.set_field_value(actor_name)
+	display_name = actorJson["display_name"]
+	unique_id = actorJson["unique_id"]
+	$TopBar/CaptainLabel.set_field_value(display_name)
 	$TopBar/BalanceLabel.set_field_value(str(actorJson["balance"]))
 	if actorJson.has("station_display_name"):
 		$TopBar/DockedAtLabel.set_field_value(actorJson["station_display_name"])
@@ -28,5 +30,5 @@ func json_init(welcome_screen, actorJson):
 #func _process(delta):
 #	pass
 func _select_self():
-	Global.actor_name = actor_name
+	Global.actor_id = unique_id
 	welcome_screen_controller._join_game()

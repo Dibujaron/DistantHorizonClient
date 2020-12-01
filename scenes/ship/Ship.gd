@@ -45,9 +45,9 @@ export var max_rotation_correction = 0.0001
 func _ready():
 	_set_primary_color(default_primary_color)
 	_set_secondary_color(default_secondary_color)
-	var center_mass_offset = _get_center_mass()
-	for child in get_children():
-		child.position = child.position + center_mass_offset
+	#var center_mass_offset = _get_center_mass()
+	#for child in get_children():
+	#	child.position = child.position + center_mass_offset
 	
 func init_as_player_ship():
 	is_player_ship = true
@@ -189,7 +189,7 @@ func _process(delta):
 	currently_inside_planet = inside_planet
 	
 	if docked():
-		var my_port_relative = Global.json_to_vec(docked_from_port.relative_position) + _get_center_mass()
+		var my_port_relative = Global.json_to_vec(docked_from_port.relative_position) #+ _get_center_mass()
 		var station_port_relative = Global.json_to_vec(docked_to_port.relative_position)
 		var rotation_offset = docked_to_port.relative_rotation + docked_from_port.relative_rotation
 		global_rotation = docked_to_station.global_rotation + rotation_offset

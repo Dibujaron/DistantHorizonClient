@@ -39,19 +39,9 @@ func _on_start_login_request_complete(result, response_code, headers, body):
 		activate_menu(actors)
 		
 func create_actor(actor_name):
-	create_or_delete_actor(actor_name, false)
-	
-func delete_actor(actor_name):
-	create_or_delete_actor(actor_name, true)
-	
-func create_or_delete_actor(actor_name, is_delete):
 	var username = Global.qualified_username
 	var server_addr = Global.server_address()
-	var request_url = ""
-	if is_delete:
-		request_url = "http://distant-horizon.io/delete_actor"
-	else:
-		request_url = "http://distant-horizon.io/create_actor"
+	var request_url = "http://distant-horizon.io/create_actor"
 	var headers = ["Content-Type: application/json"]
 	print(request_url)
 	var query = '{"display_name": "' + actor_name + '"}'

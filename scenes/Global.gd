@@ -16,7 +16,7 @@ var primary_player = null
 var targeting_circle = null
 var display_username = null
 var qualified_username = null
-var actor_name = null
+var actor_id = null
 var login_key = null
 var authenticated = false
 
@@ -50,11 +50,12 @@ func init_session_info(msg):
 		qualified_username = "Debug0000"
 		login_key = "debug"
 		authenticated = true
-		actor_name = "debug"
+		actor_id = 0
 		print("fake debug user session initialized.")
 	else:
 		display_username = "Guest"
 		qualified_username = null
+		actor_id = null
 		print("session started as guest.")
 
 func get_display_username():
