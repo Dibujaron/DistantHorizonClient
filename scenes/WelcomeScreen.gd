@@ -30,11 +30,11 @@ func _on_start_login_request_complete(result, response_code, headers, body):
 	print("completed start login request.")
 	var json = JSON.parse(body.get_string_from_utf8()).result
 	Global.init_session_info(json)
-	if Global.is_user_guest():
-		print("User is guest, skipping to join game.")
+	if Global.is_user_guest() or Global.is_user_debug():
+		print("skipping to join game.")
 		_join_game() #skip ahead, don't need any more menus.
 	else:
-		print("User is not guest, activating menu.")
+		print("User is logged in, activating menu.")
 		var actors = json["server_data"]["actors"]
 		activate_menu(actors)
 		

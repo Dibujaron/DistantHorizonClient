@@ -50,6 +50,7 @@ func init_session_info(msg):
 		qualified_username = "Debug0000"
 		login_key = "debug"
 		authenticated = true
+		actor_name = "debug"
 		print("fake debug user session initialized.")
 	else:
 		display_username = "Guest"
@@ -61,6 +62,9 @@ func get_display_username():
 	
 func is_user_guest():
 	return get_qualified_username() == null
+	
+func is_user_debug():
+	return get_qualified_username() == "Debug0000"
 	
 func get_qualified_username():
 	return qualified_username
