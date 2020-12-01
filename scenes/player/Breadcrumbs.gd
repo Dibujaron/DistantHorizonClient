@@ -1,6 +1,6 @@
 extends Node2D
 
-export var num_breadcrumbs = 1
+export var num_breadcrumbs = 5
 var best_velocity = Vector2(0,0)
 #var best_position = Vector2(0,0)
 
@@ -15,5 +15,6 @@ func _ready():
 		
 func _process(delta):
 	var ship = get_parent()
+	visible = not ship.docked()
 	best_velocity = ship.velocity
 	#best_position = ship.global_position

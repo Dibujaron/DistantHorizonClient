@@ -51,9 +51,9 @@ func _ready():
 	
 func init_as_player_ship():
 	is_player_ship = true
-	#var breadcrumb_scene = preload("res://scenes/player/Breadcrumbs.tscn")
-	#var breadcrumbs = breadcrumb_scene.instance()
-	#add_child(breadcrumbs)
+	var breadcrumb_scene = preload("res://scenes/player/Breadcrumbs.tscn")
+	var breadcrumbs = breadcrumb_scene.instance()
+	add_child(breadcrumbs)
 	
 func _get_center_mass():
 	return Vector2(0,0)
@@ -189,7 +189,7 @@ func _process(delta):
 	currently_inside_planet = inside_planet
 	
 	if docked():
-		var my_port_relative = Global.json_to_vec(docked_from_port.relative_position) #+ _get_center_mass()
+		var my_port_relative = Global.json_to_vec(docked_from_port.relative_position)
 		var station_port_relative = Global.json_to_vec(docked_to_port.relative_position)
 		var rotation_offset = docked_to_port.relative_rotation + docked_from_port.relative_rotation
 		global_rotation = docked_to_station.global_rotation + rotation_offset
@@ -215,16 +215,17 @@ func _process(delta):
 				else:
 					global_rotation += rotation_error
 					rotation_error = 0.0
+		var true_rotation = global_rotation - rotation_error
 		if main_engines_active:
-			velocity += Vector2(0,-main_engine_thrust).rotated(global_rotation) * delta
+			velocity += Vector2(0,-main_engine_thrust).rotated(true_rotation) * delta
 		if starboard_thrusters_active:
-			velocity += Vector2(-manu_engine_thrust, 0).rotated(global_rotation) * delta
+			velocity += Vector2(-manu_engine_thrust, 0).rotated(true_rotation) * delta
 		if port_thrusters_active:
-			velocity += Vector2(manu_engine_thrust, 0).rotated(global_rotation) * delta
+			velocity += Vector2(manu_engine_thrust, 0).rotated(true_rotation) * delta
 		if fore_thrusters_active:
-			velocity += Vector2(0, manu_engine_thrust).rotated(global_rotation) * delta
+			velocity += Vector2(0, manu_engine_thrust).rotated(true_rotation) * delta
 		if aft_thrusters_active:
-			velocity += Vector2(0, -manu_engine_thrust).rotated(global_rotation) * delta
+			velocity += Vector2(0, -manu_engine_thrust).rotated(true_rotation) * delta
 		velocity += Global.get_gravity_acceleration(global_position) * delta
 		global_position += velocity * delta
 	tick_count += 1
