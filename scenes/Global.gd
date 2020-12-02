@@ -6,6 +6,7 @@ var chosenSecondaryColor: Color = Color.white
 export var gravity_constant_fudge = 50.0
 export var gravity_constant_base = 6.67408
 export var gravity_constant_exp = -11.0
+export var min_gravity_force_cutoff = 0.01
 var debug_logins = true
 
 var production_server_address = null
@@ -98,11 +99,12 @@ func get_gravity_acceleration(pos):
 		var body_position = body.global_position
 		var min_alt_squared = pow(body.min_orbital_altitude,2)
 		var r_squared = abs((body_position - pos).length_squared())
-		if(r_squared < min_alt_squared):
+		if r_squared < min_alt_squared:
 			r_squared = min_alt_squared
 		var f_magnitude = gravity_constant * body_mass / r_squared
-		var acceleration = (body_position - pos).normalized() * f_magnitude
-		total_acceleration = total_acceleration + acceleration
+		if f_magnitude > min_gravity_force_cutoff:
+			var acceleration = (body_position - pos).normalized() * f_magnitude
+			total_acceleration = total_acceleration + acceleration
 	return total_acceleration
 	
 func get_space():

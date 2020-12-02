@@ -175,6 +175,7 @@ func json_sync_state(json):
 
 		var expected_position = Global.json_to_vec(json["global_pos"])
 		var expected_velocity = Global.json_to_vec(json["velocity"])
+		#global_position = expected_position
 		var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
 		var true_pos_after_time = global_position + (velocity * sync_delta)
 		var velocity_adj = expected_pos_after_time - true_pos_after_time
