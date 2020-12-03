@@ -90,7 +90,22 @@ func json_to_vec(json):
 func json_to_color(json):
 	return Color8(json["r"], json["g"], json["b"])
 	
-func get_gravity_acceleration(pos):
+func get_gravity_acceleration(global_pos):
+	var accel = Vector2()
+	var planets = get_tree().get_nodes_in_group("Planets")
+	for it in planets:
+		var planet_pos = it.global_position
+		var offset = (planet_pos - global_pos)
+		var r_squared = offset.length_squared()
+		var min_radius_squared = pow(it.min_orbital_altitude,2)
+		if r_squared < min_radius_squared:
+			r_squared = min_radius_squared
+		var force_mag = gravity_constant * it.mass / r_squared
+		if force_mag > min_gravity_force_cutoff:
+			accel += (offset.normalized() * force_mag)
+	return accel
+	
+func get_gravity_acceleration_old(pos):
 	var total_acceleration = Vector2()
 	var bodies = get_tree().get_nodes_in_group("Planets")
 	

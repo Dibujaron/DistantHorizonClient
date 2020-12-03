@@ -175,6 +175,8 @@ func json_sync_state(json):
 
 		var expected_position = Global.json_to_vec(json["global_pos"])
 		var expected_velocity = Global.json_to_vec(json["velocity"])
+		var diff = (global_position - expected_position).length()
+		#print("correcting by: ", diff)
 		#global_position = expected_position
 		var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
 		var true_pos_after_time = global_position + (velocity * sync_delta)
@@ -183,7 +185,7 @@ func json_sync_state(json):
 	last_sync_time = OS.get_ticks_msec()
 
 var tick_count = 0
-func _process(delta):
+func _physics_process(delta):
 	var inside_planet = get_inside_planet()	#if we just stopped being inside a planet, trigger z switch
 	if currently_inside_planet and not inside_planet:
 		z_index = z_index * -1
@@ -227,7 +229,10 @@ func _process(delta):
 			velocity += Vector2(0, manu_engine_thrust).rotated(true_rotation) * delta
 		if aft_thrusters_active:
 			velocity += Vector2(0, -manu_engine_thrust).rotated(true_rotation) * delta
-		velocity += Global.get_gravity_acceleration(global_position) * delta
+		var gravity_accel = Global.get_gravity_acceleration(global_position) * delta
+		if randf() > 0.95:
+			print("gravity accel is ", gravity_accel.length())
+		velocity += gravity_accel
 		global_position += velocity * delta
 	tick_count += 1
 
