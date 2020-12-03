@@ -185,7 +185,7 @@ func json_sync_state(json):
 	last_sync_time = OS.get_ticks_msec()
 
 var tick_count = 0
-func _physics_process(delta):
+func _process(delta):
 	var inside_planet = get_inside_planet()	#if we just stopped being inside a planet, trigger z switch
 	if currently_inside_planet and not inside_planet:
 		z_index = z_index * -1
@@ -218,24 +218,24 @@ func _physics_process(delta):
 				else:
 					global_rotation += rotation_error
 					rotation_error = 0.0
-		var true_rotation = global_rotation - rotation_error
-		if main_engines_active:
-			velocity += Vector2(0,-main_engine_thrust).rotated(true_rotation) * delta
-		if starboard_thrusters_active:
-			velocity += Vector2(-manu_engine_thrust, 0).rotated(true_rotation) * delta
-		if port_thrusters_active:
-			velocity += Vector2(manu_engine_thrust, 0).rotated(true_rotation) * delta
-		if fore_thrusters_active:
-			velocity += Vector2(0, manu_engine_thrust).rotated(true_rotation) * delta
-		if aft_thrusters_active:
-			velocity += Vector2(0, -manu_engine_thrust).rotated(true_rotation) * delta
-		var gravity_accel = Global.get_gravity_acceleration(global_position) * delta
-		if randf() > 0.95:
-			print("gravity accel is ", gravity_accel.length())
-		velocity += gravity_accel
 		global_position += velocity * delta
 	tick_count += 1
 
+func _physics_process(delta):
+	var true_rotation = global_rotation - rotation_error
+	if main_engines_active:
+		velocity += Vector2(0,-main_engine_thrust).rotated(true_rotation) * delta
+	if starboard_thrusters_active:
+		velocity += Vector2(-manu_engine_thrust, 0).rotated(true_rotation) * delta
+	if port_thrusters_active:
+		velocity += Vector2(manu_engine_thrust, 0).rotated(true_rotation) * delta
+	if fore_thrusters_active:
+		velocity += Vector2(0, manu_engine_thrust).rotated(true_rotation) * delta
+	if aft_thrusters_active:
+		velocity += Vector2(0, -manu_engine_thrust).rotated(true_rotation) * delta
+	var gravity_accel = Global.get_gravity_acceleration(global_position) * delta
+	velocity += gravity_accel
+	
 func get_inside_planet():
 	var bodies = get_tree().get_nodes_in_group("Planets")
 	
