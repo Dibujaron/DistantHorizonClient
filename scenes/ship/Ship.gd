@@ -55,9 +55,9 @@ func _ready():
 	
 func init_as_player_ship():
 	is_player_ship = true
-	var breadcrumb_scene = preload("res://scenes/player/Breadcrumbs.tscn")
-	var breadcrumbs = breadcrumb_scene.instance()
-	add_child(breadcrumbs)
+	#var breadcrumb_scene = preload("res://scenes/player/Breadcrumbs.tscn")
+	#var breadcrumbs = breadcrumb_scene.instance()
+	#add_child(breadcrumbs)
 	
 func _get_center_mass():
 	return Vector2(0,0)
@@ -229,7 +229,7 @@ func _process(delta):
 		global_rotation = current_rotation
 		global_position += velocity * delta
 	tick_count += 1
-
+	
 func _physics_process(delta):
 	if not docked():
 		if tiller_left:
