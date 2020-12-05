@@ -5,7 +5,7 @@ extends Area2D
 # var a = 2
 # var b = "text"
 #var rotation_speed = 0
-export var smoothing_boundary_position = 100.0
+export var smoothing_boundary_position = 1024.0
 var smoothing_boundary_position_squared = smoothing_boundary_position * smoothing_boundary_position
 export var smoothing_boundary_rotation = deg2rad(10.0)
 
