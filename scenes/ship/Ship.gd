@@ -5,6 +5,9 @@ extends Area2D
 # var a = 2
 # var b = "text"
 #var rotation_speed = 0
+export var smoothing_boundary_position = 5.0
+var smoothing_boundary_position_squared = smoothing_boundary_position * smoothing_boundary_position
+export var smoothing_boundary_rotation = deg2rad(5.0)
 
 var main_engines
 var port_thrusters
@@ -33,6 +36,7 @@ var rotation_power = 0.0
 var rotation_error_adjust = 0.0
 var rotation_error = 0.0
 var velocity = Vector2(0,0)
+var current_rotation = 0.0
 var initialized = false
 var is_player_ship = false
 
@@ -166,22 +170,27 @@ func json_sync_state(json):
 		velocity = Vector2(0,0)
 	else:
 		var expected_rotation = json["rotation"]
-		var true_rotation = global_rotation
+		#current_rotation = expected_rotation
+		var true_rotation = current_rotation
 		var new_rotation_error = Global.angular_diff(expected_rotation, true_rotation)
-		if is_zero_approx(new_rotation_error):
+		if new_rotation_error > smoothing_boundary_rotation:
+			rotation_error = 0.0
+			current_rotation = expected_rotation
+		elif is_zero_approx(new_rotation_error):
 			rotation_error = 0.0
 		else:
 			rotation_error = new_rotation_error
 
 		var expected_position = Global.json_to_vec(json["global_pos"])
 		var expected_velocity = Global.json_to_vec(json["velocity"])
-		var diff = (global_position - expected_position).length()
-		#print("correcting by: ", diff)
-		#global_position = expected_position
-		var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
-		var true_pos_after_time = global_position + (velocity * sync_delta)
-		var velocity_adj = expected_pos_after_time - true_pos_after_time
-		velocity += velocity_adj
+		var diff_squared = (global_position - expected_position).length_squared()
+		if diff_squared > smoothing_boundary_position_squared:
+			global_position = expected_position
+		else:
+			var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
+			var true_pos_after_time = global_position + (velocity * sync_delta)
+			var velocity_adj = expected_pos_after_time - true_pos_after_time
+			velocity += velocity_adj
 	last_sync_time = OS.get_ticks_msec()
 
 var tick_count = 0
@@ -199,30 +208,32 @@ func _process(delta):
 		var docked_to_global_pos = docked_to_station.global_position + station_port_relative.rotated(docked_to_station.global_rotation)
 		global_position = docked_to_global_pos + (my_port_relative * -1.0).rotated(global_rotation)
 	else:
-		if tiller_left:
-			global_rotation -= rotation_power * delta
-		if tiller_right:
-			global_rotation += rotation_power * delta
-		if not is_zero_approx(rotation_error):
-			if rotation_error > 0.0:
-				if rotation_error > max_rotation_correction:
-					global_rotation -= max_rotation_correction
-					rotation_error -= max_rotation_correction
-				else:
-					global_rotation -= rotation_error
-					rotation_error = 0.0
-			else:
-				if abs(rotation_error) > max_rotation_correction:
-					global_rotation += max_rotation_correction
-					rotation_error += max_rotation_correction
-				else:
-					global_rotation += rotation_error
-					rotation_error = 0.0
+		global_rotation = current_rotation
 		global_position += velocity * delta
 	tick_count += 1
 
 func _physics_process(delta):
-	var true_rotation = global_rotation - rotation_error
+	if not docked():
+		if tiller_left:
+			current_rotation -= rotation_power * delta
+		if tiller_right:
+			current_rotation += rotation_power * delta
+		if not is_zero_approx(rotation_error):
+			if rotation_error > 0.0:
+				if rotation_error > max_rotation_correction:
+					current_rotation -= max_rotation_correction
+					rotation_error -= max_rotation_correction
+				else:
+					current_rotation -= rotation_error
+					rotation_error = 0.0
+			else:
+				if abs(rotation_error) > max_rotation_correction:
+					current_rotation += max_rotation_correction
+					rotation_error += max_rotation_correction
+				else:
+					current_rotation += rotation_error
+					rotation_error = 0.0
+	var true_rotation = current_rotation - rotation_error
 	if main_engines_active:
 		velocity += Vector2(0,-main_engine_thrust).rotated(true_rotation) * delta
 	if starboard_thrusters_active:

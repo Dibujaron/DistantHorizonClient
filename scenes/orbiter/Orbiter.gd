@@ -1,6 +1,6 @@
 extends Node2D
 
-export var smoothing_boundary = 1.0
+export var smoothing_boundary = 5.0
 var orbiter_name
 var base_angular_velocity
 var current_angular_velocity
