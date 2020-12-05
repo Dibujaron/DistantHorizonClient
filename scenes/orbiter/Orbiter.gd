@@ -38,8 +38,6 @@ func json_update(orbiter_info):
 	expected_angular_pos = orbiter_info["angular_pos"]
 	var angular_pos = current_angular_pos
 	var current_error = Global.angular_diff(angular_pos, expected_angular_pos)
-	if randf() > 0.95:
-		print(current_error)
 	if current_error > smoothing_boundary:
 		current_angular_pos = expected_angular_pos
 	if elapsed_time > 0:
