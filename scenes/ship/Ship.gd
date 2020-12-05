@@ -188,6 +188,7 @@ func json_sync_state(json):
 		if diff_squared > smoothing_boundary_position_squared:
 			print("position error ", sqrt(diff_squared), " for ship is past smoothing boundary, hard correcting.")
 			global_position = expected_position
+			velocity = expected_velocity
 		else:
 			var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
 			var true_pos_after_time = global_position + (velocity * sync_delta)
