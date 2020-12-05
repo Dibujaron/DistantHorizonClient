@@ -39,6 +39,7 @@ func json_update(orbiter_info):
 	var angular_pos = current_angular_pos
 	var current_error = Global.angular_diff(angular_pos, expected_angular_pos)
 	if current_error > smoothing_boundary:
+		print("angular error for ", orbiter_name, " is past smoothing boundary, hard correcting.")
 		current_angular_pos = expected_angular_pos
 	if elapsed_time > 0:
 		var delta = velocity_controller.calculate(current_error, elapsed_time)

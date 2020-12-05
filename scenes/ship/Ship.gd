@@ -174,6 +174,7 @@ func json_sync_state(json):
 		var true_rotation = current_rotation
 		var new_rotation_error = Global.angular_diff(expected_rotation, true_rotation)
 		if new_rotation_error > smoothing_boundary_rotation:
+			print("rotation error for ship is past smoothing boundary, hard correcting.")
 			rotation_error = 0.0
 			current_rotation = expected_rotation
 		elif is_zero_approx(new_rotation_error):
@@ -185,6 +186,7 @@ func json_sync_state(json):
 		var expected_velocity = Global.json_to_vec(json["velocity"])
 		var diff_squared = (global_position - expected_position).length_squared()
 		if diff_squared > smoothing_boundary_position_squared:
+			print("position error for ship is past smoothing boundary, hard correcting.")
 			global_position = expected_position
 		else:
 			var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
