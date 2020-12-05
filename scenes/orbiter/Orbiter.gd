@@ -1,6 +1,5 @@
 extends Node2D
 
-export var smoothing_boundary = 5.0
 var orbiter_name
 var base_angular_velocity
 var current_angular_velocity
@@ -8,7 +7,6 @@ var orbital_radius
 var initialized = false
 var expected_angular_pos
 var expected_pos
-var current_angular_pos
 const PIDController = preload("res://scenes/orbiter/PIDController.tscn")
 var velocity_controller = PIDController.instance()
 var last_update = 0.0
@@ -23,9 +21,7 @@ func json_init(orbiter_info):
 	orbiter_name = orbiter_info["name"]
 	var parent_position = get_parent().global_position
 	var relative_position = Global.json_to_vec(orbiter_info["relative_pos"])
-	var starting_angle = relative_position.angle()
-	current_angular_pos = starting_angle
-	#global_position = parent_position + relative_position
+	global_position = parent_position + relative_position
 	base_angular_velocity = float(orbiter_info["angular_velocity"])
 	current_angular_velocity = base_angular_velocity
 	orbital_radius = orbiter_info["orbital_radius"]
@@ -36,11 +32,8 @@ func json_update(orbiter_info):
 	var current_time = OS.get_ticks_msec() / 1000.0
 	var elapsed_time = current_time - last_update
 	expected_angular_pos = orbiter_info["angular_pos"]
-	var angular_pos = current_angular_pos
+	var angular_pos = position.angle()
 	var current_error = Global.angular_diff(angular_pos, expected_angular_pos)
-	if current_error > smoothing_boundary:
-		print("angular error for ", orbiter_name, " is past smoothing boundary, hard correcting.")
-		current_angular_pos = expected_angular_pos
 	if elapsed_time > 0:
 		var delta = velocity_controller.calculate(current_error, elapsed_time)
 		current_angular_velocity = base_angular_velocity + delta
@@ -49,8 +42,7 @@ func json_update(orbiter_info):
 func _process(delta):
 	if initialized and orbital_radius > 0:
 		var angle_offset = current_angular_velocity * delta
-		current_angular_pos = current_angular_pos + angle_offset
-		position = Vector2.RIGHT.rotated(current_angular_pos) * orbital_radius
+		position = position.rotated(angle_offset)
 
 func relativePosAtTime(delta):
 	var angle_offset = current_angular_velocity * delta
