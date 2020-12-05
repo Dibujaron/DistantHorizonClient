@@ -211,16 +211,6 @@ func _process(delta):
 		var docked_to_global_pos = docked_to_station.global_position + station_port_relative.rotated(docked_to_station.global_rotation)
 		global_position = docked_to_global_pos + (my_port_relative * -1.0).rotated(global_rotation)
 	else:
-		global_rotation = current_rotation
-		global_position += velocity * delta
-	tick_count += 1
-
-func _physics_process(delta):
-	if not docked():
-		if tiller_left:
-			current_rotation -= rotation_power * delta
-		if tiller_right:
-			current_rotation += rotation_power * delta
 		if not is_zero_approx(rotation_error):
 			if rotation_error > 0.0:
 				if rotation_error > max_rotation_correction:
@@ -236,6 +226,16 @@ func _physics_process(delta):
 				else:
 					current_rotation += rotation_error
 					rotation_error = 0.0
+		global_rotation = current_rotation
+		global_position += velocity * delta
+	tick_count += 1
+
+func _physics_process(delta):
+	if not docked():
+		if tiller_left:
+			current_rotation -= rotation_power * delta
+		if tiller_right:
+			current_rotation += rotation_power * delta
 	var true_rotation = current_rotation - rotation_error
 	if main_engines_active:
 		velocity += Vector2(0,-main_engine_thrust).rotated(true_rotation) * delta
