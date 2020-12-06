@@ -8,7 +8,7 @@ extends Area2D
 export var smoothing_boundary_position = 1024.0
 var smoothing_boundary_position_squared = smoothing_boundary_position * smoothing_boundary_position
 export var smoothing_boundary_rotation = deg2rad(10.0)
-
+export var smoothing_correction_range = 8 #assuming no further inputs, a position error will self correct after x syncs
 var main_engines
 var port_thrusters
 var starboard_thrusters
@@ -191,7 +191,7 @@ func json_sync_state(json):
 			velocity = expected_velocity
 		else:
 			var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
-			var true_pos_after_time = global_position + (velocity * sync_delta)
+			var true_pos_after_time = global_position + (velocity * sync_delta * smoothing_correction_range)
 			var velocity_adj = expected_pos_after_time - true_pos_after_time
 			if randf() > 0.99:
 				print("smoothing position error: ", sqrt(diff_squared), " with velocity adj ", velocity_adj, " added to total velocity ", velocity)
