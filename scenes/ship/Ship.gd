@@ -190,7 +190,7 @@ func json_sync_state(json):
 			global_position = expected_position
 			velocity = expected_velocity
 		else:
-			var expected_pos_after_time = expected_position + (expected_velocity * sync_delta)
+			var expected_pos_after_time = expected_position + (expected_velocity * sync_delta * smoothing_correction_range)
 			var true_pos_after_time = global_position + (velocity * sync_delta * smoothing_correction_range)
 			var velocity_adj = expected_pos_after_time - true_pos_after_time
 			if randf() > 0.99:
