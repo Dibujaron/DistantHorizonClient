@@ -22,10 +22,10 @@ _global_script_class_icons={
 
 config/name="Distant Horizon"
 run/main_scene="res://scenes/WelcomeScene.tscn"
-boot_splash/image="res://sprites/logo/logo_new_flat.png"
+boot_splash/image="res://sprites/logo/logo_big_trans.png"
 boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
-config/icon="res://sprites/logo/logo_new_flat.png"
-config/windows_native_icon="res://sprites/logo/logo.ico"
+config/icon="res://sprites/logo/logo_big_trans.png"
+config/windows_native_icon="res://sprites/logo/favicon.ico"
 
 [autoload]
 
