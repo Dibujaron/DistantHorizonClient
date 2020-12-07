@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/logo_text_trans.png-97ebc752ac84058d6bf125902c5febda.stex"
+path="res://.import/Rijay.png-fd7dcfa4464a5b4c4652a2834cb5af16.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/logo/logo_text_trans.png"
-dest_files=[ "res://.import/logo_text_trans.png-97ebc752ac84058d6bf125902c5febda.stex" ]
+source_file="res://sprites/companies/Rijay/Rijay.png"
+dest_files=[ "res://.import/Rijay.png-fd7dcfa4464a5b4c4652a2834cb5af16.stex" ]
 
 [params]
 

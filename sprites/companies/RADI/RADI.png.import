@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/logo_big.png-ab687ed2a4db80b2c8a6b5d2d555309a.stex"
+path="res://.import/RADI.png-8ffb5ab707e5789afd3a04d9ecb25764.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/logo/logo_big.png"
-dest_files=[ "res://.import/logo_big.png-ab687ed2a4db80b2c8a6b5d2d555309a.stex" ]
+source_file="res://sprites/companies/RADI/RADI.png"
+dest_files=[ "res://.import/RADI.png-8ffb5ab707e5789afd3a04d9ecb25764.stex" ]
 
 [params]
 

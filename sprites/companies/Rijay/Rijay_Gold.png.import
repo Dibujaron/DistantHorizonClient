@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/logo_big_trans.png-f0745fb00b5244ff540d7b4d4e5066f9.stex"
+path="res://.import/Rijay_Gold.png-0a5201d3fbea942f6ba8718b6810206c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/logo/logo_big_trans.png"
-dest_files=[ "res://.import/logo_big_trans.png-f0745fb00b5244ff540d7b4d4e5066f9.stex" ]
+source_file="res://sprites/companies/Rijay/Rijay_Gold.png"
+dest_files=[ "res://.import/Rijay_Gold.png-0a5201d3fbea942f6ba8718b6810206c.stex" ]
 
 [params]
 

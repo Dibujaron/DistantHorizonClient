@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/logo_text.png-dfcbb464071ed8cda514d2df2fecea91.stex"
+path="res://.import/Porter.png-e24ea370c10b72b42395cdcea13608c0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/logo/logo_text.png"
-dest_files=[ "res://.import/logo_text.png-dfcbb464071ed8cda514d2df2fecea91.stex" ]
+source_file="res://sprites/companies/PHE/Porter.png"
+dest_files=[ "res://.import/Porter.png-e24ea370c10b72b42395cdcea13608c0.stex" ]
 
 [params]
 
