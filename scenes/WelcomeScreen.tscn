@@ -19,7 +19,7 @@ __meta__ = {
 
 [node name="MainBox" type="VBoxContainer" parent="."]
 margin_right = 403.0
-margin_bottom = 453.0
+margin_bottom = 536.0
 
 [node name="LogoCenter" type="HBoxContainer" parent="MainBox"]
 margin_right = 403.0
@@ -96,10 +96,17 @@ margin_right = 403.0
 margin_bottom = 378.0
 align = 1
 
-[node name="NewCharacterButton" type="Button" parent="MainBox"]
+[node name="NewCharacterCenter" type="HBoxContainer" parent="MainBox"]
 margin_top = 382.0
 margin_right = 403.0
 margin_bottom = 404.0
+alignment = 1
+
+[node name="NewCharacterButton" type="Button" parent="MainBox/NewCharacterCenter"]
+margin_left = 125.0
+margin_right = 278.0
+margin_bottom = 22.0
+size_flags_horizontal = 0
 text = "Create new character"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -115,4 +122,4 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
 margin_right = 403.0
-margin_bottom = 453.0
+margin_bottom = 536.0

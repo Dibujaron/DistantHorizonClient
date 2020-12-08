@@ -14,7 +14,7 @@ extends MarginContainer
 
 func _ready():
 	hide()
-	var new_char_button = $MainBox/NewCharacterButton
+	var new_char_button = $MainBox/NewCharacterCenter/NewCharacterButton
 	new_char_button.connect("pressed", self, "_new_character_pressed")
 	$StartLoginRequest.connect("request_completed", self, "_on_start_login_request_complete")
 	$ActorCreateOrDeleteRequest.connect("request_completed", self, "_on_refresh_actors_request_complete")
