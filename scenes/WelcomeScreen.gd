@@ -14,13 +14,10 @@ extends MarginContainer
 
 func _ready():
 	hide()
-	var join_button = get_node("MainBox/JoinButton")
-	join_button.connect("pressed", self, "_join_game")
 	var new_char_button = $MainBox/NewCharacterButton
 	new_char_button.connect("pressed", self, "_new_character_pressed")
 	$StartLoginRequest.connect("request_completed", self, "_on_start_login_request_complete")
 	$ActorCreateOrDeleteRequest.connect("request_completed", self, "_on_refresh_actors_request_complete")
-	join_button.disabled = true
 	var error = $StartLoginRequest.request("http://distant-horizon.io/client_login")
 	if error != OK:
 		var username_label = get_node("MainBox/UsernameLabel")
