@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/menu/CreateNewActorPopup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/WelcomeScreen.gd" type="Script" id=2]
 [ext_resource path="res://sprites/logo/logo_medium_trans.png" type="Texture" id=3]
 [ext_resource path="res://themes/Pixelar.tres" type="Theme" id=4]
+[ext_resource path="res://themes/Pixelar_H1.tres" type="Theme" id=5]
+[ext_resource path="res://themes/Pixelar_H2.tres" type="Theme" id=6]
 
 [node name="WelcomeScreen" type="MarginContainer"]
 margin_right = 368.0
@@ -18,44 +20,65 @@ __meta__ = {
 margin_right = 368.0
 margin_bottom = 388.0
 
-[node name="LogoHolder" type="HBoxContainer" parent="MainBox"]
+[node name="LogoCenter" type="HBoxContainer" parent="MainBox"]
 margin_right = 368.0
 margin_bottom = 128.0
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="MainBox/LogoHolder"]
+[node name="TextureRect" type="TextureRect" parent="MainBox/LogoCenter"]
 margin_left = 120.0
 margin_right = 248.0
 margin_bottom = 128.0
 texture = ExtResource( 3 )
 
-[node name="UsernameLabel" type="Label" parent="MainBox"]
+[node name="LogoText" type="Label" parent="MainBox"]
 margin_top = 132.0
 margin_right = 368.0
-margin_bottom = 150.0
+margin_bottom = 193.0
+theme = ExtResource( 5 )
+text = "Distant Horizon"
+align = 1
+
+[node name="Spacer3" type="Label" parent="MainBox"]
+margin_top = 197.0
+margin_right = 368.0
+margin_bottom = 215.0
+align = 1
+
+[node name="Spacer4" type="Label" parent="MainBox"]
+margin_top = 219.0
+margin_right = 368.0
+margin_bottom = 237.0
+align = 1
+
+[node name="UsernameLabel" type="Label" parent="MainBox"]
+margin_top = 241.0
+margin_right = 368.0
+margin_bottom = 264.0
+theme = ExtResource( 6 )
 align = 1
 
 [node name="Spacer" type="Label" parent="MainBox"]
-margin_top = 154.0
+margin_top = 268.0
 margin_right = 368.0
-margin_bottom = 172.0
+margin_bottom = 286.0
 align = 1
 
 [node name="CharacterList" type="VBoxContainer" parent="MainBox"]
-margin_top = 176.0
+margin_top = 290.0
 margin_right = 368.0
-margin_bottom = 176.0
+margin_bottom = 290.0
 
 [node name="Spacer2" type="Label" parent="MainBox"]
-margin_top = 180.0
+margin_top = 294.0
 margin_right = 368.0
-margin_bottom = 198.0
+margin_bottom = 312.0
 align = 1
 
 [node name="NewCharacterButton" type="Button" parent="MainBox"]
-margin_top = 202.0
+margin_top = 316.0
 margin_right = 368.0
-margin_bottom = 224.0
+margin_bottom = 338.0
 text = "Create new character"
 __meta__ = {
 "_edit_use_anchors_": false
