@@ -25,6 +25,7 @@ func _ready():
 	if error != OK:
 		var username_label = get_node("MainBox/UsernameLabel")
 		username_label.text = "Error: failed to connect to session server."
+	adjust_sizing()
 		
 func _on_start_login_request_complete(result, response_code, headers, body):
 	print("completed start login request.")
@@ -49,6 +50,7 @@ func create_actor(actor_name):
 	if error != OK:
 		var username_label = get_node("MainBox/UsernameLabel")
 		username_label.text = "Error: failed to confirm login. Please restart game."
+		adjust_sizing()
 		show()
 		
 func _on_refresh_actors_request_complete(result, response_code, headers, body):
@@ -76,15 +78,18 @@ func activate_menu(actors_json):
 		username_label.text = "Warning: playing as guest, progress will not be saved!"
 	else:
 		username_label.text = "Welcome, " + Global.get_display_username() + "!"
+	adjust_sizing()
 	show()
 	
 func _process(delta):
+	adjust_sizing()
+	
+func adjust_sizing():
 	var screen_size = get_viewport_rect().size
 	var my_size = rect_size
 	var screen_center = screen_size * 0.5
 	var half_my_size = my_size * 0.5
-	rect_position = screen_center - half_my_size
-	
+	rect_position = screen_center - half_my_size	
 func _join_game():
 	get_tree().change_scene("res://scenes/Space.tscn")
 	

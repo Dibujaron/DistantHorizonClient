@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/menu/CreateNewActorPopup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/WelcomeScreen.gd" type="Script" id=2]
+[ext_resource path="res://sprites/logo/logo_medium_trans.png" type="Texture" id=3]
 [ext_resource path="res://themes/Pixelar.tres" type="Theme" id=4]
 
 [node name="WelcomeScreen" type="MarginContainer"]
@@ -14,45 +15,48 @@ __meta__ = {
 }
 
 [node name="MainBox" type="VBoxContainer" parent="."]
-margin_right = 368.0
-margin_bottom = 388.0
+margin_right = 512.0
+margin_bottom = 608.0
+
+[node name="LogoHolder" type="HBoxContainer" parent="MainBox"]
+margin_right = 512.0
+margin_bottom = 128.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MainBox/LogoHolder"]
+margin_left = 192.0
+margin_right = 320.0
+margin_bottom = 128.0
+texture = ExtResource( 3 )
 
 [node name="UsernameLabel" type="Label" parent="MainBox"]
-margin_right = 368.0
-margin_bottom = 18.0
+margin_top = 132.0
+margin_right = 512.0
+margin_bottom = 150.0
 align = 1
 
 [node name="Spacer" type="Label" parent="MainBox"]
-margin_top = 22.0
-margin_right = 368.0
-margin_bottom = 40.0
+margin_top = 154.0
+margin_right = 512.0
+margin_bottom = 172.0
 align = 1
 
 [node name="CharacterList" type="VBoxContainer" parent="MainBox"]
-margin_top = 44.0
-margin_right = 368.0
-margin_bottom = 44.0
-
-[node name="NewCharacterButton" type="Button" parent="MainBox"]
-margin_top = 48.0
-margin_right = 368.0
-margin_bottom = 70.0
-text = "Create new character"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_top = 176.0
+margin_right = 512.0
+margin_bottom = 176.0
 
 [node name="Spacer2" type="Label" parent="MainBox"]
-margin_top = 74.0
-margin_right = 368.0
-margin_bottom = 92.0
+margin_top = 180.0
+margin_right = 512.0
+margin_bottom = 198.0
 align = 1
 
-[node name="JoinButton" type="Button" parent="MainBox"]
-margin_top = 96.0
-margin_right = 368.0
-margin_bottom = 118.0
-text = "Join game"
+[node name="NewCharacterButton" type="Button" parent="MainBox"]
+margin_top = 202.0
+margin_right = 512.0
+margin_bottom = 224.0
+text = "Create new character"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -62,7 +66,9 @@ __meta__ = {
 [node name="ActorCreateOrDeleteRequest" type="HTTPRequest" parent="."]
 
 [node name="CreateNewActorPopup" parent="." instance=ExtResource( 1 )]
+visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 368.0
-margin_bottom = 388.0
+margin_left = 0.0
+margin_right = 512.0
+margin_bottom = 608.0
