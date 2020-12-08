@@ -17,23 +17,23 @@ __meta__ = {
 }
 
 [node name="MainBox" type="VBoxContainer" parent="."]
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 426.0
 
 [node name="LogoCenter" type="HBoxContainer" parent="MainBox"]
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 128.0
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="MainBox/LogoCenter"]
-margin_left = 120.0
-margin_right = 248.0
+margin_left = 137.0
+margin_right = 265.0
 margin_bottom = 128.0
 texture = ExtResource( 3 )
 
 [node name="LogoText" type="Label" parent="MainBox"]
 margin_top = 132.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 193.0
 theme = ExtResource( 5 )
 text = "Distant Horizon"
@@ -41,67 +41,67 @@ align = 1
 
 [node name="Spacer3" type="Label" parent="MainBox"]
 margin_top = 197.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 215.0
 align = 1
 
 [node name="Spacer4" type="Label" parent="MainBox"]
 margin_top = 219.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 237.0
 align = 1
 
 [node name="Spacer5" type="Label" parent="MainBox"]
 margin_top = 241.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 259.0
 align = 1
 
 [node name="Spacer6" type="Label" parent="MainBox"]
 margin_top = 263.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 281.0
 align = 1
 
 [node name="Spacer7" type="Label" parent="MainBox"]
 margin_top = 285.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 303.0
 align = 1
 
 [node name="Spacer8" type="Label" parent="MainBox"]
 margin_top = 307.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 325.0
 align = 1
 
 [node name="UsernameLabel" type="Label" parent="MainBox"]
 margin_top = 329.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 352.0
 theme = ExtResource( 6 )
 align = 1
 
 [node name="Spacer" type="Label" parent="MainBox"]
 margin_top = 356.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 374.0
 align = 1
 
 [node name="CharacterList" type="VBoxContainer" parent="MainBox"]
 margin_top = 378.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 378.0
 
 [node name="Spacer2" type="Label" parent="MainBox"]
 margin_top = 382.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 400.0
 align = 1
 
 [node name="NewCharacterButton" type="Button" parent="MainBox"]
 margin_top = 404.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 426.0
 text = "Create new character"
 __meta__ = {
@@ -117,5 +117,5 @@ visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_right = 368.0
+margin_right = 403.0
 margin_bottom = 426.0
