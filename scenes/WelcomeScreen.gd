@@ -68,8 +68,6 @@ func activate_menu(actors_json):
 		var inst = existing_actor_scene.instance()
 		$MainBox/CharacterList.add_child(inst)
 		inst.json_init(self, actor_json)
-	var join_button = get_node("MainBox/JoinButton")
-	join_button.disabled = false
 	var username_label = get_node("MainBox/UsernameLabel")
 	if Global.is_user_guest():
 		username_label.text = "Warning: playing as guest, progress will not be saved!"
