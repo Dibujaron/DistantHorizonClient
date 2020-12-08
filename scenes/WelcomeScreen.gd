@@ -72,7 +72,7 @@ func activate_menu(actors_json):
 	if Global.is_user_guest():
 		username_label.text = "Warning: playing as guest, progress will not be saved!"
 	else:
-		username_label.text = "Welcome, " + Global.get_display_username() + "!"
+		username_label.text = "Welcome, " + Global.get_display_username() + "! Select your character:"
 	adjust_sizing()
 	show()
 	

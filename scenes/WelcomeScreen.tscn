@@ -63,40 +63,46 @@ margin_right = 368.0
 margin_bottom = 281.0
 align = 1
 
-[node name="UsernameLabel" type="Label" parent="MainBox"]
+[node name="Spacer7" type="Label" parent="MainBox"]
 margin_top = 285.0
 margin_right = 368.0
-margin_bottom = 308.0
+margin_bottom = 303.0
+align = 1
+
+[node name="Spacer8" type="Label" parent="MainBox"]
+margin_top = 307.0
+margin_right = 368.0
+margin_bottom = 325.0
+align = 1
+
+[node name="UsernameLabel" type="Label" parent="MainBox"]
+margin_top = 329.0
+margin_right = 368.0
+margin_bottom = 352.0
 theme = ExtResource( 6 )
 align = 1
 
 [node name="Spacer" type="Label" parent="MainBox"]
-margin_top = 312.0
+margin_top = 356.0
 margin_right = 368.0
-margin_bottom = 330.0
-align = 1
-
-[node name="Spacer7" type="Label" parent="MainBox"]
-margin_top = 334.0
-margin_right = 368.0
-margin_bottom = 352.0
+margin_bottom = 374.0
 align = 1
 
 [node name="CharacterList" type="VBoxContainer" parent="MainBox"]
-margin_top = 356.0
-margin_right = 368.0
-margin_bottom = 356.0
-
-[node name="Spacer2" type="Label" parent="MainBox"]
-margin_top = 360.0
+margin_top = 378.0
 margin_right = 368.0
 margin_bottom = 378.0
+
+[node name="Spacer2" type="Label" parent="MainBox"]
+margin_top = 382.0
+margin_right = 368.0
+margin_bottom = 400.0
 align = 1
 
 [node name="NewCharacterButton" type="Button" parent="MainBox"]
-margin_top = 382.0
+margin_top = 404.0
 margin_right = 368.0
-margin_bottom = 404.0
+margin_bottom = 426.0
 text = "Create new character"
 __meta__ = {
 "_edit_use_anchors_": false
