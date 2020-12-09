@@ -76,15 +76,13 @@ func activate_menu(actors_json):
 	adjust_sizing()
 	show()
 	
-func _process(delta):
-	adjust_sizing()
-	
 func adjust_sizing():
 	var screen_size = get_viewport_rect().size
 	var my_size = rect_size
 	var screen_center = screen_size * 0.5
 	var half_my_size = my_size * 0.5
-	rect_position = screen_center - half_my_size	
+	rect_position = screen_center - half_my_size
+	
 func _join_game():
 	get_tree().change_scene("res://scenes/Space.tscn")
 	
