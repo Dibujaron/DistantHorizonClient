@@ -93,6 +93,7 @@ func json_init(json):
 	_set_primary_color(primary_color)
 	_set_secondary_color(secondary_color)
 	var docked = json["docked"]
+	print("initializing with docked value: ", docked)
 	if docked:
 		var docked_info = json["docked_info"]
 		json_receive_docked(docked_info)
