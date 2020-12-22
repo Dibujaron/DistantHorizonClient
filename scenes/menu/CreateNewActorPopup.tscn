@@ -6,8 +6,8 @@
 visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 1.0
-margin_right = 1.0
+margin_top = 300.0
+margin_bottom = 300.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
