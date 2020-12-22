@@ -9,7 +9,7 @@ var recent_projections_vel = []
 var target_position = Vector2(0,0)
 
 var best_velocity = Vector2(0,0)
-#var best_position = Vector2(0,0)
+var best_position = Vector2(0,0)
 func _ready():
 	pass # Replace with function body.
 
@@ -20,7 +20,7 @@ func _process(delta):
 	global_scale.x = zoom
 	global_scale.y = zoom
 	var parent = get_parent()
-	var position_projected = parent.global_position
+	var position_projected = parent.best_position
 	var velocity_projected = parent.best_velocity
 	for i in range(0, calculation_steps):
 		velocity_projected += Global.get_gravity_acceleration(position_projected) * step_length
@@ -29,7 +29,7 @@ func _process(delta):
 	recent_projections_pos.push_front(position_projected)
 	if recent_projections_pos.size() > projections_to_keep:
 		recent_projections_pos.pop_back()
-		
+	
 	recent_projections_vel.push_front(velocity_projected)
 	if recent_projections_vel.size() > projections_to_keep:
 		recent_projections_vel.pop_back()
@@ -45,9 +45,6 @@ func _process(delta):
 	var avg_position = sum_position / recent_projections_pos.size()
 	var avg_velocity = sum_velocity / recent_projections_vel.size()
 	best_velocity = velocity_projected
-	
+	best_position = position_projected
 	global_rotation = avg_velocity.angle()
 	global_position = avg_position
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
