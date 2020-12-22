@@ -36,4 +36,5 @@ func _select_self():
 	welcome_screen_controller._join_game()
 	
 func _delete_self():
+	print("delete self called.")
 	welcome_screen_controller.delete_actor(unique_id)
