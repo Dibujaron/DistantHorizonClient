@@ -56,7 +56,7 @@ func delete_actor(unique_id):
 	var headers = ["Content-Type: application/json"]
 	print("request url is ", request_url)
 	print("unique ID is ", unique_id)
-	var query = '{"actor_id": "' + unique_id + '"}'
+	var query = '{"actor_id": "' + str(unique_id) + '"}'
 	print("submitting delete actor request with query ", query)
 	var error = $ActorCreateOrDeleteRequest.request(request_url, headers, false, HTTPClient.METHOD_POST, query)
 	if error != OK:
