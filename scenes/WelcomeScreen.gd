@@ -50,6 +50,19 @@ func create_actor(actor_name):
 		adjust_sizing()
 		show()
 		
+func delete_actor(unique_id):
+	var server_addr = Global.server_address()
+	var request_url = "http://distant-horizon.io/delete_actor"
+	var headers = ["Content-Type: application/json"]
+	print(request_url)
+	var query = '{"actor_id": "' + unique_id + '"}'
+	var error = $ActorCreateOrDeleteRequest.request(request_url, headers, false, HTTPClient.METHOD_POST, query)
+	if error != OK:
+		var username_label = get_node("MainBox/UsernameLabel")
+		username_label.text = "Error: failed to delete actor. Please restart game."
+		adjust_sizing()
+		show()
+		
 func _on_refresh_actors_request_complete(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8()).result
 	print("actor refreshing request complete, json is ", json)

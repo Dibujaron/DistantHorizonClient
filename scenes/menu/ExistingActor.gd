@@ -10,8 +10,10 @@ var welcome_screen_controller = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var select_button = $TopBar/SelectButton
+	var delete_button = $TopBar/DeleteButton
 	select_button.connect("pressed", self, "_select_self")
-
+	delete_button.connect("pressed", self, "_delete_self")
+	
 func json_init(welcome_screen, actorJson):
 	welcome_screen_controller = welcome_screen
 	display_name = actorJson["display_name"]
@@ -32,3 +34,6 @@ func json_init(welcome_screen, actorJson):
 func _select_self():
 	Global.actor_id = unique_id
 	welcome_screen_controller._join_game()
+	
+func _delete_self():
+	welcome_screen_controller.delete_actor(unique_id)
