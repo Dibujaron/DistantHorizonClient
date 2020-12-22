@@ -54,7 +54,6 @@ func delete_actor(unique_id):
 	var server_addr = Global.server_address()
 	var request_url = "http://distant-horizon.io/delete_actor"
 	var headers = ["Content-Type: application/json"]
-	print("request url is ", request_url)
 	print("unique ID is ", unique_id)
 	var query = '{"actor_id": "' + str(unique_id) + '"}'
 	print("submitting delete actor request with query ", query)
