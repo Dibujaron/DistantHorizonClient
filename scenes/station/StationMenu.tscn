@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/station/StationMenu.gd" type="Script" id=1]
 [ext_resource path="res://themes/Pixelar.tres" type="Theme" id=2]
 [ext_resource path="res://scenes/station/trade/TradeMenu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/menu/shipyard/ShipyardMenu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://themes/Pixelar_Tabs.tres" type="Theme" id=5]
 
 [node name="StationMenu" type="MarginContainer"]
 margin_left = 20.0
@@ -67,7 +68,7 @@ margin_bottom = 62.0
 margin_top = 66.0
 margin_right = 244.0
 margin_bottom = 190.0
-theme = ExtResource( 2 )
+theme = ExtResource( 5 )
 tab_align = 0
 
 [node name="Market" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource( 3 )]
