@@ -6,13 +6,13 @@
 [node name="ShipDisplay" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -624.0
-margin_bottom = -200.0
+margin_right = -824.0
+margin_bottom = -400.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Ship_PHE_Thumper" parent="." instance=ExtResource( 1 )]
-position = Vector2( 200, 200 )
+position = Vector2( 100, 100 )
 scale = Vector2( 2, 2 )

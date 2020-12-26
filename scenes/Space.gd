@@ -94,6 +94,7 @@ func json_update_orbiters(message):
 		var station = stations[station_info["name"]]
 		station.json_update(station_info)
 		
+var previous_ship_id = ""
 func initialize_added_ships(message):
 	var json_ships = message["ships_added"]
 	var my_ship_id = message["ship_id"]
@@ -109,10 +110,10 @@ func initialize_added_ships(message):
 			ships[ship_id] = ship
 			add_child(ship)
 			ship.json_init(ship_info)
-			if my_ship_id == ship_id and not has_initialized_own_ship:
+			if my_ship_id == ship_id and (not has_initialized_own_ship or previous_ship_id != my_ship_id):
 				print("initializing player's ship.")
-				var pilot = $PlayerPilot
-				remove_child(pilot)
+				var pilot = Global.get_primary_player()
+				pilot.get_parent().remove_child(pilot)
 				ship.add_child(pilot)
 				$GuiCanvas/BottomRightHUD.visible = true
 				$GuiCanvas/BottomRightHUD.link_ship(ship)
@@ -120,6 +121,7 @@ func initialize_added_ships(message):
 				$GuiCanvas/BottomLeftHUD.link_ship(ship) #todo clean this up
 				ship.init_as_player_ship()
 				has_initialized_own_ship = true
+	previous_ship_id = my_ship_id
 	initialized_ships = true
 	print("initialized ", json_ships.size(), " new ships.")
 

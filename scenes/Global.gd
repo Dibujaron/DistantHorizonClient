@@ -90,6 +90,13 @@ func json_to_vec(json):
 func json_to_color(json):
 	return Color8(json["r"], json["g"], json["b"])
 	
+func color_to_json(color):
+	var dict = {}
+	dict["r"] = color.r8
+	dict["g"] = color.g8
+	dict["b"] = color.b8
+	return dict
+	
 func get_gravity_acceleration(global_pos):
 	var accel = Vector2()
 	var planets = get_tree().get_nodes_in_group("Planets")

@@ -6,7 +6,7 @@ var color_index = 0
 func _ready():
 	$DisplayContainer/PreviousColor.connect("pressed", self, "_previous_color")
 	$DisplayContainer/NextColor.connect("pressed", self, "_next_color")
-	
+	$VBoxContainer/BuyButton.connect("pressed", self, "_buy_ship")
 func init(ship_class_info):
 	var identifying_name = ship_class_info["identifying_name"]
 	qualified_name = ship_class_info["qualified_name"]
@@ -30,6 +30,7 @@ func init(ship_class_info):
 	if colors.size() < 2:
 		$DisplayContainer/PreviousColor.hide()
 		$DisplayContainer/NextColor.hide()
+		
 func _previous_color():
 	if color_index == 0:
 		color_index = colors.size() - 1
@@ -51,4 +52,8 @@ func update_colors():
 	var primary_color = Global.json_to_color(colors[color_index][0])
 	var secondary_color = Global.json_to_color(colors[color_index][1])
 	ship_display.update_colors(primary_color, secondary_color)
+	
+func _buy_ship():
+	print("buying ship")
+	Global.get_socket_client().buy_ship(qualified_name, colors[color_index][0], colors[color_index][1])
 	
