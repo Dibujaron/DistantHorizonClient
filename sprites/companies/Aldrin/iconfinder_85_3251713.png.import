@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Aldrin_monochrome.png-3774bff293cb08e7b5d4ce8aea754d53.stex"
+path="res://.import/iconfinder_85_3251713.png-c33ed743ace5b069a385472da0ac6193.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/companies/RADI/Aldrin_monochrome.png"
-dest_files=[ "res://.import/Aldrin_monochrome.png-3774bff293cb08e7b5d4ce8aea754d53.stex" ]
+source_file="res://sprites/companies/Aldrin/iconfinder_85_3251713.png"
+dest_files=[ "res://.import/iconfinder_85_3251713.png-c33ed743ace5b069a385472da0ac6193.stex" ]
 
 [params]
 

@@ -25,7 +25,7 @@ export var ship_scenes = {
 	"phe.thumper": preload("res://scenes/ship/Ship_PHE_Thumper.tscn"),
 	"rijay.mockingbird": preload("res://scenes/ship/Ship_Rijay_Mockingbird.tscn"),
 	"rijay.swallow": preload("res://scenes/ship/Ship_Rijay_Swallow.tscn"),
-	"radi.kx6": preload("res://scenes/ship/Ship_RADI_kx6.tscn"),
+	"aldrin.kx6": preload("res://scenes/ship/Ship_RADI_kx6.tscn"),
 	"phe.longhorn": preload("res://scenes/ship/Ship_PHE_Longhorn.tscn"),
 	"rijay.pegasus": preload("res://scenes/ship/Ship_Rijay_Pegasus.tscn")
 }

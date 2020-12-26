@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/menu/shipyard/DealershipMenu.gd" type="Script" id=1]
+[ext_resource path="res://sprites/companies/PHE/Porter.png" type="Texture" id=2]
+
+[node name="DealershipMenu" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LogoCenter" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 9.0
+alignment = 1
+
+[node name="Logo" type="TextureRect" parent="LogoCenter"]
+margin_left = 496.0
+margin_right = 527.0
+margin_bottom = 9.0
+texture = ExtResource( 2 )
+
+[node name="Description" type="Label" parent="."]
+margin_top = 13.0
+margin_right = 1024.0
+margin_bottom = 27.0
+
+[node name="ShipClassBox" type="VBoxContainer" parent="."]
+margin_top = 31.0
+margin_right = 1024.0
+margin_bottom = 31.0

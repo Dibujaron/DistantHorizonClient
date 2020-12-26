@@ -3,15 +3,15 @@
 [ext_resource path="res://scenes/station/trade/TradeMenu.gd" type="Script" id=1]
 
 [node name="TradeMenu" type="VBoxContainer"]
-margin_right = 234.0
-margin_bottom = 192.0
+margin_right = 244.0
+margin_bottom = 202.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PlayerBalance" type="HBoxContainer" parent="."]
-margin_right = 234.0
+margin_right = 244.0
 margin_bottom = 14.0
 
 [node name="Your Balance" type="Label" parent="PlayerBalance"]
@@ -27,7 +27,7 @@ text = "0"
 
 [node name="PlayerHoldSpace" type="HBoxContainer" parent="."]
 margin_top = 18.0
-margin_right = 234.0
+margin_right = 244.0
 margin_bottom = 32.0
 
 [node name="Hold space" type="Label" parent="PlayerHoldSpace"]
@@ -43,12 +43,12 @@ text = "0"
 
 [node name="Spacer2" type="Label" parent="."]
 margin_top = 36.0
-margin_right = 234.0
+margin_right = 244.0
 margin_bottom = 50.0
 
 [node name="CommodityColumns" type="HBoxContainer" parent="."]
 margin_top = 54.0
-margin_right = 234.0
+margin_right = 244.0
 margin_bottom = 68.0
 
 [node name="OnShipCol" type="VBoxContainer" parent="CommodityColumns"]

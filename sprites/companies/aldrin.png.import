@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/RADI.png-8ffb5ab707e5789afd3a04d9ecb25764.stex"
+path="res://.import/aldrin.png-b80201d954dc2189e22c28a73e9ffc57.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/companies/RADI/RADI.png"
-dest_files=[ "res://.import/RADI.png-8ffb5ab707e5789afd3a04d9ecb25764.stex" ]
+source_file="res://sprites/companies/aldrin.png"
+dest_files=[ "res://.import/aldrin.png-b80201d954dc2189e22c28a73e9ffc57.stex" ]
 
 [params]
 

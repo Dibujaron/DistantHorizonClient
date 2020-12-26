@@ -21,13 +21,9 @@ func init(json):
 	self.station_desc = station_info["description"]
 	vbox.get_node("HeaderLabel/StationName").text = station_display_name
 	vbox.get_node("DescLabel/StationDesc").text = station_desc
-	var content_holder = vbox.get_node("ContentHolder")
-	for child in content_holder.get_children():
-		content_holder.remove_child(child)
-	if menu_mode == "TRADE":
-		var tradeMenuScene = preload("res://scenes/station/trade/TradeMenu.tscn")
-		var inst = tradeMenuScene.instance()
-		content_holder.add_child(inst)
-		inst.init(json)
-	else:
-		pass
+	var tab_container = vbox.get_node("TabContainer")
+	var trade_menu = tab_container.get_node("Market")
+	trade_menu.init(json)
+	var shipyards_menu = tab_container.get_node("Shipyards")
+	shipyards_menu.init(json)
+	

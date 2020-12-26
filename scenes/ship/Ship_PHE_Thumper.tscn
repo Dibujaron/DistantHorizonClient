@@ -59,7 +59,6 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
 }
-default_primary_color = Color( 1, 0.415686, 0, 1 )
 
 [node name="Color1Shaded" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
