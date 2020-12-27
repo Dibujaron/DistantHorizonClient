@@ -8,9 +8,8 @@
 [ext_resource path="res://themes/Pixelar_H2.tres" type="Theme" id=6]
 
 [node name="WelcomeScreen" type="MarginContainer"]
-margin_top = -250.0
-margin_right = 403.0
-margin_bottom = 203.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme = ExtResource( 4 )
 script = ExtResource( 2 )
 __meta__ = {
@@ -19,7 +18,7 @@ __meta__ = {
 
 [node name="MainBox" type="VBoxContainer" parent="."]
 margin_right = 403.0
-margin_bottom = 453.0
+margin_bottom = 404.0
 
 [node name="LogoCenter" type="HBoxContainer" parent="MainBox"]
 margin_right = 403.0
@@ -120,6 +119,6 @@ __meta__ = {
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 0.0
+margin_top = 0.0
 margin_right = 403.0
-margin_bottom = 453.0
+margin_bottom = 404.0
