@@ -47,8 +47,8 @@ func create_actor(actor_name):
 	if error != OK:
 		var username_label = get_node("MainBox/UsernameLabel")
 		username_label.text = "Error: failed to confirm login. Please restart game."
-		adjust_sizing()
 		show()
+		adjust_sizing()
 		
 func delete_actor(unique_id):
 	var server_addr = Global.server_address()
@@ -61,8 +61,8 @@ func delete_actor(unique_id):
 	if error != OK:
 		var username_label = get_node("MainBox/UsernameLabel")
 		username_label.text = "Error: failed to delete actor. Please restart game."
-		adjust_sizing()
 		show()
+		adjust_sizing()
 		
 func _on_refresh_actors_request_complete(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8()).result
@@ -87,8 +87,8 @@ func activate_menu(actors_json):
 		username_label.text = "Warning: playing as guest, progress will not be saved!"
 	else:
 		username_label.text = "Welcome, " + Global.get_display_username() + "!"
-	adjust_sizing()
 	show()
+	adjust_sizing()
 	
 func adjust_sizing():
 	var screen_size = get_viewport_rect().size
