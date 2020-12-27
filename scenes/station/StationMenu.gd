@@ -21,7 +21,8 @@ func init(json):
 	self.station_desc = station_info["description"]
 	vbox.get_node("HeaderLabel/StationName").text = station_display_name
 	vbox.get_node("DescLabel/StationDesc").text = station_desc
-	var tab_container = vbox.get_node("TabContainer")
+	var tab_aligner = vbox.get_node("TabAligner")
+	var tab_container = tab_aligner.get_node("TabContainer")
 	var trade_menu = tab_container.get_node("Market")
 	trade_menu.init(json)
 	var shipyards_menu = tab_container.get_node("Shipyards")
