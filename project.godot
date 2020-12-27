@@ -31,6 +31,11 @@ config/windows_native_icon="res://sprites/logo/favicon.ico"
 
 Global="*res://scenes/Global.gd"
 
+[display]
+
+window/stretch/mode="2d"
+window/stretch/aspect="expand"
+
 [input]
 
 ui_accept={
