@@ -22,6 +22,10 @@ func init(json):
 	var tab_container = tab_aligner.get_node("TabContainer")
 	var trade_menu = tab_container.get_node("Market")
 	trade_menu.init(json)
-	var shipyards_menu = tab_container.get_node("Shipyards")
+	var shipyards_menu_scene = preload("res://scenes/menu/shipyard/ShipyardMenu.tscn")
+	var shipyards_menu = shipyards_menu_scene.instance()
 	shipyards_menu.init(json)
+	shipyards_menu.set_name("Shipyards")
+	if shipyards_menu.dealership_count > 0:
+		tab_container.add_child(shipyards_menu)
 	
