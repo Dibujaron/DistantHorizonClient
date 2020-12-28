@@ -9,6 +9,8 @@ func json_init(station_info):
 	.json_init(station_info)
 	display_name = station_info["display_name"]
 	shows_on_navigation = station_info["navigable"]
+	if not shows_on_navigation:
+		print("station doesn't show")
 	$AnimatedSprite.play("default")
 	global_scale = Vector2(1.0, 1.0)
 

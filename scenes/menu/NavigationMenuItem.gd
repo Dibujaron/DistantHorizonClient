@@ -17,12 +17,8 @@ func init(parent, station_name):
 	
 func do_update():
 	if station != null:
-		if station.shows_on_navigation:
-			show()
-		else:
-			hide()
 		var player_ship = Global.get_primary_player_ship()
-		if player_ship and player_ship.docked() and player_ship.docked_to_station == station:
+		if not station.shows_on_navigation or (player_ship and player_ship.docked() and player_ship.docked_to_station == station):
 			hide()
 		else:
 			show()
