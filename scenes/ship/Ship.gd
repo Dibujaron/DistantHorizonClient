@@ -91,6 +91,7 @@ func json_init(json):
 	manu_engine_thrust = json["manu_engine_thrust"]
 	rotation_power = json["rotation_power"]
 	global_rotation = json["rotation"]
+	rotation_error = 0.0
 	global_position = Global.json_to_vec(json["global_pos"])
 	hold_size = json["hold_size"]
 	velocity = Global.json_to_vec(json["velocity"])
@@ -135,6 +136,7 @@ func json_receive_undocked(json):
 	json_sync_state(json)
 	var expected_rotation = json["rotation"]
 	global_rotation = expected_rotation
+	rotation_error = 0.0
 	var expected_position = Global.json_to_vec(json["global_pos"])
 	global_position = expected_position
 	var expected_velocity = Global.json_to_vec(json["velocity"])
@@ -175,6 +177,7 @@ func json_sync_state(json):
 			global_position = expected_position
 			var expected_rotation = json["rotation"]
 			global_rotation = expected_rotation
+			rotation_error = 0.0
 			velocity = Vector2(0,0)
 		else:
 			var expected_rotation = json["rotation"]
@@ -219,6 +222,7 @@ func _process(delta):
 			var station_port_relative = Global.json_to_vec(docked_to_port.relative_position)
 			var rotation_offset = docked_to_port.relative_rotation + docked_from_port.relative_rotation
 			global_rotation = docked_to_station.global_rotation + rotation_offset
+			rotation_error = 0.0
 			var docked_to_global_pos = docked_to_station.global_position + station_port_relative.rotated(docked_to_station.global_rotation)
 			global_position = docked_to_global_pos + (my_port_relative * -1.0).rotated(global_rotation)
 		else:
