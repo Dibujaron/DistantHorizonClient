@@ -19,8 +19,9 @@ func init(json):
 		var price = commodity_info["price"]
 		if price > 0:
 			instantiate_commodity_menu(commodity_info, hold_contents)
-	get_node("MainBox/PlayerBalance/CreditsBox").text = str(player_balance)
-	get_node("MainBox/PlayerHoldSpace/HoldSpaceBox").text = str(ship_hold_space)
+	var main_box = get_node("MainBox")
+	main_box.get_node("PlayerBalance/CreditsBox").text = str(player_balance)
+	main_box.get_node("PlayerHoldSpace/HoldSpaceBox").text = str(ship_hold_space)
 	
 func instantiate_commodity_menu(commodity_info, hold_contents):
 	var main_box = get_node("MainBox")

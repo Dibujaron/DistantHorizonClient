@@ -18,7 +18,7 @@ __meta__ = {
 
 [node name="MainBox" type="VBoxContainer" parent="."]
 margin_right = 403.0
-margin_bottom = 404.0
+margin_bottom = 452.0
 
 [node name="LogoCenter" type="HBoxContainer" parent="MainBox"]
 margin_right = 403.0
@@ -42,69 +42,69 @@ align = 1
 [node name="Spacer3" type="Label" parent="MainBox"]
 margin_top = 197.0
 margin_right = 403.0
-margin_bottom = 215.0
+margin_bottom = 220.0
 align = 1
 
 [node name="Spacer4" type="Label" parent="MainBox"]
-margin_top = 219.0
+margin_top = 224.0
 margin_right = 403.0
-margin_bottom = 237.0
+margin_bottom = 247.0
 align = 1
 
 [node name="Spacer5" type="Label" parent="MainBox"]
-margin_top = 241.0
+margin_top = 251.0
 margin_right = 403.0
-margin_bottom = 259.0
+margin_bottom = 274.0
 align = 1
 
 [node name="Spacer6" type="Label" parent="MainBox"]
-margin_top = 263.0
+margin_top = 278.0
 margin_right = 403.0
-margin_bottom = 281.0
+margin_bottom = 301.0
 align = 1
 
 [node name="UsernameLabel" type="Label" parent="MainBox"]
-margin_top = 285.0
+margin_top = 305.0
 margin_right = 403.0
-margin_bottom = 308.0
+margin_bottom = 336.0
 theme = ExtResource( 6 )
 align = 1
 
 [node name="SelectYourCharacter" type="Label" parent="MainBox"]
-margin_top = 312.0
+margin_top = 340.0
 margin_right = 403.0
-margin_bottom = 330.0
+margin_bottom = 363.0
 theme = ExtResource( 4 )
 text = "Select your character:"
 align = 1
 
 [node name="Spacer" type="Label" parent="MainBox"]
-margin_top = 334.0
+margin_top = 367.0
 margin_right = 403.0
-margin_bottom = 352.0
+margin_bottom = 390.0
 align = 1
 
 [node name="CharacterList" type="VBoxContainer" parent="MainBox"]
-margin_top = 356.0
+margin_top = 394.0
 margin_right = 403.0
-margin_bottom = 356.0
+margin_bottom = 394.0
 
 [node name="Spacer2" type="Label" parent="MainBox"]
-margin_top = 360.0
+margin_top = 398.0
 margin_right = 403.0
-margin_bottom = 378.0
+margin_bottom = 421.0
 align = 1
 
 [node name="NewCharacterCenter" type="HBoxContainer" parent="MainBox"]
-margin_top = 382.0
+margin_top = 425.0
 margin_right = 403.0
-margin_bottom = 404.0
+margin_bottom = 452.0
 alignment = 1
 
 [node name="NewCharacterButton" type="Button" parent="MainBox/NewCharacterCenter"]
-margin_left = 125.0
-margin_right = 278.0
-margin_bottom = 22.0
+margin_left = 104.0
+margin_right = 299.0
+margin_bottom = 27.0
 size_flags_horizontal = 0
 text = "Create new character"
 __meta__ = {
@@ -121,4 +121,4 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 0.0
 margin_right = 403.0
-margin_bottom = 404.0
+margin_bottom = 452.0
