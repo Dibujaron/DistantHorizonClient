@@ -11,5 +11,5 @@ __meta__ = {
 }
 
 [node name="TabContainer" type="TabContainer" parent="."]
-margin_right = 1024.0
+margin_right = 1920.0
 margin_bottom = 36.0

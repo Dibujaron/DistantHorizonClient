@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends HBoxContainer
 
 
 # Declare member variables here. Examples:
@@ -19,11 +19,12 @@ func init(json):
 		var price = commodity_info["price"]
 		if price > 0:
 			instantiate_commodity_menu(commodity_info, hold_contents)
-	get_node("PlayerBalance/CreditsBox").text = str(player_balance)
-	get_node("PlayerHoldSpace/HoldSpaceBox").text = str(ship_hold_space)
+	get_node("MainBox/PlayerBalance/CreditsBox").text = str(player_balance)
+	get_node("MainBox/PlayerHoldSpace/HoldSpaceBox").text = str(ship_hold_space)
 	
 func instantiate_commodity_menu(commodity_info, hold_contents):
-	var commodity_columns = get_node("CommodityColumns")
+	var main_box = get_node("MainBox")
+	var commodity_columns = main_box.get_node("CommodityColumns")
 	commodity_columns.add_constant_override("separation", 30)
 	for child in commodity_columns.get_children():
 		child.add_constant_override("separation", 10)
