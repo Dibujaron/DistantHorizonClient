@@ -13,10 +13,14 @@ func init(parent, station_name):
 	stn_name = station_name
 	parent_menu = parent
 	station = Global.get_space().stations[station_name]
-	update()
+	do_update()
 	
 func do_update():
 	if station != null:
+		if station.shows_on_navigation:
+			show()
+		else:
+			hide()
 		var player_ship = Global.get_primary_player_ship()
 		if player_ship and player_ship.docked() and player_ship.docked_to_station == station:
 			hide()
