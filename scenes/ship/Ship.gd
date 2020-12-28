@@ -49,6 +49,7 @@ var hold_occupied = 0
 export var primary_color = Color.blue
 export var secondary_color = Color.white
 export var max_rotation_correction = 0.0001
+
 func _ready():
 	pass
 	_set_primary_color(primary_color)
@@ -59,6 +60,17 @@ func _ready():
 	
 func init_as_player_ship():
 	is_player_ship = true
+	add_breadcrumbs()
+	
+func toggle_breadcrumbs():
+	print("toggling")
+	var breadcrumbs = get_node("Breadcrumbs")
+	if breadcrumbs:
+		remove_child(breadcrumbs)
+	else:
+		add_breadcrumbs()
+	
+func add_breadcrumbs():
 	var breadcrumb_scene = preload("res://scenes/player/Breadcrumbs.tscn")
 	var breadcrumbs = breadcrumb_scene.instance()
 	add_child(breadcrumbs)

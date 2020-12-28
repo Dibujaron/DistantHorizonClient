@@ -105,6 +105,10 @@ func _process(delta):
 		
 		if Input.is_action_just_pressed("ui_navigation_menu"):
 			Global.get_navigation_menu().toggle()
+			
+		if Input.is_action_just_pressed("ui_toggle_breadcrumbs"):
+			print("got toggle crumbs")
+			Global.get_primary_player_ship().toggle_breadcrumbs()
 	else:
 		if Input.is_action_just_pressed("ui_send_chat"):
 			Global.get_chat_hud().send_chat_message()
