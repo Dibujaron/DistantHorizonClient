@@ -184,8 +184,8 @@ func json_sync_state(json):
 			#current_rotation = expected_rotation
 			var true_rotation = current_rotation
 			var new_rotation_error = Global.angular_diff(expected_rotation, true_rotation)
-			if new_rotation_error > smoothing_boundary_rotation:
-				print("rotation error ", new_rotation_error, " for ship is past smoothing boundary, hard correcting.")
+			if abs(new_rotation_error) > smoothing_boundary_rotation:
+				print("rotation error ", rad2deg(new_rotation_error), "deg for ship is past smoothing boundary, hard correcting.")
 				rotation_error = 0.0
 				current_rotation = expected_rotation
 			elif is_zero_approx(new_rotation_error):
@@ -197,15 +197,12 @@ func json_sync_state(json):
 			var expected_velocity = Global.json_to_vec(json["velocity"])
 			var diff_squared = (global_position - expected_position).length_squared()
 			if diff_squared > smoothing_boundary_position_squared:
-				print("position error ", sqrt(diff_squared), " for ship is past smoothing boundary, hard correcting.")
 				global_position = expected_position
 				velocity = expected_velocity
 			else:
 				var expected_pos_after_time = expected_position + (expected_velocity * sync_delta * smoothing_correction_range)
 				var true_pos_after_time = global_position + (velocity * sync_delta * smoothing_correction_range)
 				var velocity_adj = expected_pos_after_time - true_pos_after_time
-				if randf() > 0.99:
-					print("smoothing position error: ", sqrt(diff_squared), " with velocity adj ", velocity_adj, " added to total velocity ", velocity)
 				velocity += velocity_adj
 		last_sync_time = OS.get_ticks_msec()
 

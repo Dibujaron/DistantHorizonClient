@@ -33,13 +33,20 @@ func get_linked_ship():
 
 func receive_chat_message(message_json):
 	var message_txt = message_json["payload"]
+	add_chat_message(message_txt)
+	
+func add_chat_message(message_txt):
 	chat_display.push_chat_message(message_txt)
 	
 func send_chat_message():
 	var message_txt = chat_input.text
 	unfocus_chat()
 	if(message_txt.length() > 0):
-		Global.get_socket_client().send_chat_message(message_txt)
+		if message_txt == "/debugrotation":
+			add_chat_message("ship true rotation is: " + str(rad2deg(get_linked_ship().global_rotation)) + "deg")
+			add_chat_message("ship rotation error is: " + str(rad2deg(get_linked_ship().rotation_error)) + "deg")
+		else:
+			Global.get_socket_client().send_chat_message(message_txt)
 	
 func is_chat_focused():
 	return chat_input.has_focus()
