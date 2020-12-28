@@ -95,7 +95,9 @@ func adjust_sizing():
 	var my_size = rect_size
 	var screen_center = screen_size * 0.5
 	var half_my_size = my_size * 0.5
-	rect_position = screen_center - half_my_size
+	var new_x = screen_center.x - half_my_size.x
+	var new_y = screen_center.y - (half_my_size.y / 2)
+	rect_position = Vector2(new_x, new_y)
 	
 func _join_game():
 	get_tree().change_scene("res://scenes/Space.tscn")
