@@ -97,10 +97,12 @@ func color_to_json(color):
 	dict["b"] = color.b8
 	return dict
 	
+var planet_cache = null
 func get_gravity_acceleration(global_pos):
 	var accel = Vector2()
-	var planets = get_tree().get_nodes_in_group("Planets")
-	for it in planets:
+	if planet_cache == null:
+		planet_cache = get_tree().get_nodes_in_group("Planets")
+	for it in planet_cache:
 		var planet_pos = it.global_position
 		var offset = (planet_pos - global_pos)
 		var r_squared = offset.length_squared()

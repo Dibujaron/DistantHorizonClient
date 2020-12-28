@@ -1,8 +1,8 @@
 extends Node2D
 
-export var calculation_steps = 30
+export var calculation_steps = 6
 export var projections_to_keep = 5
-var step_length = 1.0/60.0
+var step_length = 1.0/10.0#1.0/60.0
 
 var recent_projections_pos = []
 var recent_projections_vel = []

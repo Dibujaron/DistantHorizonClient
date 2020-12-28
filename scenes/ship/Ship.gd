@@ -63,12 +63,12 @@ func init_as_player_ship():
 	add_breadcrumbs()
 	
 func toggle_breadcrumbs():
-	print("toggling")
-	var breadcrumbs = get_node("Breadcrumbs")
-	if breadcrumbs:
-		remove_child(breadcrumbs)
-	else:
-		add_breadcrumbs()
+	if not docked():
+		var breadcrumbs = get_node("Breadcrumbs")
+		if breadcrumbs:
+			remove_child(breadcrumbs)
+		else:
+			add_breadcrumbs()
 	
 func add_breadcrumbs():
 	var breadcrumb_scene = preload("res://scenes/player/Breadcrumbs.tscn")
@@ -275,11 +275,13 @@ func _physics_process(delta):
 		var gravity_accel = Global.get_gravity_acceleration(global_position) * delta
 		velocity += gravity_accel
 	
+var planet_cache = null
 func get_inside_planet():
-	var bodies = get_tree().get_nodes_in_group("Planets")
+	if planet_cache == null:
+		planet_cache = get_tree().get_nodes_in_group("Planets")
 	
 	var inside_any_planet = false
-	for body in bodies:
+	for body in planet_cache:
 		var body_position = body.global_position
 		var min_alt_squared = pow(body.min_orbital_altitude,2)
 		var r_squared = abs((body_position - global_position).length_squared())

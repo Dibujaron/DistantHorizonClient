@@ -55,9 +55,12 @@ func globalPosAtTime(delta):
 	else:
 		return relativePosAtTime(delta)
 		
+var top_parent_cache = null
 func getTopParent():
 	if has_parent:
-		return get_parent().getTopParent()
+		if top_parent_cache == null:
+			top_parent_cache = get_parent().getTopParent()
+		return top_parent_cache
 	else:
 		return self
 		
