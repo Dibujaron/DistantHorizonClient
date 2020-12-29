@@ -10,7 +10,7 @@ var tidal_lock = false
 var type = "Star"
 var mass = 0
 var min_orbital_altitude = 0
-
+var min_orbital_altitude_squared = 0
 func get_mass():
 	return mass
 	
@@ -23,6 +23,7 @@ func json_init(planet_info):
 	tidal_lock = planet_info["tidal_lock"]
 	mass = planet_info["mass"]
 	min_orbital_altitude = planet_info["min_orbital_altitude"]
+	min_orbital_altitude_squared = min_orbital_altitude * min_orbital_altitude
 	var new_type = planet_info["type"]
 	if new_type != type:
 		type = new_type

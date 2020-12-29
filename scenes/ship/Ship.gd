@@ -283,7 +283,7 @@ func get_inside_planet():
 	var inside_any_planet = false
 	for body in planet_cache:
 		var body_position = body.global_position
-		var min_alt_squared = pow(body.min_orbital_altitude,2)
+		var min_alt_squared = body.min_orbital_altitude_squared
 		var r_squared = abs((body_position - global_position).length_squared())
 		if(r_squared < min_alt_squared):
 			return true

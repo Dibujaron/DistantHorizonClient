@@ -6,7 +6,7 @@ var chosenSecondaryColor: Color = Color.white
 export var gravity_constant_fudge = 50.0
 export var gravity_constant_base = 6.67408
 export var gravity_constant_exp = -11.0
-export var min_gravity_force_cutoff = 0.01
+export var min_gravity_force_cutoff = 0.2
 var debug_logins = true
 
 var production_server_address = null
@@ -106,7 +106,7 @@ func get_gravity_acceleration(global_pos):
 		var planet_pos = it.global_position
 		var offset = (planet_pos - global_pos)
 		var r_squared = offset.length_squared()
-		var min_radius_squared = pow(it.min_orbital_altitude,2)
+		var min_radius_squared = it.min_orbital_altitude_squared
 		if r_squared < min_radius_squared:
 			r_squared = min_radius_squared
 		var force_mag = gravity_constant * it.mass / r_squared
