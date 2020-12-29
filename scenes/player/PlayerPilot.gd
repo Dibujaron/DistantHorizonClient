@@ -101,8 +101,11 @@ func _process(delta):
 			socket_client.undock()
 			
 		if Input.is_action_just_pressed("ui_focus_chat"):
-			Global.get_chat_hud().focus_chat()
+			Global.get_chat_hud().focus_chat("")
 		
+		if Input.is_action_just_pressed("ui_chat_command"):
+			Global.get_chat_hud().focus_chat("/")
+			
 		if Input.is_action_just_pressed("ui_navigation_menu"):
 			Global.get_navigation_menu().toggle()
 			

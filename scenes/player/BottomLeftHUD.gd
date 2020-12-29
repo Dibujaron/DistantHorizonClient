@@ -45,6 +45,11 @@ func send_chat_message():
 		if message_txt == "/debugrotation":
 			add_chat_message("ship true rotation is: " + str(rad2deg(get_linked_ship().global_rotation)) + "deg")
 			add_chat_message("ship rotation error is: " + str(rad2deg(get_linked_ship().rotation_error)) + "deg")
+		elif message_txt == "/coords" or message_txt == "/coordinates":
+			var position = get_linked_ship().global_position
+			var x = int(position.x)
+			var y = int(position.y)
+			add_chat_message("ship coordinates: " + str(x) + ", " + str(y))
 		else:
 			Global.get_socket_client().send_chat_message(message_txt)
 	
@@ -61,7 +66,9 @@ func unfocus_chat():
 	chat_input.hide()
 	chat_display.on_chat_unfocused()
 		
-func focus_chat():
+func focus_chat(starting_text):
+	chat_input.text = starting_text
+	chat_input.set_cursor_position(starting_text.length())
 	chat_input.show()
 	chat_input.grab_focus()
 	chat_display.on_chat_focused()
