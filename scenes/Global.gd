@@ -27,7 +27,7 @@ export var ship_scenes = {
 	"rijay.swallow": preload("res://scenes/ship/Ship_Rijay_Swallow.tscn"),
 	"aldrin.kx6": preload("res://scenes/ship/Ship_RADI_kx6.tscn"),
 	"phe.longhorn": preload("res://scenes/ship/Ship_PHE_Longhorn.tscn"),
-	"rijay.pegasus": preload("res://scenes/ship/Ship_Rijay_Pegasus.tscn"),
+	"aldrin.pegasus": preload("res://scenes/ship/Ship_Rijay_Pegasus.tscn"),
 	"rijay.crusader": preload("res://scenes/ship/Ship_Rijay_Crusader.tscn")
 }
 
