@@ -11,7 +11,7 @@ func _ready():
 	pass # Replace with function body.
 
 func init(commodity_info):
-	var commodity_label = get_node("Commodity")
+	var commodity_label = get_node("ImgContainer/Commodity")
 	commodity_label.text = commodity_info["display_name"]	
 	var commodity_price = get_node("Price")
 	var price_val = commodity_info["price"]

@@ -3,12 +3,9 @@
 [ext_resource path="res://sprites/items/encrypted_data.png" type="Texture" id=1]
 [ext_resource path="res://scenes/station/trade/CommodityIconInfo.gd" type="Script" id=2]
 
-
-
-
 [node name="CommodityBox" type="VBoxContainer"]
-margin_right = 83.0
-margin_bottom = 68.0
+margin_right = 119.0
+margin_bottom = 50.0
 grow_vertical = 2
 alignment = 1
 script = ExtResource( 2 )
@@ -17,13 +14,11 @@ __meta__ = {
 }
 
 [node name="ImgContainer" type="HBoxContainer" parent="."]
-margin_right = 83.0
+margin_right = 206.0
 margin_bottom = 32.0
-alignment = 1
 
 [node name="ItemImg" type="TextureRect" parent="ImgContainer"]
-margin_left = 25.0
-margin_right = 57.0
+margin_right = 32.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
 texture = ExtResource( 1 )
@@ -32,17 +27,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Commodity" type="Label" parent="."]
-margin_top = 36.0
-margin_right = 83.0
-margin_bottom = 50.0
+[node name="Spacer" type="Label" parent="ImgContainer"]
+margin_left = 36.0
+margin_top = 9.0
+margin_right = 40.0
+margin_bottom = 23.0
+text = " "
+align = 1
+
+[node name="Commodity" type="Label" parent="ImgContainer"]
+margin_left = 44.0
+margin_top = 9.0
+margin_right = 127.0
+margin_bottom = 23.0
 text = "COMMODITY"
 align = 1
 
 [node name="Price" type="Label" parent="."]
-margin_top = 54.0
-margin_right = 83.0
-margin_bottom = 68.0
+margin_top = 36.0
+margin_right = 206.0
+margin_bottom = 50.0
 text = "$1"
 align = 1
 __meta__ = {
