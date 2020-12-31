@@ -6,8 +6,8 @@ extends RichTextLabel
 # var b = "text"
 
 export var lines_display_focused = 60
-export var lines_display_unfocused = 5
-export var message_live_time_secs = 9
+export var lines_display_unfocused = 10
+export var message_live_time_secs = 30
 var message_live_time_msecs = 1000 * message_live_time_secs
 
 var chat_focused = false
