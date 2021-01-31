@@ -21,7 +21,14 @@ __meta__ = {
 }
 
 [node name="DistToTargetLabel" type="Label" parent="."]
-margin_bottom = 18.0
+margin_bottom = 23.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VelocityLabel" type="Label" parent="."]
+margin_top = 27.0
+margin_bottom = 50.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
