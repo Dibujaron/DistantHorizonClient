@@ -3,6 +3,6 @@
 [ext_resource path="res://fonts/Pixelar.ttf" type="DynamicFontData" id=1]
 
 [resource]
-size = 64
+size = 128
 extra_spacing_char = 5
 font_data = ExtResource( 1 )
