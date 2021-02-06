@@ -7,6 +7,8 @@ export var gravity_constant_fudge = 50.0
 export var gravity_constant_base = 6.67408
 export var gravity_constant_exp = -11.0
 export var min_gravity_force_cutoff = 0.2
+export var dpi_threshold = 150
+ 
 var debug_logins = true
 
 var production_server_address = null
@@ -29,6 +31,17 @@ export var ship_scenes = {
 	"phe.longhorn": preload("res://scenes/ship/Ship_PHE_Longhorn.tscn"),
 	"aldrin.pegasus": preload("res://scenes/ship/Ship_Rijay_Pegasus.tscn"),
 	"rijay.crusader": preload("res://scenes/ship/Ship_Rijay_Crusader.tscn")
+}
+
+export var themes  = {
+	"standard.big": preload("res://themes/Pixelar_Big.tres"),
+	"standard": preload("res://themes/Pixelar_Tabs.tres"),
+	"h1.big": preload("res://themes/Pixelar_H1_Big.tres"),
+	"h1": preload("res://themes/Pixelar_H1.tres"),
+	"h2.big": preload("res://themes/Pixelar_H2_Big.tres"),
+	"h2": preload("res://themes/Pixelar_H2.tres"),
+	"tabs.big": preload("res://themes/Pixelar_Tabs_Big.tres"),
+	"tabs": preload("res://themes/Pixelar_Tabs.tres")
 }
 
 var gravity_constant = gravity_constant_base * pow(10, gravity_constant_exp) * gravity_constant_fudge
@@ -188,4 +201,13 @@ func pretty_print_distance(dist):
 		return str(round(dist / 1000)) + " Kuu"
 	else:
 		return str(round(dist)) + " uu"
+		
+func get_theme_scaled(name):
+	var dpi = OS.get_screen_dpi(OS.get_current_screen())
+	if dpi > dpi_threshold:
+		print("dpi is ", dpi, " scaling large.")
+		return themes[name + ".big"]
+	else:
+		print("dpi is ", dpi, " scaling small.")
+		return themes[name]
 

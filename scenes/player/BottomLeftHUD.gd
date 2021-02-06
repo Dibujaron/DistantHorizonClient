@@ -15,6 +15,7 @@ onready var chat_input = get_node(chat_input_path)
 
 func _ready():
 	chat_input.hide()
+	set_theme(Global.get_theme_scaled("standard"))
 	
 func _process(delta):
 	pass

@@ -12,22 +12,22 @@ __meta__ = {
 }
 
 [node name="LogoCenter" type="HBoxContainer" parent="."]
-margin_right = 1024.0
+margin_right = 1920.0
 margin_bottom = 9.0
 alignment = 1
 
 [node name="Logo" type="TextureRect" parent="LogoCenter"]
-margin_left = 496.0
-margin_right = 527.0
+margin_left = 944.0
+margin_right = 975.0
 margin_bottom = 9.0
 texture = ExtResource( 2 )
 
 [node name="Description" type="Label" parent="."]
 margin_top = 13.0
-margin_right = 1024.0
+margin_right = 1920.0
 margin_bottom = 27.0
 
 [node name="ShipClassBox" type="VBoxContainer" parent="."]
 margin_top = 31.0
-margin_right = 1024.0
+margin_right = 1920.0
 margin_bottom = 31.0
