@@ -201,6 +201,14 @@ func pretty_print_distance(dist):
 		return str(round(dist / 1000)) + " Kuu"
 	else:
 		return str(round(dist)) + " uu"
+	
+func pretty_print_speed(speed):
+	if speed >= 500000:
+		return str(stepify(speed / 1000000,0.01)) + " Muu/s"
+	elif speed > 1000:
+		return str(stepify(speed / 1000,0.01)) + " Kuu/s"
+	else:
+		return str(round(speed)) + " uu/s"
 		
 func get_theme_scaled(name):
 	var dpi = OS.get_screen_dpi(OS.get_current_screen())
