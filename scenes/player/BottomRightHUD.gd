@@ -34,5 +34,7 @@ func do_update(targeting_circle):
 		target_dist_label.text = ""
 		
 func update_velocity():
-	var speed = Global.get_primary_player_ship().velocity.length()
-	$VelocityLabel.text = "Absolute speed: " + Global.pretty_print_speed(speed)
+	var ship = Global.get_primary_player_ship()
+	if ship:
+		var speed = ship.velocity.length()
+		$VelocityLabel.text = "Absolute speed: " + Global.pretty_print_speed(speed)
