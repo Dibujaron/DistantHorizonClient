@@ -7,7 +7,6 @@ export var gravity_constant_fudge = 50.0
 export var gravity_constant_base = 6.67408
 export var gravity_constant_exp = -11.0
 export var min_gravity_force_cutoff = 0.2
-export var height_threshold = 100
  
 var debug_logins = true
 
