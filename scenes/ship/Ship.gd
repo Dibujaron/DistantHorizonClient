@@ -43,7 +43,6 @@ var current_rotation = 0.0
 var initialized = false
 var is_player_ship = false
 
-var ship_name = ""
 var hold_size = 0
 var hold_occupied = 0
 
@@ -107,7 +106,6 @@ func json_init(json):
 	rotation_error = 0.0
 	global_position = Global.json_to_vec(json["global_pos"])
 	hold_size = json["hold_size"]
-	ship_name = json["name"]
 	velocity = Global.json_to_vec(json["velocity"])
 	var primary_color = Global.json_to_color(json["primary_color"])
 	var secondary_color = Global.json_to_color(json["secondary_color"])
