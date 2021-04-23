@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://sprites/effects/targeting_circle.png" type="Texture" id=1]
 [ext_resource path="res://scenes/player/TargetingCircle.gd" type="Script" id=2]
 [ext_resource path="res://scenes/player/TargetingVisibilityNotifier.gd" type="Script" id=3]
+[ext_resource path="res://scenes/station/StationBreadcrumbs.tscn" type="PackedScene" id=4]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -20,3 +21,5 @@ frames = SubResource( 1 )
 
 [node name="TargetingVisibilityNotifier" type="VisibilityNotifier2D" parent="."]
 script = ExtResource( 3 )
+
+[node name="StationBreadcrumbs" parent="." instance=ExtResource( 4 )]

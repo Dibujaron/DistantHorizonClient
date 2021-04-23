@@ -39,6 +39,13 @@ func json_update(orbiter_info):
 		current_angular_velocity = base_angular_velocity + delta
 	last_update = OS.get_ticks_msec() / 1000.0
 	
+func linear_velocity():
+	#v = rw
+	var magnitude = orbital_radius * current_angular_velocity
+	var angle = position.angle()
+	var angle_rotated_90 = angle + deg2rad(-90)
+	return Vector2(0,magnitude).rotated(angle_rotated_90)
+	
 func _process(delta):
 	if initialized and orbital_radius > 0:
 		var angle_offset = current_angular_velocity * delta

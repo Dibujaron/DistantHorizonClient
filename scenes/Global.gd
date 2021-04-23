@@ -7,7 +7,7 @@ export var gravity_constant_fudge = 50.0
 export var gravity_constant_base = 6.67408
 export var gravity_constant_exp = -11.0
 export var min_gravity_force_cutoff = 0.2
-export var dpi_threshold = 150
+export var height_threshold = 100
  
 var debug_logins = true
 
@@ -209,13 +209,4 @@ func pretty_print_speed(speed):
 		return str(stepify(speed / 1000,0.01)) + " Kuu/s"
 	else:
 		return str(round(speed)) + " uu/s"
-		
-func get_theme_scaled(name):
-	var dpi = OS.get_screen_dpi(OS.get_current_screen())
-	if dpi > dpi_threshold:
-		print("dpi is ", dpi, " scaling large.")
-		return themes[name + ".big"]
-	else:
-		print("dpi is ", dpi, " scaling small.")
-		return themes[name]
 

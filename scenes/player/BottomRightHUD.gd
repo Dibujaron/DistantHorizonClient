@@ -4,7 +4,7 @@ var linked_ship = null
 export var update_every_n_ticks = 60
 
 func _ready():
-	set_theme(Global.get_theme_scaled("standard"))
+	pass
 	
 func link_ship(ship):
 	linked_ship = ship

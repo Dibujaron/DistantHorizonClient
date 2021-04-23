@@ -22,9 +22,6 @@ func _ready():
 	if error != OK:
 		var username_label = get_node("MainBox/UsernameLabel")
 		username_label.text = "Error: failed to connect to session server."
-	set_theme(Global.get_theme_scaled("standard"))
-	$MainBox/LogoText.set_theme(Global.get_theme_scaled("h1"))
-	$MainBox/UsernameLabel.set_theme(Global.get_theme_scaled("h2"))
 	adjust_sizing()
 		
 func _on_start_login_request_complete(result, response_code, headers, body):
