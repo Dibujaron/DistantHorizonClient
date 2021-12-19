@@ -15,6 +15,6 @@ func init(json):
 		$TabContainer.remove_child(child)
 	for dealership_info in dealership_list:
 		var inst = dealership_menu.instance()
-		inst.init(dealership_info)
+		inst.init(dealership_info, $NameShipPopup)
 		$TabContainer.add_child(inst)
 		dealership_count = dealership_count + 1

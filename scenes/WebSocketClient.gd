@@ -109,11 +109,12 @@ func send_chat_message(message):
 	dict["payload"] = message
 	queue_outgoing_message(dict)
 	
-func buy_ship(ship_class, color1, color2):
+func buy_ship(ship_class, ship_name, color1, color2):
 	print("sending buy ship message")
 	var dict = {}
 	dict["message_type"] = "buy_ship"
 	dict["ship_class_qualified_name"] = ship_class
+	dict["ship_name"] = ship_name
 	dict["primary_color"] = color1
 	dict["secondary_color"] = color2
 	queue_outgoing_message(dict)

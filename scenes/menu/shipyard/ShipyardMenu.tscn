@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/menu/shipyard/ShipyardMenu.gd" type="Script" id=1]
+[ext_resource path="res://scenes/menu/shipyard/NameShipPopup.tscn" type="PackedScene" id=2]
 
 [node name="ShipyardMenu" type="VBoxContainer"]
 anchor_right = 1.0
@@ -13,3 +14,5 @@ __meta__ = {
 [node name="TabContainer" type="TabContainer" parent="."]
 margin_right = 1920.0
 margin_bottom = 36.0
+
+[node name="NameShipPopup" parent="." instance=ExtResource( 2 )]

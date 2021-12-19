@@ -21,7 +21,7 @@ func _input(event):
 			zoom_in()
 		if event.button_index == BUTTON_WHEEL_DOWN:
 			zoom_out()
-	
+
 func _process(delta):
 	
 	if not Global.get_chat_hud().is_chat_focused():

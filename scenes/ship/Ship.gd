@@ -45,6 +45,8 @@ var fuel_tank_size = 0.0
 var initialized = false
 var is_player_ship = false
 
+var ship_name
+
 var hold_size = 0
 var hold_occupied = 0
 
@@ -120,6 +122,7 @@ func json_init(json):
 		json_receive_docked(docked_info)
 	fuel_level = json["fuel_level"]
 	fuel_tank_size = json["fuel_tank_size"]
+	ship_name = json["ship_name"]
 	initialized = true
 
 func json_receive_docked(json):

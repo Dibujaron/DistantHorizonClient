@@ -3,11 +3,13 @@ extends Control
 var qualified_name = ""
 var colors = []
 var color_index = 0
+var buy_ship_popup
 func _ready():
 	$DisplayContainer/PreviousColor.connect("pressed", self, "_previous_color")
 	$DisplayContainer/NextColor.connect("pressed", self, "_next_color")
 	$VBoxContainer/BuyButton.connect("pressed", self, "_buy_ship")
-func init(ship_class_info):
+func init(ship_class_info, buy_ship_popup):
+	self.buy_ship_popup = buy_ship_popup
 	var identifying_name = ship_class_info["identifying_name"]
 	qualified_name = ship_class_info["qualified_name"]
 	colors = ship_class_info["colors"]
@@ -55,5 +57,8 @@ func update_colors():
 	
 func _buy_ship():
 	print("buying ship")
-	Global.get_socket_client().buy_ship(qualified_name, colors[color_index][0], colors[color_index][1])
+	buy_ship_popup.ship_to_purchase_qualified_name = qualified_name
+	buy_ship_popup.ship_to_purchase_primary_color = colors[color_index][0]
+	buy_ship_popup.ship_to_purchase_secondary_color = colors[color_index][1]
+	buy_ship_popup.popup_centered()
 	

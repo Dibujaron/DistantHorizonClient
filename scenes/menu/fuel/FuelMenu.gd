@@ -17,10 +17,11 @@ func init(json):
 	var fill_100_cost = fuel_price * 100
 	var fill_required_amount = int(fuel_tank_size - fuel_level)
 	var fill_tank_cost = fuel_price * fill_required_amount
-	$FuelLevelLabel.text = "Fuel in your tank: " + str(int(fuel_level))
+	$FuelLevelLabel.text = "Fuel in your tank: " + str(int(ceil(fuel_level)))
 	$FuelCapacityLabel.text = "Fuel tank capacity: " + str(fuel_tank_size)
 	$FillTankButton.text = "Fill Tank: $" + str(int(ceil(fill_tank_cost)))
 	$Fill100Button.text = "Fill 100 Units: $" + str(fill_100_cost)
+	$FuelPriceLabel.text = "Fuel price: $" + str(fuel_price) + " / unit" 
 	
 func _fill_tank():
 	var required_amount = int(ceil(fuel_tank_size - fuel_level))

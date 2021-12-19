@@ -12,7 +12,7 @@ var manu_display_name_short = ""
 func _ready():
 	pass # Replace with function body.
 
-func init(dealership_json):
+func init(dealership_json, buy_ship_popup):
 	manu_identifying_name = dealership_json["identifying_name"]
 	manu_display_name_short = dealership_json["display_name_short"]
 	manu_display_name_long = dealership_json["display_name_long"]
@@ -24,5 +24,5 @@ func init(dealership_json):
 	var ship_class_detail_scene = preload("res://scenes/menu/shipyard/ShipClassDetails.tscn")
 	for ship_class in ship_classes:
 		var details_inst = ship_class_detail_scene.instance()
-		details_inst.init(ship_class)
+		details_inst.init(ship_class, buy_ship_popup)
 		$ShipClassBox.add_child(details_inst)

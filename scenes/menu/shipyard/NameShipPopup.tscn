@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/menu/shipyard/NameShipPopup.gd" type="Script" id=1]
+
+[node name="NameShipPopup" type="PopupPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1594.0
+margin_bottom = -1018.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 322.0
+margin_bottom = 58.0
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 318.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 114.0
+margin_bottom = 19.0
+text = "Enter Ship Name: "
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+margin_left = 118.0
+margin_right = 318.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 200, 0 )
+max_length = 64
+expand_to_text_length = true
+
+[node name="BuyShipButton" type="Button" parent="VBoxContainer"]
+margin_top = 34.0
+margin_right = 318.0
+margin_bottom = 54.0
+text = "Complete Purchase"
