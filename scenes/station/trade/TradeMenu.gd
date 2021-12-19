@@ -1,17 +1,8 @@
 extends HBoxContainer
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-var player_balance
-var ship_hold_space
-var commodity_menu_count
-# Called when the node enters the scene tree for the first time.
 func init(json):
-	self.player_balance = json["player_balance"]
-	self.ship_hold_space = json["hold_space"]
+	var player_balance = json["player_balance"]
+	var ship_hold_space = json["hold_space"]
 	var station_info = json["station_info"]
 	var hold_contents = json["hold_contents"]
 

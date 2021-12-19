@@ -22,6 +22,8 @@ func init(json):
 	var tab_container = tab_aligner.get_node("TabContainer")
 	var trade_menu = tab_container.get_node("Market")
 	trade_menu.init(json)
+	var fuel_menu = tab_container.get_node("Fuel")
+	fuel_menu.init(json)
 	for child in tab_container.get_children():
 		if child.get_name() == "Shipyards":
 			tab_container.remove_child(child)

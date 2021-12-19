@@ -118,6 +118,13 @@ func buy_ship(ship_class, color1, color2):
 	dict["secondary_color"] = color2
 	queue_outgoing_message(dict)
 	
+func buy_fuel(quantity):
+	print("sending buy fuel message")
+	var dict = {}
+	dict["message_type"] = "purchase_fuel"
+	dict["quantity"] = quantity
+	queue_outgoing_message(dict)
+	
 func send_json_message(json_message):
 	var err = _client.get_peer(1).put_packet(str(json_message).to_utf8())
 	

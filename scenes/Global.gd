@@ -50,27 +50,33 @@ func should_vanish_docked_ai_ships():
 	
 func init_session_info(msg):
 	print("got message ", msg)
-	production_server_address = msg["server_address"]
-	var logged_in = msg["logged_in"]
-	authenticated = logged_in
-	if logged_in:
-		var user_info = msg["discord_user"]
-		display_username = user_info["username"]
-		qualified_username = user_info["username"] + user_info["discriminator"]
-		login_key = msg["server_data"]["token"]
-		print("session initialized with username ", qualified_username)
+	if msg != null:
+		production_server_address = msg["server_address"]
+		var logged_in = msg["logged_in"]
+		authenticated = logged_in
+		if logged_in:
+			var user_info = msg["discord_user"]
+			display_username = user_info["username"]
+			qualified_username = user_info["username"] + user_info["discriminator"]
+			login_key = msg["server_data"]["token"]
+			print("session initialized with username ", qualified_username)
+		elif OS.is_debug_build() and debug_logins:
+			init_debug_session()
+		else:
+			display_username = "Guest"
+			qualified_username = null
+			actor_id = null
+			print("session started as guest.")
 	elif OS.is_debug_build() and debug_logins:
-		display_username = "DebugUser"
-		qualified_username = "Debug0000"
-		login_key = "debug"
-		authenticated = true
-		actor_id = 0
-		print("fake debug user session initialized.")
-	else:
-		display_username = "Guest"
-		qualified_username = null
-		actor_id = null
-		print("session started as guest.")
+		init_debug_session()
+		
+func init_debug_session():
+	display_username = "DebugUser"
+	qualified_username = "Debug0000"
+	login_key = "debug"
+	authenticated = true
+	actor_id = 0
+	print("fake debug user session initialized.")	
 
 func get_display_username():
 	return display_username

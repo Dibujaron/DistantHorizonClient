@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/menu/fuel/FuelMenu.gd" type="Script" id=1]
+
+[node name="FuelMenu" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1755.0
+margin_bottom = -958.0
+rect_min_size = Vector2( 500, 0 )
+custom_constants/separation = 10
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PurchaseFuelLabel" type="Label" parent="."]
+margin_right = 500.0
+margin_bottom = 14.0
+text = "Purchase Fuel"
+
+[node name="FuelLevelLabel" type="Label" parent="."]
+margin_top = 24.0
+margin_right = 500.0
+margin_bottom = 38.0
+text = "Fuel in your tank: x units"
+
+[node name="FuelCapacityLabel" type="Label" parent="."]
+margin_top = 48.0
+margin_right = 500.0
+margin_bottom = 62.0
+text = "Fuel tank capacity: x units"
+
+[node name="FillTankButton" type="Button" parent="."]
+margin_top = 72.0
+margin_right = 500.0
+margin_bottom = 92.0
+text = "Fill Tank: $x"
+
+[node name="Fill100Button" type="Button" parent="."]
+margin_top = 102.0
+margin_right = 500.0
+margin_bottom = 122.0
+text = "Fill 100 Units: $x"
+__meta__ = {
+"_edit_use_anchors_": false
+}

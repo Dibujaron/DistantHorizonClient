@@ -1,16 +1,6 @@
 extends MarginContainer
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-# game start flow should be this:
-# if you select guest on mainscreen: "guest" -> game start (done)
-# if you select login on mainscreen:
-#    if no characters: create new character -> game start
-#    if one character: 'resume' or 'create new character' -> game start
-#    if multiple characters: 'resume' uses latest
+var session_server_exists = false
 
 func _ready():
 	hide()
@@ -18,10 +8,13 @@ func _ready():
 	new_char_button.connect("pressed", self, "_new_character_pressed")
 	$StartLoginRequest.connect("request_completed", self, "_on_start_login_request_complete")
 	$ActorCreateOrDeleteRequest.connect("request_completed", self, "_on_refresh_actors_request_complete")
-	var error = $StartLoginRequest.request("http://distant-horizon.io/client_login")
-	if error != OK:
-		var username_label = get_node("MainBox/UsernameLabel")
-		username_label.text = "Error: failed to connect to session server."
+	if session_server_exists:
+		var error = $StartLoginRequest.request("http://distant-horizon.io/client_login")
+		if error != OK:
+			print("Failed to connect to session server, falling back to debug mode.")
+	else:
+		Global.init_session_info(null)
+		_join_game()
 	adjust_sizing()
 		
 func _on_start_login_request_complete(result, response_code, headers, body):

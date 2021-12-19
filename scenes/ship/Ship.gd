@@ -40,6 +40,8 @@ var rotation_error_adjust = 0.0
 var rotation_error = 0.0
 var velocity = Vector2(0,0)
 var current_rotation = 0.0
+var fuel_level = 0.0
+var fuel_tank_size = 0.0
 var initialized = false
 var is_player_ship = false
 
@@ -116,6 +118,8 @@ func json_init(json):
 	if docked:
 		var docked_info = json["docked_info"]
 		json_receive_docked(docked_info)
+	fuel_level = json["fuel_level"]
+	fuel_tank_size = json["fuel_tank_size"]
 	initialized = true
 
 func json_receive_docked(json):
@@ -216,6 +220,7 @@ func json_sync_state(json):
 				var true_pos_after_time = global_position + (velocity * sync_delta * smoothing_correction_range)
 				var velocity_adj = expected_pos_after_time - true_pos_after_time
 				velocity += velocity_adj
+		fuel_level = json["fuel_level"]
 		last_sync_time = OS.get_ticks_msec()
 
 var tick_count = 0
@@ -262,8 +267,12 @@ func _physics_process(delta):
 			if tiller_right:
 				current_rotation += rotation_power * delta
 		var true_rotation = current_rotation - rotation_error
-		if main_engines_active:
-			velocity += Vector2(0,-main_engine_thrust).rotated(true_rotation) * delta
+		if fuel_level > 0:
+			if main_engines_active:
+				velocity += Vector2(0,-main_engine_thrust).rotated(true_rotation) * delta
+		else:
+			for engine in main_engines:
+				engine.set_enabled(main_engines_active)
 		if starboard_thrusters_active:
 			velocity += Vector2(-manu_engine_thrust, 0).rotated(true_rotation) * delta
 		if port_thrusters_active:
