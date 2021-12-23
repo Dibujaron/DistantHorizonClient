@@ -5,8 +5,9 @@
 [ext_resource path="res://sprites/ships/Rijay/Crusader/constant_color.png" type="Texture" id=3]
 [ext_resource path="res://sprites/ships/Rijay/Crusader/c1.png" type="Texture" id=4]
 [ext_resource path="res://sprites/ships/Rijay/Crusader/c2.png" type="Texture" id=5]
+[ext_resource path="res://scenes/player/ClickablePoi.tscn" type="PackedScene" id=6]
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
@@ -14,7 +15,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
@@ -29,9 +30,6 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 } ]
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 10, 20.7196 )
 
 [node name="Ship_Rijay_Crusader" type="Area2D"]
 z_index = 1
@@ -49,13 +47,13 @@ position = Vector2( 3.5, 11 )
 anim_name = "plume_large_longer"
 
 [node name="Color2" type="AnimatedSprite" parent="."]
-frames = SubResource( 2 )
+frames = SubResource( 1 )
 
 [node name="Color1" type="AnimatedSprite" parent="."]
-frames = SubResource( 1 )
+frames = SubResource( 2 )
 
 [node name="ConstantColor" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 4 )
+[node name="ClickablePoi" parent="." instance=ExtResource( 6 )]
+scale = Vector2( 1.5, 1.5 )

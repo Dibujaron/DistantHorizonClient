@@ -9,6 +9,7 @@
 [ext_resource path="res://sprites/ships/PHE/Thumper/c2.png" type="Texture" id=7]
 [ext_resource path="res://sprites/ships/PHE/Thumper/c2_shaded.png" type="Texture" id=8]
 [ext_resource path="res://sprites/ships/PHE/Thumper/c1_shaded.png" type="Texture" id=9]
+[ext_resource path="res://scenes/player/ClickablePoi.tscn" type="PackedScene" id=10]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -50,9 +51,6 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 10, 20.7196 )
-
 [node name="Ship_PHE_Thumper" type="Area2D"]
 z_index = 1
 script = ExtResource( 4 )
@@ -74,9 +72,6 @@ frames = SubResource( 4 )
 
 [node name="ConstantColor" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 6 )
 
 [node name="EngineP" parent="." instance=ExtResource( 3 )]
 position = Vector2( -15, 34 )
@@ -207,3 +202,6 @@ position = Vector2( -12, -20 )
 
 [node name="Container_D1" parent="." instance=ExtResource( 2 )]
 position = Vector2( 8, -20 )
+
+[node name="ClickablePoi" parent="." instance=ExtResource( 10 )]
+scale = Vector2( 2.25, 3.24 )

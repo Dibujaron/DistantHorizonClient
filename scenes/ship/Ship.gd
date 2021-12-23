@@ -46,6 +46,8 @@ var initialized = false
 var is_player_ship = false
 
 var ship_name
+var ship_make
+var ship_model
 
 var hold_size = 0
 var hold_occupied = 0
@@ -123,6 +125,12 @@ func json_init(json):
 	fuel_level = json["fuel_level"]
 	fuel_tank_size = json["fuel_tank_size"]
 	ship_name = json["ship_name"]
+	ship_make = json["ship_make"]
+	ship_model = json["ship_model"]
+	$ClickablePoi.poi_text = \
+		"Type: " + ship_make + " " + ship_model + \
+		"\nName: " + ship_name
+		
 	initialized = true
 
 func json_receive_docked(json):

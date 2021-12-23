@@ -31,7 +31,6 @@ func _process(delta):
 	visible = zoom_level >= threshold_far
 	var pip_radius = pip_radius_far
 	var scale_factor_base = scale_factor_base_far
-	var sprite_anim = "triangle"
 	var offset_direction = get_parent().global_rotation + PI
 	var direction_vector = Vector2(cos(offset_direction), sin(offset_direction))
 	var desired_offset = direction_vector * pip_radius

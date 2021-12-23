@@ -14,12 +14,12 @@ export var threshold_far = 8
 var current_zoom = 0
 var prior_global_rotation_degs = 0
 
-#note when you change this file you should probably also change the very similar PoiPip
+#note when you change this file you should probably also change the very similar TargetingPip
 func _process(delta):
 	var ship_position = get_parent().global_position
-	var targeting_circle = Global.get_targeting_circle()
-	if targeting_circle != null:
-		if not targeting_circle.is_enabled() or targeting_circle.is_on_screen():
+	var poi_circle = Global.get_poi_circle()
+	if poi_circle != null:
+		if not poi_circle.is_enabled() or poi_circle.is_on_screen():
 			hide()
 		else:
 			show()
@@ -33,7 +33,7 @@ func _process(delta):
 				scale_factor_base = scale_factor_base_far
 				pip_radius = zoom_level * 25
 				
-			var target_position = targeting_circle.global_position
+			var target_position = poi_circle.global_position
 			var direction_vector = (target_position - ship_position).normalized()
 			var desired_offset = direction_vector * pip_radius
 			var desired_position = ship_position + desired_offset

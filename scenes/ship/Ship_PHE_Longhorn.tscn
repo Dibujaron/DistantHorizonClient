@@ -5,6 +5,7 @@
 [ext_resource path="res://sprites/ships/PHE/Longhorn/c1.png" type="Texture" id=3]
 [ext_resource path="res://sprites/ships/PHE/Longhorn/c2.png" type="Texture" id=4]
 [ext_resource path="res://sprites/ships/PHE/Longhorn/constant_color.png" type="Texture" id=5]
+[ext_resource path="res://scenes/player/ClickablePoi.tscn" type="PackedScene" id=6]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -30,9 +31,6 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 10, 20.7196 )
-
 [node name="Ship_PHE_Longhorn" type="Area2D"]
 z_index = 1
 script = ExtResource( 2 )
@@ -57,5 +55,5 @@ frames = SubResource( 2 )
 [node name="ConstantColor" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 4 )
+[node name="ClickablePoi" parent="." instance=ExtResource( 6 )]
+scale = Vector2( 1.75, 2 )

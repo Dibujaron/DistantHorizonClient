@@ -13,7 +13,7 @@ func json_init(station_info):
 		print("station doesn't show")
 	$AnimatedSprite.play("default")
 	global_scale = Vector2(1.0, 1.0)
-
+	$ClickablePoi.poi_text = display_name
 func json_update(station_info):
 	.json_update(station_info)
 

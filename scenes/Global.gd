@@ -16,6 +16,7 @@ export var debug_server_address = "localhost:25611"
 export var request_batching = true
 var primary_player = null
 var targeting_circle = null
+var poi_circle = null
 var display_username = null
 var qualified_username = null
 var actor_id = null
@@ -192,6 +193,14 @@ func set_targeting_circle(circle):
 
 func get_targeting_circle():
 	return targeting_circle
+	
+func set_poi_circle(circle):
+	self.poi_circle = circle
+	
+func get_poi_circle():
+	if poi_circle == null:
+		poi_circle = preload("res://scenes/player/PoiCircle.tscn").instance()
+	return poi_circle
 	
 func get_current_zoom():
 	return get_primary_player().get_node("Camera2D").zoom.x

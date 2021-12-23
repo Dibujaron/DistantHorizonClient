@@ -11,6 +11,7 @@ var type = "Star"
 var mass = 0
 var min_orbital_altitude = 0
 var min_orbital_altitude_squared = 0
+var display_name
 func get_mass():
 	return mass
 	
@@ -22,29 +23,26 @@ func json_init(planet_info):
 	rotation_speed = planet_info["rotation_speed"]
 	tidal_lock = planet_info["tidal_lock"]
 	mass = planet_info["mass"]
+	display_name = planet_info["display_name"]
 	min_orbital_altitude = planet_info["min_orbital_altitude"]
 	min_orbital_altitude_squared = min_orbital_altitude * min_orbital_altitude
 	var new_type = planet_info["type"]
 	if new_type != type:
 		type = new_type
-		$SpriteHolder/AnimatedSprite.play(type)
+		$ScalableHolder/AnimatedSprite.play(type)
 	var scale_fac = planet_info["scale"]
 	var planet_scale = Vector2(scale_fac, scale_fac)
-	$SpriteHolder.global_scale = planet_scale
+	$ScalableHolder.global_scale = planet_scale
+	$ScalableHolder/ClickablePoi.poi_text = display_name
 
 
 func json_update(planet_info):
 	.json_update(planet_info)
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var top_parent = getTopParent()
 	if top_parent != self:
-		$SpriteHolder.look_at(top_parent.global_position)
-	#if tidal_lock:
-	#	$AnimatedSprite.look_at(get_parent().global_position)
-	#else:
-	#	$AnimatedSprite.rotation += rotation_speed * delta
+		$ScalableHolder.look_at(top_parent.global_position)
 
 func json_to_vec(json):
 	return Vector2(json["x"],json["y"])
