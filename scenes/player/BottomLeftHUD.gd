@@ -16,7 +16,7 @@ onready var chat_input = get_node(chat_input_path)
 func _ready():
 	chat_input.hide()
 	
-func _process(delta):
+func _process(_delta):
 	pass
 		
 func link_ship(ship):

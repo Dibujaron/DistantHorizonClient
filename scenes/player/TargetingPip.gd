@@ -15,7 +15,7 @@ var current_zoom = 0
 var prior_global_rotation_degs = 0
 
 #note when you change this file you should probably also change the very similar PoiPip
-func _process(delta):
+func _process(_delta):
 	var ship_position = get_parent().global_position
 	var targeting_circle = Global.get_targeting_circle()
 	if targeting_circle != null:

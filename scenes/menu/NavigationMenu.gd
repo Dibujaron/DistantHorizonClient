@@ -26,7 +26,7 @@ func on_navigation_selected(stn_name):
 func toggle():
 	visible = !visible
 	
-func _process(delta):
+func _process(_delta):
 	var margin = base_margin
 	var station_menu = Global.get_station_menu()
 	if station_menu != null:

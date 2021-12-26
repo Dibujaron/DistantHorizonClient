@@ -28,7 +28,6 @@ func is_enabled():
 	return visible && get_parent() != null && get_parent().visible
 	
 func _process(delta):
-	var parent = get_parent()
 	if is_enabled():
 		show()
 		$TextHolder.global_rotation_degrees = 0.0

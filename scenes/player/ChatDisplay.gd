@@ -19,7 +19,7 @@ var expiries = []
 func _ready():
 	pass
 
-func _process(delta):
+func _process(_delta):
 	var current_time = OS.get_system_time_msecs()
 	while (expiries.size() > 0) && (current_time > expiries[0]):
 		expiries.remove(0)

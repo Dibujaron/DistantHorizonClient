@@ -52,17 +52,14 @@ var ship_model
 var hold_size = 0
 var hold_occupied = 0
 
-export var primary_color = Color.blue
-export var secondary_color = Color.white
+export var initial_primary_color = Color.blue
+export var initial_secondary_color = Color.white
 export var max_rotation_correction = 0.0001
 
 func _ready():
 	pass
-	_set_primary_color(primary_color)
-	_set_secondary_color(secondary_color)
-	#var center_mass_offset = _get_center_mass()
-	#for child in get_children():
-	#	child.position = child.position + center_mass_offset
+	set_primary_color(initial_primary_color)
+	set_secondary_color(initial_secondary_color)
 	
 func init_as_player_ship():
 	is_player_ship = true
@@ -87,13 +84,13 @@ func _get_center_mass():
 func docked():
 	return docked_to_station and docked_from_port and docked_to_port
 	
-func _set_primary_color(color):
+func set_primary_color(color):
 	print("setting primary color")
 	$Color1.modulate = color
 	if has_node("Color1Shaded"):
 		$Color1Shaded.modulate = Color.from_hsv(color.h, color.s, color.v - 0.1)
 	
-func _set_secondary_color(color):
+func set_secondary_color(color):
 	$Color2.modulate = color
 	if has_node("Color2Shaded"):
 		$Color2Shaded.modulate = Color.from_hsv(color.h, color.s, color.v - 0.1)
@@ -115,8 +112,8 @@ func json_init(json):
 	velocity = Global.json_to_vec(json["velocity"])
 	var primary_color = Global.json_to_color(json["primary_color"])
 	var secondary_color = Global.json_to_color(json["secondary_color"])
-	_set_primary_color(primary_color)
-	_set_secondary_color(secondary_color)
+	set_primary_color(primary_color)
+	set_secondary_color(secondary_color)
 	var docked = json["docked"]
 	print("initializing with docked value: ", docked)
 	if docked:
@@ -300,7 +297,6 @@ func get_inside_planet():
 	if planet_cache == null:
 		planet_cache = get_tree().get_nodes_in_group("Planets")
 	
-	var inside_any_planet = false
 	for body in planet_cache:
 		var body_position = body.global_position
 		var min_alt_squared = body.min_orbital_altitude_squared

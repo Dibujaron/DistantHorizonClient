@@ -14,7 +14,7 @@ func get_linked_ship():
 
 var ticks_since_update = 0
 var distance_enabled = false
-func _process(delta):
+func _process(_delta):
 	var targeting_circle = Global.get_targeting_circle()
 	var should_distance_be_enabled = targeting_circle != null and targeting_circle.is_enabled()
 	if distance_enabled != should_distance_be_enabled or ticks_since_update >= update_absolute_speed_every_n_ticks:

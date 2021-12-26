@@ -17,7 +17,7 @@ func json_init(station_info):
 func json_update(station_info):
 	.json_update(station_info)
 
-func _process(delta):
+func _process(_delta):
 	look_at(get_parent().global_position)
 
 func globalRotationAtTime(time):

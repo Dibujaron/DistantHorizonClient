@@ -22,7 +22,7 @@ func _input(event):
 		if event.button_index == BUTTON_WHEEL_DOWN:
 			zoom_out()
 
-func _process(delta):
+func _process(_delta):
 	
 	if not Global.get_chat_hud().is_chat_focused():
 		var updated = false

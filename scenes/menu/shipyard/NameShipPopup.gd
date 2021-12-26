@@ -6,7 +6,7 @@ var ship_to_purchase_secondary_color
 var ship_names
 
 func _ready():
-	$VBoxContainer/BuyShipButton.connect("pressed", self, "_buy_ship")
+	var _connect_result_3 = $VBoxContainer/BuyShipButton.connect("pressed", self, "_buy_ship")
 	var file_contents = Global.load_text_file("res://ship_names.txt")
 	ship_names = file_contents.split("\n")
 	print("loaded " + str(ship_names.size()) + " ship names.")

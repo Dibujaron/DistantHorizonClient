@@ -8,12 +8,12 @@ var best_position = Vector2(0,0)
 func _ready():
 	var breadcrumb_scene = preload("res://scenes/player/Breadcrumb.tscn")
 	var last_parent = self
-	for i in range(0, num_breadcrumbs):
+	for _i in range(0, num_breadcrumbs):
 		var breadcrumb = breadcrumb_scene.instance()
 		last_parent.add_child(breadcrumb)
 		last_parent = breadcrumb
 		
-func _process(delta):
+func _process(_delta):
 	var ship = get_parent()
 	visible = not ship.docked()
 	best_velocity = ship.velocity

@@ -6,7 +6,7 @@ func _ready():
 var dealership_count = 0
 
 func init(json):
-	var player_balance = json["player_balance"]
+	#var player_balance = json["player_balance"]
 	var dealership_list = json["station_info"]["dealerships"]
 	var dealership_menu = preload("res://scenes/menu/shipyard/DealershipMenu.tscn")
 	print("Loading dealerships")

@@ -15,8 +15,8 @@ func init(ship_type_identifier, color1, color2):
 	displayed_ship.scale = Vector2(2,2)
 	displayed_ship.static_display = true
 	displayed_ship.hold_size = 100
-	displayed_ship.primary_color = color1
-	displayed_ship.secondary_color = color2
+	displayed_ship.initial_primary_color = color1
+	displayed_ship.initial_secondary_color = color2
 	add_child(displayed_ship)
 	
 func update_colors(color1, color2):

@@ -7,15 +7,15 @@ var has_initialized_own_ship = false
 var planets = {}
 var stations = {}
 var ships = {}
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
+func absolute_position():
+	return position
+	
 func initialization_complete():
 	return initialized_orbiters and initialized_ships and has_initialized_own_ship
 	
 var objects_visible = false
-func _process(delta):
+func _process(_delta):
 	if not objects_visible and initialization_complete():
 		for planet in planets.values():
 			planet.show()
@@ -35,15 +35,15 @@ func receive_world_update(message):
 		
 func receive_station_menu_info(message):
 	var canvas = $GuiCanvas
-	var menu = canvas.get_node("StationMenu")
+	var menu = canvas.get_node_or_null("StationMenu")
 	if not menu:
 		menu = preload("res://scenes/station/StationMenu.tscn").instance()
 		canvas.add_child(menu)
 	menu.init(message)
 
-func receive_station_menu_close(message):
+func receive_station_menu_close(_message):
 	var canvas = $GuiCanvas
-	var menu = canvas.get_node("StationMenu")
+	var menu = canvas.get_node_or_null("StationMenu")
 	if menu:
 		canvas.remove_child(menu)
 

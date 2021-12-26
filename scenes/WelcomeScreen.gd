@@ -6,8 +6,8 @@ func _ready():
 	hide()
 	var new_char_button = $MainBox/NewCharacterCenter/NewCharacterButton
 	new_char_button.connect("pressed", self, "_new_character_pressed")
-	$StartLoginRequest.connect("request_completed", self, "_on_start_login_request_complete")
-	$ActorCreateOrDeleteRequest.connect("request_completed", self, "_on_refresh_actors_request_complete")
+	var _connect_result = $StartLoginRequest.connect("request_completed", self, "_on_start_login_request_complete")
+	var _connect_result_2 = $ActorCreateOrDeleteRequest.connect("request_completed", self, "_on_refresh_actors_request_complete")
 	if session_server_exists:
 		var error = $StartLoginRequest.request("http://distant-horizon.io/client_login")
 		if error != OK:
@@ -17,7 +17,7 @@ func _ready():
 		_join_game()
 	adjust_sizing()
 		
-func _on_start_login_request_complete(result, response_code, headers, body):
+func _on_start_login_request_complete(_result, _response_code, _headers, body):
 	print("completed start login request.")
 	var json = JSON.parse(body.get_string_from_utf8()).result
 	Global.init_session_info(json)
@@ -30,8 +30,6 @@ func _on_start_login_request_complete(result, response_code, headers, body):
 		activate_menu(actors)
 		
 func create_actor(actor_name):
-	var username = Global.qualified_username
-	var server_addr = Global.server_address()
 	var request_url = "http://distant-horizon.io/create_actor"
 	var headers = ["Content-Type: application/json"]
 	print(request_url)
@@ -44,7 +42,6 @@ func create_actor(actor_name):
 		adjust_sizing()
 		
 func delete_actor(unique_id):
-	var server_addr = Global.server_address()
 	var request_url = "http://distant-horizon.io/delete_actor"
 	var headers = ["Content-Type: application/json"]
 	print("unique ID is ", unique_id)
@@ -57,7 +54,7 @@ func delete_actor(unique_id):
 		show()
 		adjust_sizing()
 		
-func _on_refresh_actors_request_complete(result, response_code, headers, body):
+func _on_refresh_actors_request_complete(_result, _response_code, _headers, body):
 	var json = JSON.parse(body.get_string_from_utf8()).result
 	print("actor refreshing request complete, json is ", json)
 	if json["success"]:
@@ -93,7 +90,7 @@ func adjust_sizing():
 	rect_position = Vector2(new_x, new_y)
 	
 func _join_game():
-	get_tree().change_scene("res://scenes/Space.tscn")
+	var _scene_result = get_tree().change_scene("res://scenes/Space.tscn")
 	
 func _new_character_pressed():
 	$CreateNewActorPopup.popup_centered()

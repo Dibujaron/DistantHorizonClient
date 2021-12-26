@@ -21,7 +21,7 @@ func _closed(was_clean = false):
 	print("Closed, clean: ", was_clean)
 	set_process(false)
 
-func _connected(proto = ""):
+func _connected(_proto = ""):
 	print("Connection established to server ", Global.server_address(), ".")
 	var dict = {}
 	var authenticated = Global.authenticated
@@ -37,7 +37,7 @@ func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
 		_client.disconnect_from_host(1000, "game closed")
 		
-func _process(delta):
+func _process(_delta):
 	_client.poll()
 	while not incoming_message_queue.empty():
 		process_message(incoming_message_queue.pop_front())
@@ -127,7 +127,7 @@ func buy_fuel(quantity):
 	queue_outgoing_message(dict)
 	
 func send_json_message(json_message):
-	var err = _client.get_peer(1).put_packet(str(json_message).to_utf8())
+	_client.get_peer(1).put_packet(str(json_message).to_utf8())
 	
 func read_json_message():
 	var message_str = _client.get_peer(1).get_packet().get_string_from_utf8()

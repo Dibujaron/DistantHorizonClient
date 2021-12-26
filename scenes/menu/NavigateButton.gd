@@ -8,7 +8,7 @@ extends Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	connect("pressed", self, "_navigate_pressed") # Replace with function body. # Replace with function body.
+	var _connect_result = connect("pressed", self, "_navigate_pressed") # Replace with function body. # Replace with function body.
 
 func _navigate_pressed():
 	print("navigate pressed.")

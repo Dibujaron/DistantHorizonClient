@@ -8,11 +8,11 @@ extends Button
 var commodity_identifying_name
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	connect("pressed", self, "_sell_pressed") # Replace with function body.
+	var _connect_result = connect("pressed", self, "_sell_pressed") # Replace with function body.
 	hint_tooltip = "hold shift to sell 10, hold ctrl and shift to sell 100"
 	
-func init(commodity_identifying_name):
-	self.commodity_identifying_name = commodity_identifying_name
+func init(commodity_identifying_name_input):
+	self.commodity_identifying_name = commodity_identifying_name_input
 	
 func _sell_pressed():
 	if(Input.is_action_pressed("ui_modifier_shift")):

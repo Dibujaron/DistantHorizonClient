@@ -13,7 +13,7 @@ var best_position = Vector2(0,0)
 func _ready():
 	pass # Replace with function body.
 
-func _process(delta):
+func _process(_delta):
 	global_rotation = 0
 	var zoom = Global.get_current_zoom()
 
@@ -22,7 +22,7 @@ func _process(delta):
 	var parent = get_parent()
 	var position_projected = parent.best_position
 	var velocity_projected = parent.best_velocity
-	for i in range(0, calculation_steps):
+	for _i in range(0, calculation_steps):
 		velocity_projected += Global.get_gravity_acceleration(position_projected) * step_length
 		position_projected += velocity_projected * step_length
 		

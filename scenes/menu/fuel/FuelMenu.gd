@@ -1,14 +1,14 @@
 extends VBoxContainer
 
 func _ready():
-	$FillTankButton.connect("pressed", self, "_fill_tank")
-	$Fill100Button.connect("pressed", self, "_fill_100")
+	var _connect_result = $FillTankButton.connect("pressed", self, "_fill_tank")
+	var _connect_result2 = $Fill100Button.connect("pressed", self, "_fill_100")
 
 var fuel_level
 var fuel_tank_size
 
 func init(json):
-	var player_balance = json["player_balance"]
+	#var player_balance = json["player_balance"]
 	fuel_level = json["fuel_level"]
 	print("initializing fuel menu, fuel level is " + str(fuel_level))
 	fuel_tank_size = json["fuel_tank_size"]

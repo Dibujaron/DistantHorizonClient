@@ -25,7 +25,7 @@ var prior_global_rotation_degs = 0
 func _ready():
 	pass # Replace with function body.
 
-func _process(delta):
+func _process(_delta):
 	var ship_position = get_parent().global_position
 	var zoom_level = Global.get_current_zoom()
 	visible = zoom_level >= threshold_far

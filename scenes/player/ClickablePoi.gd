@@ -5,7 +5,7 @@ var poi_text = ""
 func _ready():
 	add_to_group("ClickablePois")
 	
-func _input_event(viewport, event, shape_idx):
+func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == BUTTON_LEFT:
 			print("Clickable POI with text " + poi_text + " clicked.")

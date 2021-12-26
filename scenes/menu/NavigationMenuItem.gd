@@ -23,9 +23,6 @@ func do_update():
 		else:
 			show()
 		$StationNameVal.text = station.display_name
-		var stn_position = station.global_position
-		var player = Global.get_primary_player()
-		var player_position = player.global_position
 		var distance = get_distance()
 		$DistanceVal.text = Global.pretty_print_distance(distance)
 		

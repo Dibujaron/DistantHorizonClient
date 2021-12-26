@@ -18,9 +18,6 @@ func _ready():
 func get_port_name():
 	return port_name
 	
-func is_docked():
-	return is_docked
-	
 func dock(dock_threshold):
 	if not is_docked:
 		var female = find_port_to_dock(dock_threshold)
@@ -95,7 +92,3 @@ func get_best_dock_dist(dock_threshold):
 		if dist_squared < best_dist_squared:
 			best_dist_squared = dist_squared
 	return best_dist_squared
-	
-func _process(delta):
-	pass
-		

@@ -17,7 +17,7 @@ func _ready():
 func _get_center_mass():
 	return Vector2(0, -5)
 	
-func _process(delta):
+func _process(_delta):
 	var hold_occupied_new = self.hold_occupied
 	if hold_occupied_new != hold_occupied_old:
 		hold_occupied_old = hold_occupied_new

@@ -5,12 +5,11 @@ var colors = []
 var color_index = 0
 var buy_ship_popup
 func _ready():
-	$DisplayContainer/PreviousColor.connect("pressed", self, "_previous_color")
-	$DisplayContainer/NextColor.connect("pressed", self, "_next_color")
-	$VBoxContainer/BuyButton.connect("pressed", self, "_buy_ship")
-func init(ship_class_info, buy_ship_popup):
-	self.buy_ship_popup = buy_ship_popup
-	var identifying_name = ship_class_info["identifying_name"]
+	var _connect_result = $DisplayContainer/PreviousColor.connect("pressed", self, "_previous_color")
+	var _connect_result2 = $DisplayContainer/NextColor.connect("pressed", self, "_next_color")
+	var _connect_result3 = $VBoxContainer/BuyButton.connect("pressed", self, "_buy_ship")
+func init(ship_class_info, buy_ship_popup_input):
+	self.buy_ship_popup = buy_ship_popup_input
 	qualified_name = ship_class_info["qualified_name"]
 	colors = ship_class_info["colors"]
 	var display_name = ship_class_info["display_name"]
