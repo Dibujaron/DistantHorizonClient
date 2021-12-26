@@ -6,14 +6,17 @@ func _ready():
 	add_to_group("ClickablePois")
 	
 func _input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton \
-	and event.button_index == BUTTON_LEFT \
-	and event.is_pressed():
-		print("Clickable POI with text " + poi_text + " clicked.")
-		if is_closest_poi():
+	if event is InputEventMouseButton and event.is_pressed():
+		if event.button_index == BUTTON_LEFT:
+			print("Clickable POI with text " + poi_text + " clicked.")
+			if is_closest_poi():
+				var poi_circle = Global.get_poi_circle()
+				print("Setting poi circle with display text: " + poi_text)
+				poi_circle.select_object(self, poi_text)
+		elif event.button_index == BUTTON_RIGHT:
+			print("Got right click.")
 			var poi_circle = Global.get_poi_circle()
-			print("Setting poi circle with display text: " + poi_text)
-			poi_circle.select_object(self, poi_text)
+			poi_circle.stop_navigating()
 		
 func is_closest_poi():
 	var mouse_pos = get_global_mouse_position()

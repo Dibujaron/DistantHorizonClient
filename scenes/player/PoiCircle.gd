@@ -19,16 +19,17 @@ func select_object(target_object, poi_text):
 	target_object.add_child(self)
 	$TextHolder/RichTextLabel.text = poi_text
 	update_zoom(Global.get_current_zoom())
+	show()
 	
 func stop_navigating():
 	hide()
 	
 func is_enabled():
-	return visible && get_parent() != null
+	return visible && get_parent() != null && get_parent().visible
 	
 func _process(delta):
 	var parent = get_parent()
-	if parent != null && parent.visible:
+	if is_enabled():
 		show()
 		$TextHolder.global_rotation_degrees = 0.0
 		$TextHolder.global_position.x = global_position.x + (32 * current_zoom)
