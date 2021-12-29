@@ -16,23 +16,12 @@ func _ready():
 	velocity_controller._Kp = 0.5#0.5#0.1
 	velocity_controller._Kd = 0.25#0.1
 	velocity_controller._Ki = 0.05#0.5 
-	
-func absolute_position():
-	if is_inside_tree():
-		return global_position
-	else:
-		return position
 		
 func json_init(orbiter_info):
 	orbiter_name = orbiter_info["name"]
 	var parent_position = get_parent().global_position
 	var relative_position = Global.json_to_vec(orbiter_info["relative_pos"])
 	global_position = parent_position + relative_position
-	#var new_position = parent_position + relative_position
-	#if is_inside_tree():
-	#	global_position = new_position
-	#else:
-	#	position = new_position
 	base_angular_velocity = float(orbiter_info["angular_velocity"])
 	current_angular_velocity = base_angular_velocity
 	orbital_radius = orbiter_info["orbital_radius"]
@@ -62,25 +51,25 @@ func _process(delta):
 		var angle_offset = current_angular_velocity * delta
 		position = position.rotated(angle_offset)
 
-func relativePosAtTime(delta):
+func relative_pos_at_time(delta):
 	var angle_offset = current_angular_velocity * delta
 	return position.rotated(angle_offset)
 
-func globalPosAtTime(delta):
+func global_pos_at_time(delta):
 	if has_parent:
 		var parent = get_parent()
-		return parent.globalPosAtTime(delta) + relativePosAtTime(delta)
+		return parent.global_pos_at_time(delta) + relative_pos_at_time(delta)
 	else:
-		return relativePosAtTime(delta)
+		return relative_pos_at_time(delta)
 		
 var top_parent_cache = null
-func getTopParent():
+func get_top_parent():
 	if has_parent:
 		if top_parent_cache == null:
-			top_parent_cache = get_parent().getTopParent()
+			top_parent_cache = get_parent().get_top_parent()
 		return top_parent_cache
 	else:
 		return self
 		
-func velocityAtTime(delta):
-	return globalPosAtTime(delta + 1) - globalPosAtTime(0) 
+func velocity_at_time(delta):
+	return global_pos_at_time(delta + 1) - global_pos_at_time(0) 

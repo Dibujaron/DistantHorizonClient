@@ -10,22 +10,21 @@ var target_position = Vector2(0,0)
 
 var best_velocity = Vector2(0,0)
 var best_position = Vector2(0,0)
-func _ready():
-	pass # Replace with function body.
-
+var max_future_ticks = 0
 func _process(_delta):
-	global_rotation = 0
 	var zoom = Global.get_current_zoom()
 
 	global_scale.x = zoom
 	global_scale.y = zoom
 	var parent = get_parent()
+	max_future_ticks = parent.max_future_ticks + (calculation_steps * step_length * 60)
 	var position_projected = parent.best_position
 	var velocity_projected = parent.best_velocity
-	for _i in range(0, calculation_steps):
-		velocity_projected += Global.get_gravity_acceleration(position_projected) * step_length
+	for i in range(0, calculation_steps):
+		var future_distance_ticks = parent.max_future_ticks + (step_length * 60 * i)
 		position_projected += velocity_projected * step_length
-		
+		var acceleration = Global.get_gravity_acceleration_at_tick(position_projected, future_distance_ticks) * step_length
+		velocity_projected += acceleration
 	recent_projections_pos.push_front(position_projected)
 	if recent_projections_pos.size() > projections_to_keep:
 		recent_projections_pos.pop_back()

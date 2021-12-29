@@ -134,22 +134,21 @@ func get_gravity_acceleration(global_pos):
 			accel += (offset.normalized() * force_mag)
 	return accel
 	
-func get_gravity_acceleration_old(pos):
-	var total_acceleration = Vector2()
-	var bodies = get_tree().get_nodes_in_group("Planets")
-	
-	for body in bodies:
-		var body_mass = body.mass
-		var body_position = body.global_position
-		var min_alt_squared = pow(body.min_orbital_altitude,2)
-		var r_squared = abs((body_position - pos).length_squared())
-		if r_squared < min_alt_squared:
-			r_squared = min_alt_squared
-		var f_magnitude = gravity_constant * body_mass / r_squared
-		if f_magnitude > min_gravity_force_cutoff:
-			var acceleration = (body_position - pos).normalized() * f_magnitude
-			total_acceleration = total_acceleration + acceleration
-	return total_acceleration
+func get_gravity_acceleration_at_tick(global_pos, tick_offset):
+	var accel = Vector2()
+	if planet_cache == null:
+		planet_cache = get_tree().get_nodes_in_group("Planets")
+	for it in planet_cache:
+		var planet_pos = it.global_pos_at_time(tick_offset)
+		var offset = (planet_pos - global_pos)
+		var r_squared = offset.length_squared()
+		var min_radius_squared = it.min_orbital_altitude_squared
+		if r_squared < min_radius_squared:
+			r_squared = min_radius_squared
+		var force_mag = gravity_constant * it.mass / r_squared
+		if force_mag > min_gravity_force_cutoff:
+			accel += (offset.normalized() * force_mag)
+	return accel
 	
 func get_space():
 	return get_tree().get_root().get_node("Space")
