@@ -25,13 +25,14 @@ func absolute_position():
 		
 func json_init(orbiter_info):
 	orbiter_name = orbiter_info["name"]
-	var parent_position = get_parent().absolute_position()
+	var parent_position = get_parent().global_position
 	var relative_position = Global.json_to_vec(orbiter_info["relative_pos"])
-	var new_position = parent_position + relative_position
-	if is_inside_tree():
-		global_position = new_position
-	else:
-		position = new_position
+	global_position = parent_position + relative_position
+	#var new_position = parent_position + relative_position
+	#if is_inside_tree():
+	#	global_position = new_position
+	#else:
+	#	position = new_position
 	base_angular_velocity = float(orbiter_info["angular_velocity"])
 	current_angular_velocity = base_angular_velocity
 	orbital_radius = orbiter_info["orbital_radius"]
