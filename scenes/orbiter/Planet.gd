@@ -32,7 +32,10 @@ func json_init(planet_info):
 		$ScalableHolder/AnimatedSprite.play(type)
 	var scale_fac = planet_info["scale"]
 	var planet_scale = Vector2(scale_fac, scale_fac)
-	$ScalableHolder.global_scale = planet_scale
+	if is_inside_tree():
+		$ScalableHolder.global_scale = planet_scale
+	else: 
+		$ScalableHolder.scale = planet_scale
 	$ScalableHolder/ClickablePoi.poi_text = display_name
 
 
