@@ -56,6 +56,7 @@ export var initial_primary_color = Color.blue
 export var initial_secondary_color = Color.white
 export var max_rotation_correction = 0.0001
 
+export var rescale_factor = 2
 func _ready():
 	pass
 	set_primary_color(initial_primary_color)
@@ -158,13 +159,6 @@ func json_receive_docked(json):
 	
 func json_receive_undocked(json):
 	json_sync_state(json)
-	var expected_rotation = json["rotation"]
-	global_rotation = expected_rotation
-	rotation_error = 0.0
-	var expected_position = Global.json_to_vec(json["global_pos"])
-	global_position = expected_position
-	var expected_velocity = Global.json_to_vec(json["velocity"])
-	velocity = expected_velocity
 	docked_to_station = null
 	docked_from_port = null
 	docked_to_port = null
@@ -191,7 +185,7 @@ func json_update_inputs(json):
 	json_sync_state(json)
 	
 var last_sync_time = 0.0
-
+var prior_velocity_adjustment = Vector2(0,0)
 func json_sync_state(json):
 	if not static_display:
 		var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
@@ -221,13 +215,16 @@ func json_sync_state(json):
 			var expected_velocity = Global.json_to_vec(json["velocity"])
 			var diff_squared = (global_position - expected_position).length_squared()
 			if diff_squared > smoothing_boundary_position_squared:
+				print("position error ", sqrt(diff_squared), " is past smoothing boundary, hard correcting.")
 				global_position = expected_position
 				velocity = expected_velocity
 			else:
 				var expected_pos_after_time = expected_position + (expected_velocity * sync_delta * smoothing_correction_range)
 				var true_pos_after_time = global_position + (velocity * sync_delta * smoothing_correction_range)
-				var velocity_adj = expected_pos_after_time - true_pos_after_time
+				var velocity_adj = (expected_pos_after_time - true_pos_after_time) / 8
+				velocity -= prior_velocity_adjustment
 				velocity += velocity_adj
+				prior_velocity_adjustment = velocity_adj
 		fuel_level = json["fuel_level"]
 		last_sync_time = OS.get_ticks_msec()
 

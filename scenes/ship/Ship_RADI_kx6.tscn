@@ -39,12 +39,15 @@ __meta__ = {
 }
 
 [node name="Color2" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 1 )
 
 [node name="Color1" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 2 )
 
 [node name="ConstantColor" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 3 )
 
 [node name="EngineL" parent="." instance=ExtResource( 1 )]

@@ -59,18 +59,23 @@ __meta__ = {
 }
 
 [node name="Color1Shaded" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 1 )
 
 [node name="Color1" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 2 )
 
 [node name="Color2Shaded" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 3 )
 
 [node name="Color2" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 4 )
 
 [node name="ConstantColor" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 5 )
 
 [node name="EngineP" parent="." instance=ExtResource( 3 )]
@@ -79,7 +84,7 @@ z_index = -1
 anim_name = "plume_larger"
 
 [node name="EngineS" parent="." instance=ExtResource( 3 )]
-position = Vector2( 15, 34 )
+position = Vector2( 14, 34 )
 z_index = -1
 anim_name = "plume_larger"
 
