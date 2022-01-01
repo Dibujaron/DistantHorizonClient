@@ -283,8 +283,8 @@ func _process(delta):
 				velocity += Vector2(0, manu_engine_thrust).rotated(true_rotation) * delta
 			if aft_thrusters_active:
 				velocity += Vector2(0, -manu_engine_thrust).rotated(true_rotation) * delta
-			#var gravity_accel = Global.get_gravity_acceleration(global_position) * delta
-			#velocity += gravity_accel
+			var gravity_accel = Global.get_gravity_acceleration(global_position) * delta
+			velocity += gravity_accel
 			global_rotation = current_rotation
 			global_position += velocity * delta
 		tick_count += 1
