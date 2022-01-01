@@ -185,7 +185,7 @@ func json_update_inputs(json):
 	json_sync_state(json)
 	
 var last_sync_time = 0.0
-var prior_velocity_adjustment = Vector2(0,0)
+#var prior_velocity_adjustment = Vector2(0,0)
 func json_sync_state(json):
 	if not static_display:
 		var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
@@ -221,10 +221,8 @@ func json_sync_state(json):
 			else:
 				var expected_pos_after_time = expected_position + (expected_velocity * sync_delta * smoothing_correction_range)
 				var true_pos_after_time = global_position + (velocity * sync_delta * smoothing_correction_range)
-				var velocity_adj = (expected_pos_after_time - true_pos_after_time) / 8
-				velocity -= prior_velocity_adjustment
+				var velocity_adj = (expected_pos_after_time - true_pos_after_time) / smoothing_correction_range
 				velocity += velocity_adj
-				prior_velocity_adjustment = velocity_adj
 		fuel_level = json["fuel_level"]
 		last_sync_time = OS.get_ticks_msec()
 
