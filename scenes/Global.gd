@@ -17,6 +17,7 @@ export var request_batching = true
 var primary_player = null
 var targeting_circle = null
 var poi_circle = null
+var true_position_indicator = null
 var display_username = null
 var qualified_username = null
 var actor_id = null
@@ -200,6 +201,12 @@ func get_poi_circle():
 	if poi_circle == null:
 		poi_circle = preload("res://scenes/player/PoiCircle.tscn").instance()
 	return poi_circle
+	
+func get_true_position_indicator():
+	if true_position_indicator == null:
+		true_position_indicator = preload("res://scenes/TruePositionIndicator.tscn").instance()
+		get_space().add_child(true_position_indicator)
+	return true_position_indicator
 	
 func get_current_zoom():
 	return get_primary_player().get_node("Camera2D").zoom.x

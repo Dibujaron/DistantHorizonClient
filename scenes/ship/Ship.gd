@@ -8,10 +8,10 @@ extends Area2D
 
 var static_display = false
 
-export var smoothing_boundary_position = 1024.0
+export var smoothing_boundary_position = 30.0
 var smoothing_boundary_position_squared = smoothing_boundary_position * smoothing_boundary_position
 export var smoothing_boundary_rotation = deg2rad(10.0)
-export var smoothing_correction_range = 8 #assuming no further inputs, a position error will self correct after x syncs
+export var smoothing_correction_range = 12 #assuming no further inputs, a position error will self correct after x syncs
 var main_engines
 var port_thrusters
 var starboard_thrusters
@@ -55,6 +55,8 @@ var hold_occupied = 0
 export var initial_primary_color = Color.blue
 export var initial_secondary_color = Color.white
 export var max_rotation_correction = 0.0001
+export var enable_true_position_indicator = false
+export var enable_position_smoothing = true
 
 export var rescale_factor = 2
 func _ready():
@@ -192,7 +194,6 @@ func json_update_inputs(json):
 	json_sync_state(json)
 	
 var last_sync_time = 0.0
-#var prior_velocity_adjustment = Vector2(0,0)
 func json_sync_state(json):
 	if not static_display:
 		var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
@@ -210,18 +211,23 @@ func json_sync_state(json):
 			else:
 				rotation_error = new_rotation_error
 	
-			var expected_position = Global.json_to_vec(json["global_pos"])
 			var expected_velocity = Global.json_to_vec(json["velocity"])
+			velocity = expected_velocity
+			var expected_position = Global.json_to_vec(json["global_pos"])
 			var diff_squared = (global_position - expected_position).length_squared()
 			if diff_squared > smoothing_boundary_position_squared:
 				print("position error ", sqrt(diff_squared), " is past smoothing boundary, hard correcting.")
 				global_position = expected_position
-				velocity = expected_velocity
-			else:
+			elif enable_position_smoothing:
 				var expected_pos_after_time = expected_position + (expected_velocity * sync_delta * smoothing_correction_range)
 				var true_pos_after_time = global_position + (velocity * sync_delta * smoothing_correction_range)
 				var velocity_adj = (expected_pos_after_time - true_pos_after_time) / smoothing_correction_range
 				velocity += velocity_adj
+			if is_player_ship and enable_true_position_indicator:
+				var true_pos_indicator = Global.get_true_position_indicator()
+				true_pos_indicator.global_position = expected_position
+				true_pos_indicator.global_rotation = expected_rotation
+
 		fuel_level = json["fuel_level"]
 		last_sync_time = OS.get_ticks_msec()
 
@@ -258,6 +264,27 @@ func _process(delta):
 					else:
 						current_rotation += rotation_error
 						rotation_error = 0.0
+			if tiller_left:
+				current_rotation -= rotation_power * delta
+			if tiller_right:
+				current_rotation += rotation_power * delta
+			var true_rotation = current_rotation - rotation_error
+			if fuel_level > 0:
+				if main_engines_active:
+					velocity += Vector2(0,-main_engine_thrust).rotated(true_rotation) * delta
+			else:
+				for engine in main_engines:
+					engine.set_enabled(false)
+			if starboard_thrusters_active:
+				velocity += Vector2(-manu_engine_thrust, 0).rotated(true_rotation) * delta
+			if port_thrusters_active:
+				velocity += Vector2(manu_engine_thrust, 0).rotated(true_rotation) * delta
+			if fore_thrusters_active:
+				velocity += Vector2(0, manu_engine_thrust).rotated(true_rotation) * delta
+			if aft_thrusters_active:
+				velocity += Vector2(0, -manu_engine_thrust).rotated(true_rotation) * delta
+			#var gravity_accel = Global.get_gravity_acceleration(global_position) * delta
+			#velocity += gravity_accel
 			global_rotation = current_rotation
 			global_position += velocity * delta
 		tick_count += 1
@@ -265,27 +292,7 @@ func _process(delta):
 func _physics_process(delta):
 	if not static_display:
 		if not docked():
-			if tiller_left:
-				current_rotation -= rotation_power * delta
-			if tiller_right:
-				current_rotation += rotation_power * delta
-		var true_rotation = current_rotation - rotation_error
-		if fuel_level > 0:
-			if main_engines_active:
-				velocity += Vector2(0,-main_engine_thrust).rotated(true_rotation) * delta
-		else:
-			for engine in main_engines:
-				engine.set_enabled(main_engines_active)
-		if starboard_thrusters_active:
-			velocity += Vector2(-manu_engine_thrust, 0).rotated(true_rotation) * delta
-		if port_thrusters_active:
-			velocity += Vector2(manu_engine_thrust, 0).rotated(true_rotation) * delta
-		if fore_thrusters_active:
-			velocity += Vector2(0, manu_engine_thrust).rotated(true_rotation) * delta
-		if aft_thrusters_active:
-			velocity += Vector2(0, -manu_engine_thrust).rotated(true_rotation) * delta
-		var gravity_accel = Global.get_gravity_acceleration(global_position) * delta
-		velocity += gravity_accel
+			pass
 	
 var planet_cache = null
 func get_inside_planet():
