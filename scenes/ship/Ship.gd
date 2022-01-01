@@ -158,10 +158,17 @@ func json_receive_docked(json):
 		visible = false
 	
 func json_receive_undocked(json):
-	json_sync_state(json)
+	var expected_position = Global.json_to_vec(json["global_pos"])
+	global_position = expected_position
+	var expected_rotation = json["rotation"]
+	global_rotation = expected_rotation
+	rotation_error = 0.0
+	var expected_velocity = Global.json_to_vec(json["velocity"])
+	velocity = expected_velocity
 	docked_to_station = null
 	docked_from_port = null
 	docked_to_port = null
+	json_sync_state(json)
 	visible = true
 	
 func json_update_inputs(json):
@@ -190,20 +197,12 @@ func json_sync_state(json):
 	if not static_display:
 		var sync_delta = (OS.get_ticks_msec() - last_sync_time) / 1000.0
 		hold_occupied = json["hold_occupied"]
-		if docked():
-			var expected_position = Global.json_to_vec(json["global_pos"])
-			global_position = expected_position
+		if !docked():
 			var expected_rotation = json["rotation"]
-			global_rotation = expected_rotation
-			rotation_error = 0.0
-			velocity = Vector2(0,0)
-		else:
-			var expected_rotation = json["rotation"]
-			#current_rotation = expected_rotation
 			var true_rotation = current_rotation
 			var new_rotation_error = Global.angular_diff(expected_rotation, true_rotation)
 			if abs(new_rotation_error) > smoothing_boundary_rotation:
-				print("rotation error ", rad2deg(new_rotation_error), "deg for ship is past smoothing boundary, hard correcting.")
+				print("rotation error ", rad2deg(abs(new_rotation_error)), "deg is past smoothing boundary, hard correcting.")
 				rotation_error = 0.0
 				current_rotation = expected_rotation
 			elif is_zero_approx(new_rotation_error):
@@ -242,6 +241,7 @@ func _process(delta):
 			rotation_error = 0.0
 			var docked_to_global_pos = docked_to_station.global_position + station_port_relative.rotated(docked_to_station.global_rotation)
 			global_position = docked_to_global_pos + (my_port_relative * -1.0).rotated(global_rotation)
+			velocity = docked_to_station.velocity()
 		else:
 			if not is_zero_approx(rotation_error):
 				if rotation_error > 0.0:
