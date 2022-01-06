@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/station/StationMenu.gd" type="Script" id=1]
 [ext_resource path="res://themes/Pixelar.tres" type="Theme" id=2]
 [ext_resource path="res://scenes/station/trade/TradeMenu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/menu/fuel/FuelMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://themes/Pixelar_Tabs.tres" type="Theme" id=5]
+[ext_resource path="res://scenes/menu/passenger/PassengerMenu.tscn" type="PackedScene" id=6]
 
 [node name="StationMenu" type="MarginContainer"]
 margin_left = 20.0
@@ -93,6 +94,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="Fuel" parent="HBoxContainer/VBoxContainer/TabAligner/TabContainer" instance=ExtResource( 4 )]
+visible = false
+margin_left = 4.0
+margin_top = 41.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Passengers" parent="HBoxContainer/VBoxContainer/TabAligner/TabContainer" instance=ExtResource( 6 )]
 visible = false
 margin_left = 4.0
 margin_top = 41.0

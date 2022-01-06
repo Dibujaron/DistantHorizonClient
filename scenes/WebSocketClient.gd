@@ -73,6 +73,8 @@ func process_message(json):
 		get_parent().receive_ships_added(json)
 	elif message_type == "ships_removed":
 		get_parent().receive_ships_removed(json)
+	elif message_type == "money_earned":
+		get_parent().receive_money_earned(json)
 	elif message_type == "chat":
 		Global.get_chat_hud().receive_chat_message(json)
 
@@ -123,6 +125,14 @@ func buy_fuel(quantity):
 	print("sending buy fuel message")
 	var dict = {}
 	dict["message_type"] = "purchase_fuel"
+	dict["quantity"] = quantity
+	queue_outgoing_message(dict)
+	
+func load_passengers(destination, quantity):
+	print("sending load passengers message")
+	var dict = {}
+	dict["message_type"] = "load_passengers"
+	dict["destination_station"] = destination
 	dict["quantity"] = quantity
 	queue_outgoing_message(dict)
 	

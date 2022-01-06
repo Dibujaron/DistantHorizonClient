@@ -23,7 +23,6 @@ func _input(event):
 			zoom_out()
 
 func _process(_delta):
-	
 	if not Global.get_chat_hud().is_chat_focused():
 		var updated = false
 		if Input.is_action_just_pressed("ui_zoom_in"):
@@ -152,3 +151,9 @@ func zoom_out():
 		#if new_zoom > 8:
 		#	parallax_bg.get_node("LayerLower").hide()
 		print("camera zoom is ", camera.zoom.x)
+
+var earned_indicator = preload("res://scenes/player/MoneyEarnedIndicator.tscn")
+func display_money_earned(amount):
+	var indicator = earned_indicator.instance()
+	add_child(indicator)
+	indicator.show_value(amount)

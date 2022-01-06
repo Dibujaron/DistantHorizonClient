@@ -11,8 +11,7 @@ func init(json):
 	var dealership_menu = preload("res://scenes/menu/shipyard/DealershipMenu.tscn")
 	print("Loading dealerships")
 	dealership_count = 0
-	for child in $TabContainer.get_children():
-		$TabContainer.remove_child(child)
+	Global.delete_children($TabContainer)
 	for dealership_info in dealership_list:
 		var inst = dealership_menu.instance()
 		inst.init(dealership_info, $NameShipPopup)

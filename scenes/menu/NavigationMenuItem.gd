@@ -33,10 +33,7 @@ func get_dist_squared():
 	return get_offset_vector().length_squared()
 	
 func get_offset_vector():
-	var stn_position = station.global_position
-	var player = Global.get_primary_player()
-	var player_position = player.global_position
-	return (stn_position - player_position)
+	return station.get_offset_vector_from_player()
 	
 func on_selected():
 	parent_menu.on_navigation_selected(stn_name)

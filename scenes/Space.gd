@@ -80,7 +80,13 @@ func receive_ship_heartbeats(message):
 			ship.json_sync_state(ship_info)
 		else:
 			print("error got heartbeat for unitialized ship ", ship_id)
-		
+
+func receive_money_earned(message):
+	var amount = message["money_earned"]
+	var player = Global.get_primary_player()
+	print("got money earned message of amount " + str(amount))
+	player.display_money_earned(amount)
+	
 func json_update_orbiters(message):
 	var world_state = message["world_state"]
 	var json_planets = world_state["planets"]
